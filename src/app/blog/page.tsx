@@ -3,6 +3,7 @@ import { Mailchimp } from "@/components";
 import { Posts } from "@/components/blog/Posts";
 import { baseURL } from "@/app/resources";
 import { blog, person, newsletter } from "@/app/resources/content";
+import { getPosts } from "@/app/utils/utils";
 
 export async function generateMetadata() {
   const title = blog.title;
@@ -34,6 +35,8 @@ export async function generateMetadata() {
 }
 
 export default function Blog() {
+  const allPosts = getPosts(["src", "app", "blog", "posts"]);
+
   return (
     <Column maxWidth="s">
       <script
@@ -62,7 +65,7 @@ export default function Blog() {
         {blog.title}
       </Heading>
       <Column fillWidth flex={1}>
-        <Posts thumbnail columns="1" />
+        <Posts posts={allPosts} thumbnail columns="1" />
       </Column>
       {newsletter.display && <Mailchimp newsletter={newsletter} />}
     </Column>

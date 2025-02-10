@@ -33,8 +33,8 @@ export async function generateMetadata() {
   };
 }
 
-export default function Work() {
-  let allProjects = getPosts(["src", "app", "work", "projects"]);
+export default async function Work() {
+  let allProjects = await getPosts(["src", "app", "work", "projects"]);
 
   return (
     <Column maxWidth="m">
@@ -63,7 +63,7 @@ export default function Work() {
           }),
         }}
       />
-      <Projects />
+      <Projects projects={allProjects} />
     </Column>
   );
 }

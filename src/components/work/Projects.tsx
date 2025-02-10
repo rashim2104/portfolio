@@ -1,18 +1,29 @@
 "use client";
 
-import { getPosts } from "@/app/utils/utils";
 import { Column } from "@/once-ui/components";
 import { ProjectCard } from "@/components";
 
-interface ProjectsProps {
-  range?: [number, number?];
+interface Project {
+  slug: string;
+  metadata: {
+    title: string;
+    publishedAt: string;
+    summary: string;
+    images: string[];
+    team?: { avatar: string }[];
+    link?: string;
+  };
+  content: string;
 }
 
-export function Projects({ range }: ProjectsProps) {
-  let allProjects = getPosts(["src", "app", "work", "projects"]);
+interface ProjectsProps {
+  range?: [number, number?];
+  projects: Project[];
+}
 
+export function Projects({ range, projects }: ProjectsProps) {
   // Remove duplicates based on title
-  const uniqueProjects = allProjects.reduce((acc, current) => {
+  const uniqueProjects = projects.reduce((acc, current) => {
     const existingProject = acc.find(
       (project) => project.metadata.title === current.metadata.title
     );
@@ -20,7 +31,7 @@ export function Projects({ range }: ProjectsProps) {
       acc.push(current);
     }
     return acc;
-  }, [] as typeof allProjects);
+  }, [] as Project[]);
 
   const sortedProjects = uniqueProjects.sort((a, b) => {
     return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();

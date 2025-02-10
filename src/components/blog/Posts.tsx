@@ -1,29 +1,39 @@
-import { getPosts } from "@/app/utils/utils";
+"use client";
+
 import { Grid } from "@/once-ui/components";
 import Post from "@/components/blog/Post";
+
+interface Post {
+  slug: string;
+  metadata: {
+    title: string;
+    publishedAt: string;
+    summary: string;
+    image?: string;
+  };
+}
 
 interface PostsProps {
   range?: [number] | [number, number];
   columns?: "1" | "2" | "3";
   thumbnail?: boolean;
+  posts: Post[];
 }
 
-export function Posts({ range, columns = "1", thumbnail = false }: PostsProps) {
-  let allBlogs = getPosts(["src", "app", "blog", "posts"]);
-
-  const sortedBlogs = allBlogs.sort((a, b) => {
+export function Posts({ range, columns = "1", thumbnail = false, posts }: PostsProps) {
+  const sortedPosts = posts.sort((a, b) => {
     return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
   });
 
-  const displayedBlogs = range
-    ? sortedBlogs.slice(range[0] - 1, range.length === 2 ? range[1] : sortedBlogs.length)
-    : sortedBlogs;
+  const displayedPosts = range
+    ? sortedPosts.slice(range[0] - 1, range.length === 2 ? range[1] : sortedPosts.length)
+    : sortedPosts;
 
   return (
     <>
-      {displayedBlogs.length > 0 && (
+      {displayedPosts.length > 0 && (
         <Grid columns={columns} mobileColumns="1" fillWidth marginBottom="40" gap="m">
-          {displayedBlogs.map((post) => (
+          {displayedPosts.map((post) => (
             <Post key={post.slug} post={post} thumbnail={thumbnail} />
           ))}
         </Grid>
