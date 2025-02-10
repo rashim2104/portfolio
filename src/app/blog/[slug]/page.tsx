@@ -6,21 +6,21 @@ import { baseURL } from "@/app/resources";
 import { formatDate } from "@/app/utils/formatDate";
 import ScrollToHash from "@/components/ScrollToHash";
 
-interface BlogParams {
+interface Params {
   params: {
     slug: string;
   };
 }
 
-export async function generateStaticParams(): Promise<{ slug: string }[]> {
+export async function generateStaticParams() {
   const posts = getPosts(["src", "app", "blog", "posts"]);
   return posts.map((post) => ({
     slug: post.slug,
   }));
 }
 
-export function generateMetadata({ params: { slug } }: BlogParams) {
-  let post = getPosts(["src", "app", "blog", "posts"]).find((post) => post.slug === slug);
+export async function generateMetadata({ params }: Params) {
+  let post = getPosts(["src", "app", "blog", "posts"]).find((post) => post.slug === params.slug);
 
   if (!post) {
     return;
@@ -30,9 +30,9 @@ export function generateMetadata({ params: { slug } }: BlogParams) {
     title,
     publishedAt: publishedTime,
     summary: description,
-    images,
     image,
   } = post.metadata;
+
   let ogImage = image ? `https://${baseURL}${image}` : `https://${baseURL}/og?title=${title}`;
 
   return {
@@ -59,7 +59,7 @@ export function generateMetadata({ params: { slug } }: BlogParams) {
   };
 }
 
-export default function BlogPost({ params }: BlogParams) {
+export default async function BlogPost({ params }: Params) {
   let post = getPosts(["src", "app", "blog", "posts"]).find((post) => post.slug === params.slug);
 
   if (!post) {
