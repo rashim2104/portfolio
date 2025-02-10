@@ -1,0 +1,12 @@
+.hover {
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.image {
+  width: 100%;
+  height: auto;
+}
