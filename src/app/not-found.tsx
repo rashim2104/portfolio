@@ -14,21 +14,21 @@ export default function NotFound() {
         horizontal="center"
         vertical="center"
         gap="m"
-        maxWidth="600px"
-        textAlign="center"
+        maxWidth={600}
+        align="center"
       >
         <Text
           as="h1"
-          size="3xl"
-          weight="bold"
+          size="xl"
+          weight="strong"
           color="brand"
         >
           404
         </Text>
         <Text
           as="h2"
-          size="xl"
-          weight="semibold"
+          size="l"
+          weight="strong"
         >
           Page Not Found
         </Text>
@@ -43,20 +43,16 @@ export default function NotFound() {
           gap="m"
           marginTop="l"
         >
-          <Button
-            as={Link}
-            href="/"
-            variant="primary"
-          >
-            Return Home
-          </Button>
-          <Button
-            as={Link}
-            href="/projects"
-            variant="secondary"
-          >
-            View Projects
-          </Button>
+          <Link href="/" passHref legacyBehavior>
+            <Button variant="primary">
+              Return Home
+            </Button>
+          </Link>
+          <Link href="/projects" passHref legacyBehavior>
+            <Button variant="secondary">
+              View Projects
+            </Button>
+          </Link>
         </Flex>
       </Column>
     </Flex>
