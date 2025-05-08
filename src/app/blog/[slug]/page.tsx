@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { CustomMDX } from "@/components/mdx";
 import { getPosts } from "@/app/utils/utils";
-import { Button, Column, Flex, Heading, SmartImage } from "@/once-ui/components";
+import { Button, Column, Flex, Heading, SmartImage, Carousel } from "@/once-ui/components";
 import { baseURL } from "@/app/resources";
 import { formatDate } from "@/app/utils/formatDate";
 import ScrollToHash from "@/components/ScrollToHash";
@@ -92,7 +92,17 @@ export default async function BlogPost({ params }: Params) {
         </Button>
         <Heading variant="display-strong-s">{post.metadata.title}</Heading>
       </Column>
-      {post.metadata.image && (
+      {post.metadata.images && post.metadata.images.length > 0 ? (
+        <Carousel
+          images={post.metadata.images.map((image: string) => ({
+            src: image,
+            alt: post.metadata.title,
+          }))}
+          indicator="thumbnail"
+          aspectRatio="16 / 9"
+          sizes="(max-width: 960px) 100vw, 960px"
+        />
+      ) : post.metadata.image ? (
         <SmartImage
           priority
           aspectRatio="16 / 9"
@@ -100,7 +110,7 @@ export default async function BlogPost({ params }: Params) {
           alt="Blog post cover image"
           src={post.metadata.image}
         />
-      )}
+      ) : null}
       <Column style={{ margin: "auto" }} as="article" maxWidth="xs">
         <Flex gap="12" marginBottom="24" vertical="center">
           {formatDate(post.metadata.publishedAt)}

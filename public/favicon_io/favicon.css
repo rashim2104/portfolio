@@ -1,0 +1,20 @@
+/* Favicon circle styling */
+link[rel="icon"],
+link[rel="shortcut icon"],
+link[rel="apple-touch-icon"] {
+    border-radius: 50% !important;
+    overflow: hidden;
+}
+
+/* For Safari */
+link[rel="mask-icon"] {
+    border-radius: 50% !important;
+    overflow: hidden;
+}
+
+/* For Android Chrome */
+link[rel="android-chrome-192x192"],
+link[rel="android-chrome-512x512"] {
+    border-radius: 50% !important;
+    overflow: hidden;
+}

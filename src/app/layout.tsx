@@ -7,33 +7,82 @@ import { Inter } from "next/font/google";
 import { Source_Code_Pro } from "next/font/google";
 import { person, home } from "@/app/resources/content";
 import { Background, Column, Flex, ToastProvider } from "@/once-ui/components";
+import { Metadata } from "next";
 
-export async function generateMetadata() {
-  return {
-    metadataBase: new URL(`https://${baseURL}`),
-    title: home.title,
-    description: home.description,
-    openGraph: {
-      title: `${person.firstName}'s Portfolio`,
-      description: "Portfolio website showcasing my work.",
-      url: baseURL,
-      siteName: `${person.firstName}'s Portfolio`,
-      locale: "en_US",
-      type: "website",
-    },
-    robots: {
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Rashim R B",
+    default: "Rashim R B",
+  },
+  description: home.description,
+  icons: {
+    icon: [
+      { 
+        url: '/favicon_io/favicon-16x16.png', 
+        sizes: '16x16', 
+        type: 'image/png',
+        rel: 'icon',
+        media: '(prefers-color-scheme: light)',
+      },
+      { 
+        url: '/favicon_io/favicon-32x32.png', 
+        sizes: '32x32', 
+        type: 'image/png',
+        rel: 'icon',
+        media: '(prefers-color-scheme: light)',
+      },
+    ],
+    shortcut: '/favicon_io/favicon.ico',
+    apple: [
+      {
+        url: '/favicon_io/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+        rel: 'apple-touch-icon',
+      }
+    ],
+    other: [
+      {
+        rel: 'mask-icon',
+        url: '/favicon_io/favicon-32x32.png',
+        color: '#000000',
+      },
+      {
+        rel: 'android-chrome-192x192',
+        url: '/favicon_io/android-chrome-192x192.png',
+        sizes: '192x192',
+        type: 'image/png',
+      },
+      {
+        rel: 'android-chrome-512x512',
+        url: '/favicon_io/android-chrome-512x512.png',
+        sizes: '512x512',
+        type: 'image/png',
+      },
+    ],
+  },
+  manifest: '/favicon_io/site.webmanifest',
+  metadataBase: new URL(`https://${baseURL}`),
+  openGraph: {
+    title: `${person.firstName}'s Portfolio`,
+    description: "Portfolio website showcasing my work.",
+    url: baseURL,
+    siteName: `${person.firstName}'s Portfolio`,
+    locale: "en_US",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
       index: true,
       follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-      },
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
-  };
-}
+  },
+};
 
 const primary = Inter({
   variable: "--font-primary",
@@ -80,6 +129,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         code.variable,
       )}
     >
+      <head>
+        <link rel="stylesheet" href="/favicon_io/favicon.css" />
+      </head>
       <ToastProvider>
         <Column style={{ minHeight: "100vh" }} as="body" fillWidth margin="0" padding="0">
           <Background

@@ -78,13 +78,7 @@ const about = {
     title: "Introduction",
     description: (
       <>
-        Hey there! I'm Rashim — a techie, a builder, and the guy who somehow ends up leading the team when things get serious 😅
-        <br /><br />
-        Currently surviving 3rd-year IT and thriving on code, caffeine, and deadlines. From QR-based tracking systems to event platforms like Eventify, I've built stuff that actually works (and doesn't crash at the wrong time 💀).
-        <br /><br />
-        I'm interning at <a href="https://www.skcript.com/" target="_blank" rel="noopener noreferrer">Skcript</a>, where I'm working on cutting-edge AI and document processing solutions. Won an IEEE SIGHT Fund for innovative tech solutions, and led the tech team for TEDxSriSairamIT. Basically, I break things till they work.
-        <br /><br />
-        Let's build something cool?
+        Pre-final year IT engineering student with strong programming skills in Python and Java, keen interest in development, and a solid foundation in web development. Experienced in applying analytical problem-solving skills to build scalable solutions.
       </>
     ),
   },
