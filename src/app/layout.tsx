@@ -211,7 +211,7 @@ export const metadata: Metadata = {
     canonical: baseURL,
   },
   verification: {
-    google: "your-google-site-verification", // Add your Google Search Console verification code
+    google: "aORBuZX3pcK4_x1Tb98R52KmbozBWMRFQbmd_egUGlQ",
   },
 };
 
