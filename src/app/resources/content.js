@@ -123,7 +123,7 @@ const about = {
       {
         name: "Sri Sairam Institute of Technology",
         timeframe: "Oct 2022 - Present",
-        description: <>Bachelor of Technology in Information Technology (GPA: 8.68)</>,
+        description: <>Bachelor of Technology in Information Technology (GPA: 8.59)</>,
         achievements: [
           <>Developed websites for Infyra'23 symposium and Hack in Hub'23 hackathon</>
         ]
