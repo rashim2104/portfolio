@@ -215,6 +215,42 @@ export const metadata: Metadata = {
   },
 };
 
+// Add JSON-LD structured data
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Rashim R B",
+  "url": `https://${baseURL}`,
+  "image": `${baseURL}/images/avatar.jpg`,
+  "sameAs": [
+    "https://github.com/rashimrb",
+    "https://linkedin.com/in/rashimrb"
+  ],
+  "jobTitle": "Full Stack Developer",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Sri Sairam Institute of Technology"
+  },
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "Sri Sairam Institute of Technology",
+    "department": "Information Technology"
+  },
+  "knowsAbout": [
+    "React.js",
+    "Next.js",
+    "Node.js",
+    "MongoDB",
+    "SQL",
+    "Python",
+    "Java",
+    "JavaScript",
+    "Web Development",
+    "API Development"
+  ],
+  "description": "Full Stack Developer and IT Engineering student specializing in React.js, Next.js, and Node.js development."
+};
+
 const primary = Inter({
   variable: "--font-primary",
   subsets: ["latin"],
@@ -261,6 +297,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       )}
     >
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <style dangerouslySetInnerHTML={{
           __html: `
             link[rel="icon"],
