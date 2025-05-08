@@ -3,7 +3,7 @@ link[rel="icon"],
 link[rel="shortcut icon"],
 link[rel="apple-touch-icon"] {
     border-radius: 50% !important;
-    overflow: hidden;
+    overflow: hidden !important;
 }
 
 /* For Safari */
@@ -17,4 +17,12 @@ link[rel="android-chrome-192x192"],
 link[rel="android-chrome-512x512"] {
     border-radius: 50% !important;
     overflow: hidden;
+}
+
+/* Ensure the image inside the favicon is also circular */
+link[rel="icon"] img,
+link[rel="shortcut icon"] img,
+link[rel="apple-touch-icon"] img {
+    border-radius: 50% !important;
+    overflow: hidden !important;
 }

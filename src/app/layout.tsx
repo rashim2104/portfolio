@@ -130,7 +130,22 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       )}
     >
       <head>
-        <link rel="stylesheet" href="/favicon_io/favicon.css" />
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            link[rel="icon"],
+            link[rel="shortcut icon"],
+            link[rel="apple-touch-icon"] {
+              border-radius: 50% !important;
+              overflow: hidden !important;
+            }
+            link[rel="icon"] img,
+            link[rel="shortcut icon"] img,
+            link[rel="apple-touch-icon"] img {
+              border-radius: 50% !important;
+              overflow: hidden !important;
+            }
+          `
+        }} />
       </head>
       <ToastProvider>
         <Column style={{ minHeight: "100vh" }} as="body" fillWidth margin="0" padding="0">
