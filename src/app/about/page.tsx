@@ -125,15 +125,6 @@ export default function About() {
               <Icon onBackground="accent-weak" name="globe" />
               {person.location}
             </Flex>
-            {person.languages.length > 0 && (
-              <Flex wrap gap="8">
-                {person.languages.map((language, index) => (
-                  <Tag key={index} size="l">
-                    {language}
-                  </Tag>
-                ))}
-              </Flex>
-            )}
           </Column>
         )}
         <Column className={styles.blockAlign} flex={9} maxWidth={40}>
@@ -204,12 +195,22 @@ export default function About() {
                     ),
                 )}
                 <Button
+                  className="s-flex-hide"
                   href="/resumes/Rashim-Resume.pdf"
                   download="Rashim-Resume.pdf"
+                  prefixIcon="download"
+                  label="Download Resume"
+                  size="s"
                   variant="primary"
-                >
-                  Download Resume
-                </Button>
+                />
+                <IconButton
+                  className="s-flex-show"
+                  size="l"
+                  href="/resumes/Rashim-Resume.pdf"
+                  download="Rashim-Resume.pdf"
+                  icon="download"
+                  variant="secondary"
+                />
               </Flex>
             )}
           </Column>
@@ -230,7 +231,13 @@ export default function About() {
                   <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth>
                     <Flex fillWidth horizontal="space-between" vertical="end" marginBottom="4">
                       <Text id={experience.company} variant="heading-strong-l">
-                        {experience.company}
+                        {experience.company === "Bulkpe" ? (
+                          <a href="https://bulkpe.in" target="_blank" rel="noopener noreferrer">
+                            {experience.company}
+                          </a>
+                        ) : (
+                          experience.company
+                        )}
                       </Text>
                       <Text variant="heading-default-xs" onBackground="neutral-weak">
                         {experience.timeframe}
@@ -292,7 +299,13 @@ export default function About() {
                   <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth>
                     <Flex fillWidth horizontal="space-between" vertical="end" marginBottom="4">
                       <Text id={experience.company} variant="heading-strong-l">
-                        {experience.company}
+                        {experience.company === "Bulkpe" ? (
+                          <a href="https://bulkpe.in" target="_blank" rel="noopener noreferrer">
+                            {experience.company}
+                          </a>
+                        ) : (
+                          experience.company
+                        )}
                       </Text>
                       <Text variant="heading-default-xs" onBackground="neutral-weak">
                         {experience.timeframe}

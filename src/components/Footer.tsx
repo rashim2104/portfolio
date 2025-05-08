@@ -23,16 +23,10 @@ export const Footer = () => {
         horizontal="space-between"
         vertical="center"
       >
-        <Flex gap="16" vertical="center">
-          <Text variant="body-default-s" onBackground="neutral-strong">
-            <Text onBackground="neutral-weak">© {currentYear} /</Text>
-            <Text paddingX="4">{person.name}</Text>
-          </Text>
-          <Text variant="body-default-s" onBackground="neutral-strong">
-            <Text onBackground="neutral-weak">/ Languages /</Text>
-            <Text paddingX="4">{person.languages.join(", ")}</Text>
-          </Text>
-        </Flex>
+        <Text variant="body-default-s" onBackground="neutral-strong">
+          <Text onBackground="neutral-weak">© {currentYear} /</Text>
+          <Text paddingX="4">{person.name}</Text>
+        </Text>
         <Flex gap="16">
           {social.map(
             (item) =>

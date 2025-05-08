@@ -11,7 +11,6 @@ const person = {
   location: "Chennai, Tamil Nadu",
   email: "rashimrb22@gmail.com",
   phone: "+91-8778484418",
-  languages: ["English", "Tamil"],
 };
 
 const newsletter = {
@@ -48,19 +47,21 @@ const social = [
 const home = {
   label: "Home",
   title: `${person.name}'s Portfolio`,
-  description: `Pre-final year IT engineering student with strong programming skills in Python and Java`,
-  headline: <>Full Stack Developer & IT Engineering Student</>,
-  subline: (
-    <>
-      I'm a pre-final year IT engineering student with strong programming skills and
-      <br /> a passion for building scalable web solutions.
-    </>
-  ),
+  description: `Developer & IT Engineering Student from ${person.location}`,
+  headline: <>Developer & IT Engineering Student</>,
+  about: <>Hey there! I'm Rashim — a techie, a builder, and the guy who somehow ends up leading the team when things get serious 😅
+    <br /><br />
+    Currently surviving 3rd-year IT and thriving on code, caffeine, and deadlines. From QR-based tracking systems to event platforms like Eventify, I've built stuff that actually works (and doesn't crash at the wrong time 💀).
+    <br /><br />
+    I'm interning at <a href="https://www.skcript.com/" target="_blank" rel="noopener noreferrer">Skcript</a>, where we build stuffs, that is cool. Won an IEEE SIGHT Fund for innovative tech solutions, and led the tech team for TEDxSriSairamIT. Basically, I break things till they work.
+    <br /><br />
+    Let's build something cool?
+  </>
 };
 
 const about = {
   label: "About",
-  title: "About me",
+  title: "About Me",
   description: `Meet ${person.name}, ${person.role} from ${person.location}`,
   tableOfContent: {
     display: true,
@@ -77,9 +78,13 @@ const about = {
     title: "Introduction",
     description: (
       <>
-        Pre-final year IT engineering student with strong programming skills in Python and Java, keen interest in
-        development, and a solid foundation in web development. Experienced in applying analytical problem-solving
-        skills to build scalable solutions.
+        Hey there! I'm Rashim — a techie, a builder, and the guy who somehow ends up leading the team when things get serious 😅
+        <br /><br />
+        Currently surviving 3rd-year IT and thriving on code, caffeine, and deadlines. From QR-based tracking systems to event platforms like Eventify, I've built stuff that actually works (and doesn't crash at the wrong time 💀).
+        <br /><br />
+        I'm interning at <a href="https://www.skcript.com/" target="_blank" rel="noopener noreferrer">Skcript</a>, where I'm working on cutting-edge AI and document processing solutions. Won an IEEE SIGHT Fund for innovative tech solutions, and led the tech team for TEDxSriSairamIT. Basically, I break things till they work.
+        <br /><br />
+        Let's build something cool?
       </>
     ),
   },
@@ -177,24 +182,4 @@ const work = {
   description: "A collection of my technical projects and achievements",
 };
 
-const gallery = {
-  label: "Achievements",
-  title: "Achievements & Recognition",
-  description: "Notable achievements and contributions",
-  achievements: [
-    "Won 1st prize in &apos;Code Combat&apos;, a college-level coding competition",
-    "Secured $8,632 in funding for the IEEE Tech4Good project focused on energy conservation in an old age home",
-    "Contributed to the organization of events at the IEEE Student Branch"
-  ],
-  /* Sample gallery image format:
-  images: [
-    {
-      src: "/images/gallery/img-01.jpg",
-      alt: "image",
-      orientation: "vertical",
-    },
-  ],
-  */
-};
-
-export { person, social, newsletter, home, about, blog, work, gallery };
+export { person, social, newsletter, home, about, blog, work };
