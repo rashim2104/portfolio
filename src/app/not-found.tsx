@@ -1,15 +1,64 @@
-import { Column, Heading, Text } from "@/once-ui/components";
+import { Button, Column, Flex, Text } from "@/once-ui/components";
+import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <Column as="section" fill center paddingBottom="160">
-      <Text marginBottom="s" variant="display-strong-xl">
-        404
-      </Text>
-      <Heading marginBottom="l" variant="display-default-xs">
-        Page Not Found
-      </Heading>
-      <Text onBackground="neutral-weak">The page you are looking for does not exist.</Text>
-    </Column>
+    <Flex
+      fillWidth
+      fillHeight
+      horizontal="center"
+      vertical="center"
+      padding="l"
+    >
+      <Column
+        horizontal="center"
+        vertical="center"
+        gap="m"
+        maxWidth="600px"
+        textAlign="center"
+      >
+        <Text
+          as="h1"
+          size="3xl"
+          weight="bold"
+          color="brand"
+        >
+          404
+        </Text>
+        <Text
+          as="h2"
+          size="xl"
+          weight="semibold"
+        >
+          Page Not Found
+        </Text>
+        <Text
+          color="neutral"
+          size="m"
+        >
+          Oops! The page you're looking for seems to have vanished into the digital void.
+          Let's get you back on track!
+        </Text>
+        <Flex
+          gap="m"
+          marginTop="l"
+        >
+          <Button
+            as={Link}
+            href="/"
+            variant="primary"
+          >
+            Return Home
+          </Button>
+          <Button
+            as={Link}
+            href="/projects"
+            variant="secondary"
+          >
+            View Projects
+          </Button>
+        </Flex>
+      </Column>
+    </Flex>
   );
 }

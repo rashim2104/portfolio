@@ -220,11 +220,11 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Rashim R B",
-  "url": `https://${baseURL}`,
-  "image": `${baseURL}/images/avatar.jpg`,
+  "url": "https://www.rashim.codes",
+  "image": "https://www.rashim.codes/images/avatar.jpg",
   "sameAs": [
-    "https://github.com/rashimrb",
-    "https://linkedin.com/in/rashimrb"
+    "https://github.com/rashim2104",
+    "https://linkedin.com/in/rashimraseethali"
   ],
   "jobTitle": "Full Stack Developer",
   "worksFor": {
