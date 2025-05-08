@@ -11,7 +11,7 @@ const person = {
   location: "Chennai, Tamil Nadu",
   email: "rashimrb22@gmail.com",
   phone: "+91-8778484418",
-  languages: ["English", "Tamil"], 
+  languages: ["English", "Tamil"],
 };
 
 const newsletter = {
@@ -182,7 +182,7 @@ const gallery = {
   title: "Achievements & Recognition",
   description: "Notable achievements and contributions",
   achievements: [
-    "Won 1st prize in 'Code Combat', a college-level coding competition",
+    "Won 1st prize in &apos;Code Combat&apos;, a college-level coding competition",
     "Secured $8,632 in funding for the IEEE Tech4Good project focused on energy conservation in an old age home",
     "Contributed to the organization of events at the IEEE Student Branch"
   ],

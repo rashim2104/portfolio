@@ -33,31 +33,19 @@ const Icon = forwardRef<HTMLDivElement, IconProps>(
     },
     ref,
   ) => {
-    const IconComponent: IconType | undefined = iconLibrary[name];
-
-    if (!IconComponent) {
-      console.warn(`Icon "${name}" does not exist in the library.`);
-      return null;
-    }
-
-    if (onBackground && onSolid) {
-      console.warn(
-        "You cannot use both 'onBackground' and 'onSolid' props simultaneously. Only one will be applied.",
-      );
-    }
-
-    let colorClass = "color-inherit";
-
-    if (onBackground) {
-      const [scheme, weight] = onBackground.split("-") as [ColorScheme, ColorWeight];
-      colorClass = `${scheme}-on-background-${weight}`;
-    } else if (onSolid) {
-      const [scheme, weight] = onSolid.split("-") as [ColorScheme, ColorWeight];
-      colorClass = `${scheme}-on-solid-${weight}`;
-    }
-
     const [isTooltipVisible, setTooltipVisible] = useState(false);
     const [isHover, setIsHover] = useState(false);
+    const [colorClass, setColorClass] = useState("color-inherit");
+
+    useEffect(() => {
+      if (onBackground) {
+        const [scheme, weight] = onBackground.split("-") as [ColorScheme, ColorWeight];
+        setColorClass(`${scheme}-on-background-${weight}`);
+      } else if (onSolid) {
+        const [scheme, weight] = onSolid.split("-") as [ColorScheme, ColorWeight];
+        setColorClass(`${scheme}-on-solid-${weight}`);
+      }
+    }, [onBackground, onSolid]);
 
     useEffect(() => {
       let timer: NodeJS.Timeout;
@@ -71,6 +59,19 @@ const Icon = forwardRef<HTMLDivElement, IconProps>(
 
       return () => clearTimeout(timer);
     }, [isHover]);
+
+    const IconComponent: IconType | undefined = iconLibrary[name];
+
+    if (!IconComponent) {
+      console.warn(`Icon "${name}" does not exist in the library.`);
+      return null;
+    }
+
+    if (onBackground && onSolid) {
+      console.warn(
+        "You cannot use both 'onBackground' and 'onSolid' props simultaneously. Only one will be applied.",
+      );
+    }
 
     return (
       <Flex
