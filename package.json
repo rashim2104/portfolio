@@ -13,6 +13,7 @@
     "@next/mdx": "^14.2.16",
     "classnames": "^2.5.1",
     "cookie": "^1.0.1",
+    "critters": "^0.0.20",
     "gray-matter": "^4.0.3",
     "next": "^14.0.4",
     "next-mdx-remote": "^5.0.0",
@@ -34,6 +35,8 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.0.4",
     "postcss-custom-media": "^10.0.7",
     "postcss-flexbugs-fixes": "^5.0.2",
     "typescript": "^5"
