@@ -7,7 +7,7 @@ const person = {
     return `${this.firstName} ${this.lastName}`;
   },
   role: "Full Stack Developer",
-  avatar: "/images/avatar1.jpg",
+  avatar: "/images/avatar.jpg",
   location: "Chennai, Tamil Nadu",
   email: "rashimrb22@gmail.com",
   phone: "+91-8778484418",
