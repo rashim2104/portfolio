@@ -4,13 +4,17 @@ Allow: /
 # Sitemap location
 Sitemap: https://www.rashim.codes/sitemap.xml
 
+# Allow all important routes
+Allow: /about
+Allow: /projects
+Allow: /blog
+Allow: /contact
+Allow: /404
+
 # Disallow admin and private routes
 Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
 
-# Allow all other routes
-Allow: /about
-Allow: /projects
-Allow: /blog
-Allow: /contact 
+# Crawl-delay for better server performance
+Crawl-delay: 10 
