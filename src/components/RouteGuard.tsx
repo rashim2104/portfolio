@@ -28,18 +28,22 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
       const checkRouteEnabled = () => {
         if (!pathname) return false;
 
+        // Check if route is explicitly configured
         if (pathname in routes) {
           return routes[pathname as keyof typeof routes];
         }
 
+        // Check dynamic routes (blog and work)
         const dynamicRoutes = ["/blog", "/work"] as const;
         for (const route of dynamicRoutes) {
-          if (pathname?.startsWith(route) && routes[route]) {
-            return true;
+          if (pathname?.startsWith(route)) {
+            return routes[route] !== false; // Allow if not explicitly disabled
           }
         }
 
-        return false;
+        // For unknown routes (like 404 pages), allow them through
+        // Let Next.js handle the routing and 404 rendering
+        return true;
       };
 
       const routeEnabled = checkRouteEnabled();
