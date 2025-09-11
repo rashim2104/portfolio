@@ -64,7 +64,7 @@ export default function NotFound() {
               Return Home
             </Button>
           </Link>
-          <Link href="/projects" passHref legacyBehavior>
+          <Link href="/work" passHref legacyBehavior>
             <Button variant="secondary">
               View Projects
             </Button>
