@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { Fade, Flex, Line, ToggleButton } from "@/once-ui/components";
 import styles from "@/components/Header.module.scss";
 import { routes } from "@/app/resources";
-import { person, about, blog, work } from "@/app/resources/content";
+import { person, about, blog, work, resume } from "@/app/resources/content";
 
 export const Header = () => {
   const pathname = usePathname() ?? "";
@@ -90,6 +90,23 @@ export const Header = () => {
                   prefixIcon="book"
                   href="/blog"
                   selected={pathname.startsWith("/blog")}
+                />
+              </>
+            )}
+            {routes["/resume"] && (
+              <>
+                <ToggleButton
+                  className="s-flex-hide"
+                  prefixIcon="clipboard"
+                  href="/resume"
+                  label={resume.label}
+                  selected={pathname.startsWith("/resume")}
+                />
+                <ToggleButton
+                  className="s-flex-show"
+                  prefixIcon="clipboard"
+                  href="/resume"
+                  selected={pathname.startsWith("/resume")}
                 />
               </>
             )}

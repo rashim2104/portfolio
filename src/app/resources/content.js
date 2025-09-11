@@ -176,4 +176,10 @@ const work = {
   description: "A collection of my technical projects and achievements",
 };
 
-export { person, social, newsletter, home, about, blog, work };
+const resume = {
+  label: "Resume",
+  title: "Resume",
+  description: "View and download my professional resume",
+};
+
+export { person, social, newsletter, home, about, blog, work, resume };
