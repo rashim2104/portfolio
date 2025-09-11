@@ -71,8 +71,8 @@ export default function Home() {
 
         <Flex gap="16">
           <Button
-            href="/resumes/Rashim-Resume.pdf"
-            download="Rashim-Resume.pdf"
+            href="/resumes/Rashim_Resume.pdf"
+            download="Rashim_Resume.pdf"
             variant="primary"
             role="link"
           >
