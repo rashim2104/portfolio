@@ -59,6 +59,12 @@ Add a new .mdx file to src/app/blog/posts or src/app/work/projects
 - Dynamic routing
 - Image optimization
 
+## **URL Shortener**
+- Custom short URLs for easy sharing
+- Managed via JSON configuration at `src/app/data/short-urls.json`
+- Access short URLs at `/l/[shortcode]` (e.g., `/l/abc` redirects to the configured URL)
+- Returns 404 for non-existent shortcodes
+
 # **Contact**
 Email: rashimrb22@gmail.com
 LinkedIn: linkedin.com/in/rashimraseethali
