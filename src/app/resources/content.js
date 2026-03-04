@@ -47,13 +47,13 @@ const home = {
   title: `${person.name}'s Portfolio`,
   description: `Software Developer & IT Engineering Student from ${person.location}`,
   headline: <>Software Developer & IT Engineering Student</>,
-  about: <>Hey there! I'm Rashim — a full-stack developer who builds things that actually ship.
+  about: <>Hey, I'm Rashim — nerdy, a little ADHD, and genuinely kind (or so I'm told).
     <br /><br />
-    Currently working as a Software Developer at <a href="https://www.skcript.com/" target="_blank" rel="noopener noreferrer">Skcript</a>, where I've built a production-grade email service that's processed 500K+ jobs, and developed FeatureOS Mobile end-to-end with React Native + Expo.
+    I think in visuals, figure things out as I go, and get weirdly obsessed with problems that don't have easy answers. I'm a night owl, a team player, and someone who believes the best solutions are usually the simplest ones.
     <br /><br />
-    Final-year IT student at Sri Sairam Institute of Technology, with projects ranging from QR-based crowd management systems to full-scale event platforms. I work across the stack — from database design to user-facing interfaces.
+    Outside of work — badminton, A.R. Rahman on loop, the occasional Lego set, and slowly getting into reading. Math has always been my thing, even if I never made it to the olympiad.
     <br /><br />
-    Let's build something cool?
+    Integrity and honesty matter to me more than almost anything. If we vibe on that, let's talk.
   </>
 };
 
@@ -76,7 +76,7 @@ const about = {
     title: "Introduction",
     description: (
       <>
-        Full-stack developer with hands-on experience building scalable web and mobile applications using modern TypeScript frameworks. Specialized in React Native, Node.js, and cloud-native architectures with proven ability to deliver production-ready features for multi-tenant SaaS platforms. Experienced in implementing end-to-end solutions from database design to user-facing interfaces.
+        I'm someone who thinks visually, moves fast, and cares a lot — about the work, about the people around me, and about keeping things simple. I get pulled toward hard problems, thrive in teams, and tend to figure things out as I go rather than planning every step upfront. Dedicated to a fault, probably ADHD, and genuinely kind.
       </>
     ),
   },
