@@ -47,11 +47,11 @@ const home = {
   title: `${person.name}'s Portfolio`,
   description: `Software Developer & IT Engineering Student from ${person.location}`,
   headline: <>Software Developer & IT Engineering Student</>,
-  about: <>Hey, I'm Rashim — nerdy, a little ADHD, and genuinely kind (or so I'm told).
+  about: <>Hey, I'm Rashim. Nerdy, a little ADHD, and genuinely kind (or so I'm told).
     <br /><br />
     I think in visuals, figure things out as I go, and get weirdly obsessed with problems that don't have easy answers. I'm a night owl, a team player, and someone who believes the best solutions are usually the simplest ones.
     <br /><br />
-    Outside of work — badminton, A.R. Rahman on loop, the occasional Lego set, and slowly getting into reading. Math has always been my thing, even if I never made it to the olympiad.
+    Outside of work: badminton, A.R. Rahman on loop, the occasional Lego set, and slowly getting into reading. Math has always been my thing, even if I never made it to the olympiad.
     <br /><br />
     Integrity and honesty matter to me more than almost anything. If we vibe on that, let's talk.
   </>
@@ -76,7 +76,7 @@ const about = {
     title: "Introduction",
     description: (
       <>
-        I'm someone who thinks visually, moves fast, and cares a lot — about the work, about the people around me, and about keeping things simple. I get pulled toward hard problems, thrive in teams, and tend to figure things out as I go rather than planning every step upfront. Dedicated to a fault, probably ADHD, and genuinely kind.
+        I'm someone who thinks visually, moves fast, and cares a lot: about the work, about the people around me, and about keeping things simple. I get pulled toward hard problems, thrive in teams, and tend to figure things out as I go rather than planning every step upfront. Dedicated to a fault, probably ADHD, and genuinely kind.
       </>
     ),
   },
@@ -117,7 +117,7 @@ const about = {
       {
         name: "Sri Sankara Matric. Hr. Sec. School",
         timeframe: "Completed 2022",
-        description: <>Higher Secondary Certificate (HSC) — Computer Science (87%)</>,
+        description: <>Higher Secondary Certificate (HSC), Computer Science (87%)</>,
       },
     ],
   },
