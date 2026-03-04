@@ -6,7 +6,7 @@ const person = {
   get name() {
     return `${this.firstName} ${this.lastName}`;
   },
-  role: "Full Stack Developer",
+  role: "Software Developer",
   avatar: "/images/avatar.jpg",
   location: "Chennai, Tamil Nadu",
   email: "rashimrb22@gmail.com",
@@ -31,29 +31,27 @@ const social = [
     link: "https://linkedin.com/in/rashimraseethali",
   },
   {
+    name: "X",
+    icon: "x",
+    link: "https://x.com/rashimbuilds",
+  },
+  {
     name: "Email",
     icon: "email",
     link: "mailto:rashimrb22@gmail.com",
   },
-  /* Sample social link format:
-  {
-    name: "X",
-    icon: "x",
-    link: "",
-  },
-  */
 ];
 
 const home = {
   label: "Home",
   title: `${person.name}'s Portfolio`,
-  description: `Developer & IT Engineering Student from ${person.location}`,
-  headline: <>Developer & IT Engineering Student</>,
-  about: <>Hey there! I'm Rashim — a techie, a builder, and the guy who somehow ends up leading the team when things get serious 😅
+  description: `Software Developer & IT Engineering Student from ${person.location}`,
+  headline: <>Software Developer & IT Engineering Student</>,
+  about: <>Hey there! I'm Rashim — a full-stack developer who builds things that actually ship.
     <br /><br />
-    Currently surviving 3rd-year IT and thriving on code, caffeine, and deadlines. From QR-based tracking systems to event platforms like Eventify, I've built stuff that actually works (and doesn't crash at the wrong time 💀).
+    Currently working as a Software Developer at <a href="https://www.skcript.com/" target="_blank" rel="noopener noreferrer">Skcript</a>, where I've built a production-grade email service that's processed 500K+ jobs, and developed FeatureOS Mobile end-to-end with React Native + Expo.
     <br /><br />
-    I'm interning at <a href="https://www.skcript.com/" target="_blank" rel="noopener noreferrer">Skcript</a>, where we build stuffs, that is cool. Won an IEEE SIGHT Fund for innovative tech solutions, and led the tech team for TEDxSriSairamIT. Basically, I break things till they work.
+    Final-year IT student at Sri Sairam Institute of Technology, with projects ranging from QR-based crowd management systems to full-scale event platforms. I work across the stack — from database design to user-facing interfaces.
     <br /><br />
     Let's build something cool?
   </>
@@ -78,7 +76,7 @@ const about = {
     title: "Introduction",
     description: (
       <>
-        Pre-final year IT engineering student with strong programming skills in Python and Java, keen interest in development, and a solid foundation in web development. Experienced in applying analytical problem-solving skills to build scalable solutions.
+        Full-stack developer with hands-on experience building scalable web and mobile applications using modern TypeScript frameworks. Specialized in React Native, Node.js, and cloud-native architectures with proven ability to deliver production-ready features for multi-tenant SaaS platforms. Experienced in implementing end-to-end solutions from database design to user-facing interfaces.
       </>
     ),
   },
@@ -87,34 +85,25 @@ const about = {
     title: "Work Experience",
     experiences: [
       {
-        company: "Bulkpe",
-        timeframe: "Jun 2024 - Dec 2024",
-        role: "Full Stack Developer Intern",
+        company: "Skcript",
+        timeframe: "Apr 2025 – Present",
+        role: "Software Developer",
         location: "Chennai, Tamil Nadu, India",
         achievements: [
-          <>Redesigned Bulkpe's landing page using React.js, enhancing SEO and improving load times by 20%</>,
-          <>Developed comprehensive API documentation and testing strategies, increasing reliability</>,
-          <>Contributed to designing and implementing features for a Docs AI Chatbot app</>,
-          <>Created and optimized email templates for marketing communications</>,
-          <>Redesigned and created new blog templates, improving content presentation</>,
+          <>Independently architected and built a standalone, production-grade email and notification service, decoupled from a legacy Ruby system to enable reuse across multiple products.</>,
+          <>Processed 500K+ email jobs in the last 6 months with zero failures for completed deliveries, using Redis-backed queues, PostgreSQL transactions, and retry mechanisms (3 retries).</>,
+          <>Designed and implemented pixel-based open tracking and URL shortening for click analytics, enabling real-time engagement insights through interactive dashboards.</>,
+          <>Built a scalable job processing pipeline capable of handling high request volumes with strict logging guarantees, tracking every lifecycle event of an email job.</>,
+          <>Developed FeatureOS Mobile end-to-end using React Native + Expo, delivering a complete production-ready app including changelogs, roadmap boards, voting system, and searchable knowledge base.</>,
+          <>Integrated Apple Sign-In, Sentry error monitoring, and React Query for type-safe APIs, caching, and performant data fetching across iOS and Android.</>,
         ],
       },
     ],
   },
   volunteering: {
-    display: true,
+    display: false,
     title: "Leadership & Volunteering",
-    experiences: [
-      {
-        company: "IEEE Sri Sairam Institute of Technology SB",
-        timeframe: "Apr 2024 - Present",
-        role: "Website Vice Lead",
-        achievements: [
-          <>Managed website operations and updates for the IEEE Student Branch</>,
-          <>Organized Yesist12 - 2024 event and the Zenith Event funded by IEEE SPAx</>,
-        ],
-      },
-    ],
+    experiences: [],
   },
   studies: {
     display: true,
@@ -122,21 +111,13 @@ const about = {
     institutions: [
       {
         name: "Sri Sairam Institute of Technology",
-        timeframe: "Oct 2022 - Present",
-        description: <>Bachelor of Technology in Information Technology (GPA: 8.59)</>,
-        achievements: [
-          <>Developed websites for Infyra'23 symposium and Hack in Hub'23 hackathon</>
-        ]
+        timeframe: "Oct 2022 – May 2026",
+        description: <>Bachelor of Technology in Information Technology (CGPA: 8.59/10.0)</>,
       },
       {
         name: "Sri Sankara Matric. Hr. Sec. School",
-        timeframe: "Completed in 2022",
-        description: <>Higher Secondary (HSC) - Computer Science (87%)</>,
-      },
-      {
-        name: "Sri Mahadeva Guruji Matric. Hr. Sec. School",
-        timeframe: "Completed in 2020",
-        description: <>Secondary School (SSLC) - 97%</>,
+        timeframe: "Completed 2022",
+        description: <>Higher Secondary Certificate (HSC) — Computer Science (87%)</>,
       },
     ],
   },
@@ -145,20 +126,28 @@ const about = {
     title: "Technical Skills",
     skills: [
       {
-        title: "Languages",
-        description: <>Java, C, Python, JavaScript, HTML, CSS</>,
+        title: "Programming Languages",
+        description: <>TypeScript, JavaScript, Java, Python, C, HTML5, CSS3</>,
       },
       {
-        title: "Frameworks & Tools",
-        description: <>Next.js, MongoDB, React.js, Node.js</>,
+        title: "Frontend",
+        description: <>React.js, Next.js, React Native, Expo, NativeWind, TailwindCSS</>,
       },
       {
-        title: "Databases",
-        description: <>SQL, MongoDB</>,
+        title: "Backend",
+        description: <>Node.js, Express.js, REST APIs, GraphQL, SMTP Protocols</>,
       },
       {
-        title: "Other Skills",
-        description: <>Problem Solving, Communication, Team Leadership</>,
+        title: "Databases & Caching",
+        description: <>PostgreSQL, MongoDB, Redis, Drizzle ORM, Mongoose</>,
+      },
+      {
+        title: "DevOps & Tools",
+        description: <>Docker, Docker Compose, Git, GitHub Actions, Sentry, AWS (S3, EC2)</>,
+      },
+      {
+        title: "Libraries & Frameworks",
+        description: <>React Query, Zod, React Hook Form, Highcharts, OAuth</>,
       },
     ],
   },
