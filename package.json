@@ -4,6 +4,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:cloudflare": "next build && npx @opennextjs/cloudflare build",
+    "deploy": "npm run build:cloudflare && npx wrangler deploy",
     "start": "next start",
     "lint": "next lint"
   },
