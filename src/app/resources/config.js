@@ -1,4 +1,4 @@
-const baseURL = "rashimrb.com";  // Updated from demo URL
+const baseURL = "rashimrb.in";
 
 const routes = {
   "/": true,
