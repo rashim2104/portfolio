@@ -9,7 +9,7 @@ const person = {
   role: "Software Developer",
   avatar: "/images/avatar.jpg",
   location: "Chennai, Tamil Nadu",
-  email: "rashimrb22@gmail.com",
+  email: "hello@rashim.in",
   phone: "+91-8778484418",
 };
 
@@ -38,7 +38,7 @@ const social = [
   {
     name: "Email",
     icon: "email",
-    link: "mailto:rashimrb22@gmail.com",
+    link: "mailto:hello@rashim.in",
   },
 ];
 
