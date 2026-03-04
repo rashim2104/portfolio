@@ -47,7 +47,7 @@ const home = {
   title: `${person.name}'s Portfolio`,
   description: `Software Developer & IT Engineering Student from ${person.location}`,
   headline: <>Software Developer & IT Engineering Student</>,
-  about: <>Hey, I'm Rashim. Nerdy, a little ADHD, and genuinely kind (or so I'm told).
+  about: <>Hey, I'm Rashim. Curious, a little all over the place, and someone who genuinely cares about the people around him.
     <br /><br />
     I think in visuals, figure things out as I go, and get weirdly obsessed with problems that don't have easy answers. I'm a night owl, a team player, and someone who believes the best solutions are usually the simplest ones.
     <br /><br />
