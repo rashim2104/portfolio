@@ -1,6 +1,6 @@
 /* TEAM */
 Developer: Rashim R B
-Site: https://www.rashim.codes
+Site: https://rashimrb.in
 Location: Chennai, Tamil Nadu, India
 
 /* SITE */

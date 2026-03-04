@@ -79,6 +79,18 @@ export default function Blog() {
                 url: `https://${baseURL}${person.avatar}`,
               },
             },
+            blogPost: allPosts.map((post) => ({
+              "@type": "BlogPosting",
+              headline: post.metadata.title,
+              description: post.metadata.summary,
+              url: `https://${baseURL}/blog/${post.slug}`,
+              datePublished: post.metadata.publishedAt,
+              image: post.metadata.image ? `https://${baseURL}${post.metadata.image}` : undefined,
+              author: {
+                "@type": "Person",
+                name: person.name,
+              },
+            })),
           }),
         }}
       />

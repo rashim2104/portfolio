@@ -34,7 +34,6 @@ export const metadata: Metadata = {
     "PostgreSQL",
     "Docker",
     "AWS",
-    "Portfolio",
   ].join(", "),
   authors: [{ name: "Rashim R B", url: "https://rashimrb.in" }],
   creator: "Rashim R B",
@@ -50,7 +49,7 @@ export const metadata: Metadata = {
     title: `${person.name} - Software Developer`,
     description: `Software Developer at Skcript building production-grade systems. TypeScript, React Native, Node.js, Redis, PostgreSQL, Docker, AWS.`,
     url: `https://${baseURL}`,
-    siteName: `${person.name}'s Portfolio`,
+    siteName: person.name,
     locale: "en_US",
     type: "website",
     images: [
@@ -129,6 +128,27 @@ const jsonLd = {
   "description": "Software Developer at Skcript building production-grade systems with TypeScript, React Native, and cloud-native architectures."
 };
 
+// Website schema for overall site structure
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Rashim R B",
+  "url": "https://rashimrb.in",
+  "description": "Software Developer specializing in TypeScript, React Native, and Node.js. Building production-grade systems with modern technologies.",
+  "author": {
+    "@type": "Person",
+    "name": "Rashim R B"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://rashimrb.in/blog?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+};
+
 const primary = Inter({
   variable: "--font-primary",
   subsets: ["latin"],
@@ -178,6 +198,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
         <style dangerouslySetInnerHTML={{
           __html: `

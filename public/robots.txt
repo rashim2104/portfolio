@@ -2,19 +2,17 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://www.rashim.codes/sitemap.xml
+Sitemap: https://rashimrb.in/sitemap.xml
 
 # Allow all important routes
 Allow: /about
-Allow: /projects
+Allow: /work
 Allow: /blog
-Allow: /contact
-Allow: /404
+Allow: /resume
 
 # Disallow admin and private routes
 Disallow: /api/
 Disallow: /admin/
-Disallow: /private/
 
 # Crawl-delay for better server performance
-Crawl-delay: 10 
+Crawl-delay: 1 

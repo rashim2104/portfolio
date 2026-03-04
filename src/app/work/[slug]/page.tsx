@@ -111,6 +111,7 @@ export default async function Project({ params }: WorkParams) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CreativeWork",
+            name: post.metadata.title,
             headline: post.metadata.title,
             datePublished: post.metadata.publishedAt,
             dateModified: post.metadata.publishedAt,
@@ -119,7 +120,15 @@ export default async function Project({ params }: WorkParams) {
               ? `https://${baseURL}${post.metadata.image}`
               : `https://${baseURL}/og?title=${post.metadata.title}`,
             url: `https://${baseURL}/work/${post.slug}`,
-            author: {
+            author: post.metadata.team?.map((member) => ({
+              "@type": "Person",
+              name: member.name,
+            })) || [{
+              "@type": "Person",
+              name: person.name,
+              url: `https://${baseURL}`,
+            }],
+            creator: {
               "@type": "Person",
               name: person.name,
               url: `https://${baseURL}`,
@@ -138,7 +147,7 @@ export default async function Project({ params }: WorkParams) {
           priority
           aspectRatio="16 / 9"
           radius="m"
-          alt="image"
+          alt={`${post.metadata.title} project screenshot`}
           src={post.metadata.images[0]}
         />
       )}

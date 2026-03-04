@@ -117,6 +117,16 @@ export default async function BlogPost({ params }: Params) {
               "@type": "Person",
               name: person.name,
               url: `https://${baseURL}`,
+              email: person.email,
+            },
+            publisher: {
+              "@type": "Person",
+              name: person.name,
+              url: `https://${baseURL}`,
+            },
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": `https://${baseURL}/blog/${post.slug}`,
             },
           }),
         }}
@@ -142,7 +152,7 @@ export default async function BlogPost({ params }: Params) {
           priority
           aspectRatio="16 / 9"
           radius="m"
-          alt="Blog post cover image"
+          alt={post.metadata.title}
           src={post.metadata.image}
         />
       ) : null}

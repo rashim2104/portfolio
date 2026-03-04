@@ -4,15 +4,15 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "404 - Page Not Found | Rashim R B",
-  description: "The page you're looking for doesn't exist. Return to Rashim R B's portfolio to explore projects, blog posts, and more.",
+  description: "The page you're looking for doesn't exist. Return to explore projects, blog posts, and more.",
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
     title: "404 - Page Not Found | Rashim R B",
-    description: "The page you're looking for doesn't exist. Return to Rashim R B's portfolio to explore projects, blog posts, and more.",
-    url: "https://www.rashim.codes/404",
+    description: "The page you're looking for doesn't exist. Return to explore projects, blog posts, and more.",
+    url: "https://rashimrb.in/404",
     type: "website",
   },
 };
