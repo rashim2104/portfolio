@@ -4,9 +4,9 @@ import shortUrls from '@/app/data/short-urls.json';
 
 export async function GET(
   request: Request,
-  { params }: { params: { shortcode: string } }
+  { params }: { params: Promise<{ shortcode: string }> }
 ) {
-  const { shortcode } = params;
+  const { shortcode } = await params;
   
   // Type the shortUrls object properly
   const urls: Record<string, string> = shortUrls;

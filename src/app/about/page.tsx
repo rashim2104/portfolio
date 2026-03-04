@@ -14,7 +14,7 @@ import { baseURL } from "@/app/resources";
 import TableOfContents from "@/components/about/TableOfContents";
 import styles from "@/components/about/about.module.scss";
 import { person, about, social } from "@/app/resources/content";
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 
 export async function generateMetadata() {
   const title = about.title;
@@ -247,7 +247,7 @@ export default function About() {
                       {experience.role}
                     </Text>
                     <Column as="ul" gap="16">
-                      {experience.achievements.map((achievement: JSX.Element, index: number) => (
+                      {experience.achievements.map((achievement: React.ReactElement, index: number) => (
                         <Text
                           as="li"
                           variant="body-default-m"
@@ -315,7 +315,7 @@ export default function About() {
                       {experience.role}
                     </Text>
                     <Column as="ul" gap="16">
-                      {experience.achievements.map((achievement: JSX.Element, index: number) => (
+                      {experience.achievements.map((achievement: React.ReactElement, index: number) => (
                         <Text
                           as="li"
                           variant="body-default-m"
