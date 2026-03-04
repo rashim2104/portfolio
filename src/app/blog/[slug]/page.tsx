@@ -3,6 +3,7 @@ import { CustomMDX } from "@/components/mdx";
 import { getPosts } from "@/app/utils/utils";
 import { Button, Column, Flex, Heading, SmartImage, Carousel } from "@/once-ui/components";
 import { baseURL } from "@/app/resources";
+import { person } from "@/app/resources/content";
 import { formatDate } from "@/app/utils/formatDate";
 import ScrollToHash from "@/components/ScrollToHash";
 
@@ -39,17 +40,14 @@ export async function generateMetadata({ params }: Params) {
   return {
     title,
     description,
+    alternates: { canonical: `https://${baseURL}/blog/${post.slug}` },
     openGraph: {
       title,
       description,
       type: "article",
       publishedTime,
       url: `https://${baseURL}/blog/${post.slug}`,
-      images: [
-        {
-          url: ogImage,
-        },
-      ],
+      images: [{ url: ogImage, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
@@ -76,6 +74,36 @@ export default async function BlogPost({ params }: Params) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": `https://${baseURL}`
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blog",
+                "item": `https://${baseURL}/blog`
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": post.metadata.title,
+                "item": `https://${baseURL}/blog/${post.slug}`
+              }
+            ]
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
             "@type": "BlogPosting",
             headline: post.metadata.title,
             datePublished: post.metadata.publishedAt,
@@ -85,6 +113,11 @@ export default async function BlogPost({ params }: Params) {
               ? `https://${baseURL}${post.metadata.image}`
               : `https://${baseURL}/og?title=${post.metadata.title}`,
             url: `https://${baseURL}/blog/${post.slug}`,
+            author: {
+              "@type": "Person",
+              name: person.name,
+              url: `https://${baseURL}`,
+            },
           }),
         }}
       />

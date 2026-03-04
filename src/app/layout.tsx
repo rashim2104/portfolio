@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(`https://${baseURL}`),
   openGraph: {
     title: `${person.name} - Software Developer`,
-    description: `Software Developer at Skcript building production-grade systems. TypeScript, React Native, Node.js, cloud-native.`,
+    description: `Software Developer at Skcript building production-grade systems. TypeScript, React Native, Node.js, Redis, PostgreSQL, Docker, AWS.`,
     url: `https://${baseURL}`,
     siteName: `${person.name}'s Portfolio`,
     locale: "en_US",
@@ -92,31 +92,41 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": person.name,
-  "url": `https://${baseURL}`,
-  "image": `https://${baseURL}${person.avatar}`,
-  "email": person.email,
-  "jobTitle": person.role,
+  "name": "Rashim R B",
+  "url": "https://rashimrb.in",
+  "email": "hello@rashim.in",
+  "image": "https://rashimrb.in/images/avatar.jpg",
+  "sameAs": [
+    "https://github.com/rashim2104",
+    "https://linkedin.com/in/rashimraseethali",
+    "https://x.com/rashimbuilds"
+  ],
+  "jobTitle": "Software Developer",
   "worksFor": {
     "@type": "Organization",
-    "name": "Skcript",
-    "url": "https://skcript.com"
+    "name": "Skcript"
   },
   "alumniOf": {
     "@type": "CollegeOrUniversity",
     "name": "Sri Sairam Institute of Technology",
     "department": "Information Technology"
   },
-  "sameAs": [
-    "https://github.com/rashim2104",
-    "https://linkedin.com/in/rashimraseethali",
-    "https://x.com/rashimbuilds"
-  ],
   "knowsAbout": [
-    "TypeScript", "React Native", "Node.js", "Next.js",
-    "PostgreSQL", "Redis", "Docker", "AWS", "GraphQL"
+    "TypeScript",
+    "JavaScript",
+    "React Native",
+    "Expo",
+    "React.js",
+    "Next.js",
+    "Node.js",
+    "Redis",
+    "PostgreSQL",
+    "Docker",
+    "AWS",
+    "REST APIs",
+    "Web Development"
   ],
-  "description": `Software Developer from Chennai specializing in TypeScript, React Native, and cloud-native architectures.`
+  "description": "Software Developer at Skcript building production-grade systems with TypeScript, React Native, and cloud-native architectures."
 };
 
 const primary = Inter({

@@ -24,17 +24,13 @@ export async function generateMetadata() {
   return {
     title,
     description,
+    alternates: { canonical: `https://${baseURL}/about` },
     openGraph: {
       title,
       description,
       type: "website",
       url: `https://${baseURL}/about`,
-      images: [
-        {
-          url: ogImage,
-          alt: title,
-        },
-      ],
+      images: [{ url: ogImage, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
@@ -86,7 +82,7 @@ export default function About() {
             jobTitle: person.role,
             description: about.intro.description,
             url: `https://${baseURL}/about`,
-            image: `${baseURL}/images/${person.avatar}`,
+            image: `https://${baseURL}${person.avatar}`,
             sameAs: social
               .filter((item) => item.link && !item.link.startsWith("mailto:")) // Filter out empty links and email links
               .map((item) => item.link),

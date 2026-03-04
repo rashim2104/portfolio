@@ -41,19 +41,14 @@ export async function generateMetadata({ params }: WorkParams) {
   return {
     title,
     description,
-    images,
-    team,
+    alternates: { canonical: `https://${baseURL}/work/${post.slug}` },
     openGraph: {
       title,
       description,
       type: "article",
       publishedTime,
       url: `https://${baseURL}/work/${post.slug}`,
-      images: [
-        {
-          url: ogImage,
-        },
-      ],
+      images: [{ url: ogImage, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
@@ -85,7 +80,37 @@ export default async function Project({ params }: WorkParams) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "BlogPosting",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": `https://${baseURL}`
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Projects",
+                "item": `https://${baseURL}/work`
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": post.metadata.title,
+                "item": `https://${baseURL}/work/${post.slug}`
+              }
+            ]
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
             headline: post.metadata.title,
             datePublished: post.metadata.publishedAt,
             dateModified: post.metadata.publishedAt,
@@ -97,6 +122,7 @@ export default async function Project({ params }: WorkParams) {
             author: {
               "@type": "Person",
               name: person.name,
+              url: `https://${baseURL}`,
             },
           }),
         }}

@@ -47,14 +47,40 @@ const home = {
   title: `${person.name}'s Portfolio`,
   description: `Software Developer & IT Engineering Student from ${person.location}`,
   headline: <>Software Developer & IT Engineering Student</>,
-  about: <>Hey, I'm Rashim. Curious, a little all over the place, and someone who genuinely cares about the people around him.
+  about: <>Hey, I'm Rashim. Curious, a little all over the place, and someone who can't stop building things.
     <br /><br />
     I think in visuals, figure things out as I go, and get weirdly obsessed with problems that don't have easy answers. I'm a night owl, a team player, and someone who believes the best solutions are usually the simplest ones.
     <br /><br />
     Outside of work: badminton, A.R. Rahman on loop, the occasional Lego set, and slowly getting into reading. Math has always been my thing, even if I never made it to the olympiad.
     <br /><br />
-    Integrity and honesty matter to me more than almost anything. If we vibe on that, let's talk.
-  </>
+    If any of that resonates, hey, let's talk.
+  </>,
+  interests: [
+    {
+      title: "Building",
+      description: "Software, systems, and side projects. If it can be made, I want to make it.",
+    },
+    {
+      title: "Music",
+      description: "A.R. Rahman on loop, always. Anything with soul.",
+    },
+    {
+      title: "Badminton",
+      description: "On the court when not at a keyboard.",
+    },
+    {
+      title: "Legos",
+      description: "Building physical things, one brick at a time.",
+    },
+    {
+      title: "Math",
+      description: "Always had a thing for elegant solutions.",
+    },
+    {
+      title: "Games",
+      description: "Spending time in virtual worlds.",
+    },
+  ],
 };
 
 const about = {
@@ -103,7 +129,14 @@ const about = {
   volunteering: {
     display: false,
     title: "Leadership & Volunteering",
-    experiences: [],
+    experiences: [
+      {
+        company: "",
+        timeframe: "",
+        role: "",
+        achievements: [],
+      },
+    ],
   },
   studies: {
     display: true,
