@@ -5,7 +5,7 @@ import { baseURL } from "@/app/resources";
 export async function generateMetadata() {
   const title = "Resume - Rashim R B";
   const description = "View Rashim R B's resume - Full Stack Developer and IT Engineering Student";
-  const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
+  const ogImage = `https://${baseURL}/og?type=resume&title=${encodeURIComponent(title)}`;
 
   return {
     title,

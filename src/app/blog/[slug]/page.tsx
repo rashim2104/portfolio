@@ -35,7 +35,15 @@ export async function generateMetadata({ params }: Params) {
     image,
   } = post.metadata;
 
-  let ogImage = image ? `https://${baseURL}${image}` : `https://${baseURL}/og?title=${title}`;
+  const formattedDate = new Date(publishedTime).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+
+  let ogImage = image 
+    ? `https://${baseURL}${image}` 
+    : `https://${baseURL}/og?type=blog&title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}&date=${encodeURIComponent(formattedDate)}`;
 
   return {
     title,

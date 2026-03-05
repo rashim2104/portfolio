@@ -36,7 +36,9 @@ export async function generateMetadata({ params }: WorkParams) {
     image,
     team,
   } = post.metadata;
-  let ogImage = image ? `https://${baseURL}${image}` : `https://${baseURL}/og?title=${title}`;
+  let ogImage = image 
+    ? `https://${baseURL}${image}` 
+    : `https://${baseURL}/og?type=work&title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 
   return {
     title,
