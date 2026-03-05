@@ -5,8 +5,8 @@ import { baseURL } from "@/app/resources";
 import { person, work } from "@/app/resources/content";
 
 export async function generateMetadata() {
-  const title = work.title;
-  const description = work.description;
+  const title = "Featured Projects - Rashim R B";
+  const description = "Full stack projects including production email services, mobile apps with React Native, real-time tracking systems, and scalable backend architectures.";
   const ogImage = `https://${baseURL}/og?type=work&title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 
   return {

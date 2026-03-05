@@ -3,8 +3,8 @@ import { Column, Flex, Text, Button } from "@/once-ui/components";
 import { baseURL } from "@/app/resources";
 
 export async function generateMetadata() {
-  const title = "Resume - Rashim R B";
-  const description = "View Rashim R B's resume - Full Stack Developer and IT Engineering Student";
+  const title = "Resume - Rashim R B | Full Stack Developer";
+  const description = "Rashim R B's professional resume. Full Stack Developer at Skcript with expertise in TypeScript, React Native, Node.js, PostgreSQL, Docker, and AWS. Based in Chennai, India.";
   const ogImage = `https://${baseURL}/og?type=resume&title=${encodeURIComponent(title)}`;
 
   return {

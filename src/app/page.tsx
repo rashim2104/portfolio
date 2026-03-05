@@ -6,8 +6,8 @@ import { getPosts } from "@/app/utils/utils";
 import { formatDate } from "@/app/utils/formatDate";
 
 export async function generateMetadata() {
-  const title = home.title;
-  const description = home.description;
+  const title = "Rashim R B - Full Stack Developer";
+  const description = "Full Stack Developer at Skcript specializing in TypeScript, React Native, Node.js. Building production-grade email services, mobile apps, and scalable systems. Based in Chennai.";
   const ogImage = `https://${baseURL}/og?type=default&title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 
   return {

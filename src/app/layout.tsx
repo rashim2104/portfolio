@@ -13,9 +13,9 @@ import { Analytics } from "@vercel/analytics/next";
 export const metadata: Metadata = {
   title: {
     template: "%s | Rashim R B",
-    default: "Rashim R B - Software Developer",
+    default: "Rashim R B - Full Stack Developer | TypeScript, React Native, Node.js",
   },
-  description: `Software Developer at Skcript specializing in TypeScript, React Native, Node.js, and cloud-native architectures. Building production-grade systems.`,
+  description: `Full Stack Developer at Skcript specializing in TypeScript, React Native, Node.js, and cloud-native architectures. Building production-grade email services, mobile apps, and scalable backend systems.`,
   keywords: [
     "Rashim R B",
     "Rashim",
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
   manifest: '/favicon_io/site.webmanifest',
   metadataBase: new URL(`https://${baseURL}`),
   openGraph: {
-    title: `${person.name} - Software Developer`,
-    description: `Software Developer at Skcript building production-grade systems. TypeScript, React Native, Node.js, Redis, PostgreSQL, Docker, AWS.`,
+    title: `${person.name} - Full Stack Developer`,
+    description: `Full Stack Developer at Skcript. Building production-grade systems with TypeScript, React Native, Node.js, and cloud-native architectures. Email services, mobile apps, backend systems.`,
     url: `https://${baseURL}`,
     siteName: person.name,
     locale: "en_US",
@@ -63,8 +63,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${person.name} - Software Developer`,
-    description: `Software Developer at Skcript. Building production-grade systems with TypeScript, React Native, Node.js, and cloud-native architectures.`,
+    title: `${person.name} - Full Stack Developer`,
+    description: `Full Stack Developer at Skcript. Building production-grade systems with TypeScript, React Native, Node.js, and cloud-native architectures.`,
     images: [`https://${baseURL}/images/avatar.jpg`],
     creator: "@rashimbuilds",
   },

@@ -6,8 +6,8 @@ import { blog, person, newsletter } from "@/app/resources/content";
 import { getPosts } from "@/app/utils/utils";
 
 export async function generateMetadata() {
-  const title = blog.title;
-  const description = blog.description;
+  const title = "Technical Blog - Rashim R B";
+  const description = "In-depth technical articles on TypeScript, React Native, Node.js, system design, and software engineering best practices.";
   const ogImage = `https://${baseURL}/og?type=blog&title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 
   return {

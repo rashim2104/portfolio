@@ -17,8 +17,8 @@ import { person, about, social } from "@/app/resources/content";
 import React, { Fragment } from "react";
 
 export async function generateMetadata() {
-  const title = about.title;
-  const description = about.description;
+  const title = "About Rashim R B - Full Stack Developer";
+  const description = "Learn about Rashim R B, a full stack developer at Skcript building scalable systems with TypeScript, React Native, Node.js, PostgreSQL, and cloud technologies. Based in Chennai.";
   const ogImage = `https://${baseURL}/og?type=about&title=${encodeURIComponent(title)}`;
 
   return {
