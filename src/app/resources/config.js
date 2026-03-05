@@ -1,4 +1,4 @@
-const baseURL = "rashimrb.in";
+const baseURL = "rashim.in";
 
 const routes = {
   "/": true,

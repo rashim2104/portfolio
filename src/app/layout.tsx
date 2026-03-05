@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     "Docker",
     "AWS",
   ].join(", "),
-  authors: [{ name: "Rashim R B", url: "https://rashimrb.in" }],
+  authors: [{ name: "Rashim R B", url: "https://rashim.in" }],
   creator: "Rashim R B",
   publisher: "Rashim R B",
   formatDetection: {
@@ -92,9 +92,9 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Rashim R B",
-  "url": "https://rashimrb.in",
+  "url": "https://rashim.in",
   "email": "hello@rashim.in",
-  "image": "https://rashimrb.in/images/avatar.jpg",
+  "image": "https://rashim.in/images/avatar.jpg",
   "sameAs": [
     "https://github.com/rashim2104",
     "https://linkedin.com/in/rashimraseethali",
@@ -133,7 +133,7 @@ const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Rashim R B",
-  "url": "https://rashimrb.in",
+  "url": "https://rashim.in",
   "description": "Software Developer specializing in TypeScript, React Native, and Node.js. Building production-grade systems with modern technologies.",
   "author": {
     "@type": "Person",
@@ -143,7 +143,7 @@ const websiteSchema = {
     "@type": "SearchAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": "https://rashimrb.in/blog?q={search_term_string}"
+      "urlTemplate": "https://rashim.in/blog?q={search_term_string}"
     },
     "query-input": "required name=search_term_string"
   }

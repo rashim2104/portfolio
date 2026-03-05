@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "404 - Page Not Found | Rashim R B",
     description: "The page you're looking for doesn't exist. Return to explore projects, blog posts, and more.",
-    url: "https://rashimrb.in/404",
+    url: "https://rashim.in/404",
     type: "website",
   },
 };
