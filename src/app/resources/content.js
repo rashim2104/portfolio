@@ -45,8 +45,16 @@ const social = [
 const home = {
   label: "Home",
   title: person.name,
-  description: `Software Developer & IT Engineering Student from ${person.location}`,
-  headline: <>Software Developer & IT Engineering Student</>,
+  description: `Software Developer at Skcript building backend systems and mobile apps. Based in ${person.location}.`,
+  headline: <>Software Developer</>,
+  summary: (
+    <>
+      I build backend systems and mobile apps that hold up in production. Currently at{" "}
+      <strong>Skcript</strong> in Chennai, where I built a standalone email and notification
+      service that has processed <strong>500K+ jobs with zero failed deliveries</strong>, and
+      shipped <strong>FeatureOS Mobile</strong> end-to-end in React Native.
+    </>
+  ),
   about: <>Hey, I'm Rashim. Curious, a little all over the place, and someone who can't stop building things.
     <br /><br />
     I think in visuals, figure things out as I go, and get weirdly obsessed with problems that don't have easy answers. I'm a night owl, a team player, and someone who believes the best solutions are usually the simplest ones.
