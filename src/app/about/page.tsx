@@ -227,13 +227,7 @@ export default function About() {
                   <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth>
                     <Flex fillWidth horizontal="space-between" vertical="end" marginBottom="4">
                       <Text id={experience.company} variant="heading-strong-l">
-                        {experience.company === "Bulkpe" ? (
-                          <a href="https://bulkpe.in" target="_blank" rel="noopener noreferrer">
-                            {experience.company}
-                          </a>
-                        ) : (
-                          experience.company
-                        )}
+                        {experience.company}
                       </Text>
                       <Text variant="heading-default-xs" onBackground="neutral-weak">
                         {experience.timeframe}
@@ -295,13 +289,7 @@ export default function About() {
                   <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth>
                     <Flex fillWidth horizontal="space-between" vertical="end" marginBottom="4">
                       <Text id={experience.company} variant="heading-strong-l">
-                        {experience.company === "Bulkpe" ? (
-                          <a href="https://bulkpe.in" target="_blank" rel="noopener noreferrer">
-                            {experience.company}
-                          </a>
-                        ) : (
-                          experience.company
-                        )}
+                        {experience.company}
                       </Text>
                       <Text variant="heading-default-xs" onBackground="neutral-weak">
                         {experience.timeframe}
