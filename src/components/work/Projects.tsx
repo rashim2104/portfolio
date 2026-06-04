@@ -1,7 +1,7 @@
 "use client";
 
-import { Column } from "@/once-ui/components";
-import { ProjectCard } from "@/components";
+import { Fragment } from "react";
+import { Column, Line, Row, SmartLink, Tag, Text } from "@/once-ui/components";
 
 interface Project {
   slug: string;
@@ -9,8 +9,7 @@ interface Project {
     title: string;
     publishedAt: string;
     summary: string;
-    images: string[];
-    team?: { avatar: string }[];
+    tag?: string | string[];
     link?: string;
   };
   content: string;
@@ -25,7 +24,7 @@ export function Projects({ range, projects }: ProjectsProps) {
   // Remove duplicates based on title
   const uniqueProjects = projects.reduce((acc, current) => {
     const existingProject = acc.find(
-      (project) => project.metadata.title === current.metadata.title
+      (project) => project.metadata.title === current.metadata.title,
     );
     if (!existingProject) {
       acc.push(current);
@@ -42,20 +41,48 @@ export function Projects({ range, projects }: ProjectsProps) {
     : sortedProjects;
 
   return (
-    <Column fillWidth gap="xl" marginBottom="40" paddingX="l">
-      {displayedProjects.map((post, index) => (
-        <ProjectCard
-          priority={index < 2}
-          key={post.slug}
-          href={`work/${post.slug}`}
-          images={post.metadata.images}
-          title={post.metadata.title}
-          description={post.metadata.summary}
-          content={post.content}
-          avatars={post.metadata.team?.map((member) => ({ src: member.avatar })) || []}
-          link={post.metadata.link || ""}
-        />
-      ))}
+    <Column fillWidth>
+      {displayedProjects.map((post, index) => {
+        const tags = Array.isArray(post.metadata.tag)
+          ? post.metadata.tag
+          : post.metadata.tag
+            ? [post.metadata.tag]
+            : [];
+
+        return (
+          <Fragment key={post.slug}>
+            {index > 0 && <Line background="neutral-alpha-weak" />}
+            <SmartLink fillWidth unstyled href={`/work/${post.slug}`}>
+              <Row fillWidth horizontal="space-between" vertical="center" gap="24" paddingY="16">
+                <Column gap="8">
+                  <Text variant="body-strong-l" onBackground="neutral-strong">
+                    {post.metadata.title}
+                  </Text>
+                  <Text variant="body-default-m" onBackground="neutral-weak">
+                    {post.metadata.summary}
+                  </Text>
+                  {tags.length > 0 && (
+                    <Row gap="8" wrap paddingTop="4">
+                      {tags.map((tag) => (
+                        <Tag key={tag} size="s" variant="neutral">
+                          {tag}
+                        </Tag>
+                      ))}
+                    </Row>
+                  )}
+                </Column>
+                <Text
+                  variant="body-default-s"
+                  onBackground="neutral-weak"
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  {new Date(post.metadata.publishedAt).getFullYear()}
+                </Text>
+              </Row>
+            </SmartLink>
+          </Fragment>
+        );
+      })}
     </Column>
   );
 }
