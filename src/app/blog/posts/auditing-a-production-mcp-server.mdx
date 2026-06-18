@@ -1,0 +1,183 @@
+---
+title: "Auditing a Production MCP Server with Multi-Agent Workflows"
+publishedAt: "2026-06-18"
+summary: "I pointed ~60 agents at my own MCP server and found a class of bug that only shows up when an LLM is the consumer. The worst one silently breaks pagination for every model. Plus lessons on is_error, tool annotations, and output_schema, validated live across all 31 tools."
+image: ""
+tag: "MCP"
+---
+
+I maintain an MCP server for FeatureOS, a `fastmcp-slim` (Python) server that exposes a product-feedback platform's API as 31 tools an assistant can call: list feature requests, post comments, manage changelogs, and so on. It worked. Tools returned the right data. Tests passed.
+
+So instead of reviewing it myself, I pointed a swarm of agents at it (roughly 60, fanned out by a multi-agent workflow) and asked them to audit it the way a *model*, not a human, actually experiences it. That reframing is the whole story: the bugs that surfaced weren't crashes or wrong data. They were places where the server returned the correct answer and the model still couldn't use it.
+
+## The setup: a 60-agent self-audit
+
+The workflow fanned agents out across five dimensions, each blind to the others:
+
+- **Dependency bloat.** Declared vs. actually-imported packages.
+- **Logging consistency.** Does anything share one format on one stream?
+- **Tool affordances.** Can a model *select and call* each tool correctly from its schema alone?
+- **Pagination reachability.** Can the model get past page one?
+- **Widget design match.** Do the UI widgets use the real product tokens?
+
+That produced 122 raw findings. The important half of the design was the next phase: an *adversarial verification* pass where fresh agents tried to refute each finding against the source. A good chunk got refuted and dropped, including findings that were already fixed on a branch the audit had partly run against. What survived became six pull requests.
+
+## The headline bug: models read `content`, not `structured_content`
+
+Here's the one worth the price of admission.
+
+An MCP tool result carries two things: a `content` block (the text the model reads) and `structured_content` (a machine-readable block for UIs and programmatic consumers). By default, the model only sees `content`.
+
+Every list tool I had was doing this:
+
+<CodeBlock
+  codeInstances={[{
+    code: `# The data is all here — but the model never sees the cursor
+return ToolResult(
+    content=f"Found {len(items)} posts.",        # all the model reads
+    structured_content={"posts": items, "page": page, "has_more": True},  # invisible
+)`,
+    language: "python",
+    label: "before"
+  }]}
+/>
+
+A board with 800 posts returns 30, the model reads *"Found 30 posts,"* and confidently tells the user that's everything. The next-page signal existed, just in a field the model never looks at. Pagination was, in practice, unreachable.
+
+The fix is a shared helper that writes the next-page instruction into the **content text** itself:
+
+<CodeBlock
+  codeInstances={[{
+    code: `def build_list_result(items, label, key, *, page=None, per_page=None, meta=None):
+    count = len(items)
+    has_more = per_page is not None and count == per_page  # full page => likely more
+
+    head = f"Found {count} {label}{'s' if count != 1 else ''}."
+    if has_more and page is not None:
+        head += (
+            f"\\n\\n[Page {page}. More results available — call this tool again "
+            f"with page={page + 1} and the same other arguments to get the next page.]"
+        )
+
+    return ToolResult(
+        content=head + "\\n\\n" + json.dumps(items, default=str),   # the model reads THIS
+        structured_content={key: items, "page": page, "has_more": has_more},
+        meta=meta,
+    )`,
+    language: "python",
+    label: "tools/helpers.py"
+  }]}
+/>
+
+For endpoints that paginate but don't expose a total, the heuristic is *"a full page probably has more."* For endpoints that return everything in one shot, no hint is emitted; a false *"there's more"* is worse than none. The rule generalizes: anything the model must act on belongs in `content`, not `structured_content`.
+
+## `is_error` is not optional
+
+Same category, different tool. Every error branch looked like this:
+
+<CodeBlock
+  codeInstances={[{
+    code: `# Before — a 403/404 body comes back as if it were a normal result
+return ToolResult(content=result)
+
+# After — the failure is actually flagged
+return ToolResult(
+    content=f"Error: {result.get('message')}",
+    structured_content=result,
+    is_error=True,
+)`,
+    language: "python",
+    label: "error signaling"
+  }]}
+/>
+
+Without `is_error=True`, the SDK ships the failure as an ordinary result. A model reads `{"error": true, ...}` as data: it'll happily report "the upvoters are: error", or read an auth failure as "zero results" and move on. One flag is the difference between the model retrying and the model hallucinating over a 404.
+
+While we were in the descriptions, the audit caught one that was actively wrong. `list_team_members` told the model to assign teammates by their member ID, but the assign endpoint keys on email. The model would follow that to the letter and fail every time.
+
+## Teaching the model the domain
+
+Tool schemas describe individual tools. They don't describe how tools relate. So the server now ships `instructions`: domain framing, an ID-provenance map, and the pagination rule:
+
+<CodeBlock
+  codeInstances={[{
+    code: `IDs are opaque and must come from a prior tool call — never invent them:
+  bucket_id     <- list_buckets
+  tag_ids       <- list_tags
+  changelog_id  <- list_changelogs / search_changelogs
+  to assign a teammate, pass their email (list_team_members -> user.email), not an id.`,
+    language: "text",
+    label: "instructions"
+  }]}
+/>
+
+Plus per-tool annotations, made into three shared constants so the intent is declared once:
+
+<CodeBlock
+  codeInstances={[{
+    code: `READ        = {"readOnlyHint": True,  "destructiveHint": False, "openWorldHint": False}
+WRITE       = {"readOnlyHint": False, "destructiveHint": False, "openWorldHint": False}
+DESTRUCTIVE = {"readOnlyHint": False, "destructiveHint": True,  "openWorldHint": False}
+# openWorldHint=False: these tools touch ONE workspace, not the open web.`,
+    language: "python",
+    label: "annotations"
+  }]}
+/>
+
+`openWorldHint=False` is the easy one to get wrong; I did, at first. The question isn't whether the tool hits the network, it's whether it reaches into an unbounded, open world like web search. A workspace API is a closed domain, and hosts lean on that hint to decide what's safe to auto-approve.
+
+## When the robots introduce the bug
+
+Here's the honest part. The fixes themselves were applied by fanning out ~10 file-agents per PR. Fast, but fan-out is exactly where subtle bugs sneak in. Two got caught only because the workflow kept an adversarial verify phase (and a human) in the loop.
+
+The nastier one: an agent gave `remove_tag_from_changelog` an `output_schema` keyed on `tag_id` as an object, but the tool returns `tag_id` as an integer.
+
+<CodeBlock
+  codeInstances={[{
+    code: `# What the agent generated — looks reasonable, breaks every call:
+output_schema = item_output_schema("tag_id")   # declares {"tag_id": {"type": "object"}}
+
+# But the tool actually returns:
+#   {"success": true, "tag_id": 61915, "changelog_id": 14420}   <- tag_id is an int
+# The MCP SDK validates structured_content against output_schema at runtime,
+# so this throws "Output validation error" on every SUCCESS.
+
+# Fix: a status-envelope schema with no colliding typed key
+def status_output_schema():
+    return {
+        "type": "object",
+        "properties": {"success": {"type": "boolean"}},
+        "additionalProperties": True,   # permissive: documents shape, never rejects
+    }`,
+    language: "python",
+    label: "output_schema collision"
+  }]}
+/>
+
+The lesson on `output_schema`: keep it **permissive**. Its job is to *document* the result shape for the model, not to police your own backend. A too-strict schema turns a valid response into a runtime error the model has to puzzle over. I proved the fix by round-tripping all 31 tools through an in-memory client and asserting zero output-validation errors.
+
+## Shipping it: six atomic PRs
+
+Everything landed as six commits on one branch, build-correctness first, verifying between each:
+
+1. **Dependency pin.** `requirements.txt` pinned the full `fastmcp` 2.x distribution while the code targets `fastmcp-slim` 3.x APIs, so a fresh build installed a different framework than the one I developed against.
+2. **Logging.** The app logger, `fastmcp`'s Rich handler, and uvicorn were all writing to stderr in three incompatible formats. I unified them onto one stdout formatter (plus `captureWarnings`).
+3. **Pagination reachability.** The `build_list_result` story above.
+4. **Error signaling and descriptions.** `is_error`, plus the ID-vs-email fix.
+5. **Instructions, annotations, output schemas, and field constraints.**
+6. **Widget accent.** Aligned to the exact `oklch` primary token from the webapp, not a hand-picked approximation.
+
+## Validating live, across all 31 tools
+
+A green test suite wasn't going to convince me after all that, so I exercised every tool against the live Avro test workspace: reads *and* a full write lifecycle. Create a post, update it, comment, tag, assign a teammate (by email), close it; create a changelog, tag it, remove the tag. The pagination hints showed up in the content text. Errors came back flagged. Zero output-validation errors. (Test org, scrubbed of keys and PII; every token in those calls stays out of this post.)
+
+## Takeaways for anyone building MCP servers
+
+- The model reads `content`, not `structured_content`. Put anything it must act on (cursors, next steps, "there's more") in the text.
+- Always set `is_error=True` on failures, or the model reads your 404 as data.
+- Add annotations, and set `openWorldHint=False` for closed-domain tools.
+- Keep `output_schema` permissive, and round-trip-test it. Strict schemas fail valid responses at runtime.
+- Make tool descriptions match the API's real contract (email vs. ID). The model will follow a wrong one off a cliff.
+- Fan-out scales codebase-wide edits, but it will introduce bugs. The adversarial verify phase isn't optional, and neither is the human in the loop.
+
+What ties these together: almost none of them were visible to me as the author, or to the test suite. They only existed from the model's seat. Sometimes the fastest way into that seat is to send sixty agents to sit in it for you.
