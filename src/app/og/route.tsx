@@ -3,7 +3,6 @@ import { baseURL } from "@/app/resources";
 import { person } from "@/app/resources/content";
 
 export const runtime = "nodejs";
-export const revalidate = 60;
 
 export async function GET(request: Request) {
   let url = new URL(request.url);
@@ -12,10 +11,8 @@ export async function GET(request: Request) {
   let description = url.searchParams.get("description") || "";
   let date = url.searchParams.get("date") || "";
 
-  const font = fetch(new URL("../../../public/fonts/Inter.ttf", import.meta.url)).then((res) =>
-    res.arrayBuffer(),
-  );
-  const fontData = await font;
+  const origin = new URL(request.url).origin;
+  const fontData = await fetch(`${origin}/fonts/Inter.ttf`).then((res) => res.arrayBuffer());
 
   // Blog post template
   if (type === "blog") {
