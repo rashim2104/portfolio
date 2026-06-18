@@ -1,5 +1,4 @@
 import React from "react";
-import { Column, Flex, Text, Button } from "@/once-ui/components";
 import { baseURL } from "@/app/resources";
 
 export async function generateMetadata() {
@@ -33,53 +32,51 @@ export async function generateMetadata() {
 
 export default function Resume() {
   return (
-    <Column maxWidth="l" fillWidth>
-      <Flex gap="24" direction="column">
-        <Flex gap="8" direction="column">
-          <Text variant="display-strong-l">Resume</Text>
-          <Text variant="body-default-l" onBackground="neutral-weak">
-            View my resume below or download it for offline viewing.
-          </Text>
-        </Flex>
-        
-        <Flex gap="16">
-          <Button
-            href="/resumes/Rashim_Resume.pdf"
-            download="Rashim_Resume.pdf"
-            variant="primary"
-            role="link"
-          >
-            Download Resume
-          </Button>
-          <Button
-            href="/resumes/Rashim_Resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="secondary"
-            role="link"
-          >
-            Open in New Tab
-          </Button>
-        </Flex>
+    <div style={{ maxWidth: "var(--max-w-lg)", width: "100%", display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+        <h1 style={{ fontSize: "32px", fontWeight: 600, letterSpacing: "-1.28px", lineHeight: "40px", color: "var(--color-primary)", margin: 0 }}>
+          Resume
+        </h1>
+        <p style={{ fontSize: "16px", lineHeight: "24px", color: "var(--color-secondary)", margin: 0 }}>
+          View my resume below or download it for offline viewing.
+        </p>
+      </div>
 
-        <Flex 
-          fillWidth 
-          style={{ 
-            height: "80vh",
-            border: "1px solid var(--neutral-border-medium)",
-            borderRadius: "var(--radius-m)",
-            overflow: "hidden"
-          }}
+      <div style={{ display: "flex", gap: "var(--space-4)", flexWrap: "wrap" }}>
+        <a
+          href="/resumes/Rashim_Resume.pdf"
+          download="Rashim_Resume.pdf"
+          className="btn btn-primary"
         >
-          <iframe
-            src="/resumes/Rashim_Resume.pdf"
-            width="100%"
-            height="100%"
-            style={{ border: "none" }}
-            title="Rashim R B Resume"
-          />
-        </Flex>
-      </Flex>
-    </Column>
+          Download Resume
+        </a>
+        <a
+          href="/resumes/Rashim_Resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-secondary"
+        >
+          Open in New Tab
+        </a>
+      </div>
+
+      <div
+        style={{
+          width: "100%",
+          height: "80vh",
+          border: "1px solid var(--gray-400)",
+          borderRadius: "var(--radius-md)",
+          overflow: "hidden",
+        }}
+      >
+        <iframe
+          src="/resumes/Rashim_Resume.pdf"
+          width="100%"
+          height="100%"
+          style={{ border: "none", display: "block" }}
+          title="Rashim R B Resume"
+        />
+      </div>
+    </div>
   );
 }

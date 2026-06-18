@@ -1,5 +1,5 @@
 import React from "react";
-import { Column, Flex, Text, SmartLink, SmartImage } from "@/once-ui/components";
+import Link from "next/link";
 import { baseURL } from "@/app/resources";
 import { home, person } from "@/app/resources/content";
 import { getPosts } from "@/app/utils/utils";
@@ -38,68 +38,89 @@ export default function Home() {
     .slice(0, 3);
 
   return (
-    <Column maxWidth="m" gap="xl">
+    <div style={{ maxWidth: "var(--max-w-md)", width: "100%", display: "flex", flexDirection: "column", gap: "var(--space-10)" }}>
+
       {/* Overview */}
-      <Flex direction="column" gap="16">
-        <Text variant="heading-strong-l">Overview</Text>
-        <Flex gap="32" mobileDirection="column-reverse">
-          <Text variant="body-default-l" onBackground="neutral-weak" style={{ flex: 1 }}>
+      <section style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+        <h2 style={{ fontSize: "24px", fontWeight: 600, letterSpacing: "-0.96px", lineHeight: "32px", color: "var(--color-primary)", margin: 0 }}>
+          Overview
+        </h2>
+        <div style={{ display: "flex", gap: "var(--space-8)", alignItems: "flex-start", flexWrap: "wrap-reverse" }}>
+          <p style={{ fontSize: "16px", lineHeight: "24px", color: "var(--color-secondary)", flex: 1, minWidth: "200px", margin: 0 }}>
             {home.about}
-          </Text>
-          <SmartImage
+          </p>
+          <img
             src={person.avatar}
             alt={person.name}
-            aspectRatio="1 / 1"
-            radius="full"
-            style={{ width: "140px", height: "140px", flexShrink: 0 }}
+            style={{
+              width: "120px",
+              height: "120px",
+              borderRadius: "var(--radius-full)",
+              objectFit: "cover",
+              flexShrink: 0,
+            }}
           />
-        </Flex>
-      </Flex>
+        </div>
+      </section>
 
       {/* Interests */}
-      <Flex direction="column" gap="16">
-        <Text variant="heading-strong-l">Interests</Text>
-        <Flex wrap gap="12">
+      <section style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+        <h2 style={{ fontSize: "24px", fontWeight: 600, letterSpacing: "-0.96px", lineHeight: "32px", color: "var(--color-primary)", margin: 0 }}>
+          Interests
+        </h2>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-3)" }}>
           {home.interests.map((interest) => (
-            <Flex
+            <div
               key={interest.title}
-              direction="column"
-              gap="4"
-              padding="16"
-              radius="m"
-              border="neutral-alpha-weak"
-              style={{ flex: "1 1 200px", maxWidth: "280px" }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-1)",
+                padding: "var(--space-4)",
+                border: "1px solid var(--gray-400)",
+                borderRadius: "var(--radius-sm)",
+                flex: "1 1 180px",
+                maxWidth: "280px",
+              }}
             >
-              <Text variant="label-strong-s">{interest.title}</Text>
-              <Text variant="body-default-s" onBackground="neutral-weak">
+              <span style={{ fontSize: "13px", fontWeight: 600, lineHeight: "18px", color: "var(--color-primary)" }}>
+                {interest.title}
+              </span>
+              <span style={{ fontSize: "13px", lineHeight: "18px", color: "var(--color-secondary)" }}>
                 {interest.description}
-              </Text>
-            </Flex>
+              </span>
+            </div>
           ))}
-        </Flex>
-      </Flex>
+        </div>
+      </section>
 
       {/* Writing */}
       {posts.length > 0 && (
-        <Flex direction="column" gap="16">
-          <Text variant="heading-strong-l">Writing</Text>
-          <Flex direction="column" gap="8">
+        <section style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+          <h2 style={{ fontSize: "24px", fontWeight: 600, letterSpacing: "-0.96px", lineHeight: "32px", color: "var(--color-primary)", margin: 0 }}>
+            Writing
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
             {posts.map((post) => (
-              <SmartLink key={post.slug} href={`/blog/${post.slug}`} style={{ textDecoration: "none" }}>
-                <Flex horizontal="space-between" vertical="center" padding="12" radius="m" border="neutral-alpha-weak">
-                  <Text variant="body-default-m">{post.metadata.title}</Text>
-                  <Text variant="body-default-s" onBackground="neutral-weak" style={{ whiteSpace: "nowrap", marginLeft: "16px" }}>
-                    {formatDate(post.metadata.publishedAt)}
-                  </Text>
-                </Flex>
-              </SmartLink>
+              <Link
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                className="post-row"
+              >
+                <span style={{ fontSize: "14px", lineHeight: "20px", color: "var(--color-primary)" }}>
+                  {post.metadata.title}
+                </span>
+                <span style={{ fontSize: "13px", lineHeight: "18px", color: "var(--color-secondary)", whiteSpace: "nowrap", marginLeft: "var(--space-4)" }}>
+                  {formatDate(post.metadata.publishedAt)}
+                </span>
+              </Link>
             ))}
-          </Flex>
-          <SmartLink href="/blog">
-            <Text variant="body-default-s" onBackground="neutral-weak">View all</Text>
-          </SmartLink>
-        </Flex>
+          </div>
+          <Link href="/blog" style={{ fontSize: "13px", lineHeight: "18px", color: "var(--color-secondary)", textDecoration: "none" }}>
+            View all
+          </Link>
+        </section>
       )}
-    </Column>
+    </div>
   );
 }

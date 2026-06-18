@@ -1,0 +1,29 @@
+.postLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 150ms;
+}
+
+.postLink:hover {
+  background-color: var(--gray-alpha-100);
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-primary);
+  line-height: 1.4;
+}
+
+.date {
+  font-size: 13px;
+  color: var(--color-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}

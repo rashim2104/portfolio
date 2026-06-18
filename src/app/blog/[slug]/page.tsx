@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { CustomMDX } from "@/components/mdx";
 import { getPosts } from "@/app/utils/utils";
-import { Button, Column, Flex, Heading, SmartImage, Carousel } from "@/once-ui/components";
 import { baseURL } from "@/app/resources";
 import { person } from "@/app/resources/content";
 import { formatDate } from "@/app/utils/formatDate";
@@ -41,8 +41,8 @@ export async function generateMetadata({ params }: Params) {
     day: "numeric",
   });
 
-  let ogImage = image 
-    ? `https://${baseURL}${image}` 
+  let ogImage = image
+    ? `https://${baseURL}${image}`
     : `https://${baseURL}/og?type=blog&title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}&date=${encodeURIComponent(formattedDate)}`;
 
   return {
@@ -75,7 +75,7 @@ export default async function BlogPost({ params }: Params) {
   }
 
   return (
-    <Column as="section" maxWidth="m" horizontal="center" gap="l">
+    <section style={{ maxWidth: "var(--max-w-content)", width: "100%", margin: "0 auto" }}>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -139,38 +139,73 @@ export default async function BlogPost({ params }: Params) {
           }),
         }}
       />
-      <Column maxWidth="xs" gap="16">
-        <Button href="/blog" variant="tertiary" weight="default" size="s" prefixIcon="chevronLeft">
-          Blog
-        </Button>
-        <Heading variant="display-strong-s">{post.metadata.title}</Heading>
-      </Column>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)", marginBottom: "var(--space-8)" }}>
+        <Link
+          href="/blog"
+          className="btn btn-tertiary btn-sm"
+          style={{ display: "inline-flex", alignItems: "center", gap: "4px", width: "fit-content" }}
+        >
+          <span>←</span> Blog
+        </Link>
+        <h1
+          style={{
+            fontSize: "32px",
+            fontWeight: 600,
+            letterSpacing: "-1.28px",
+            lineHeight: "40px",
+            color: "var(--color-primary)",
+            margin: 0,
+          }}
+        >
+          {post.metadata.title}
+        </h1>
+      </div>
+
       {post.metadata.images && post.metadata.images.length > 0 ? (
-        <Carousel
-          images={post.metadata.images.map((image: string) => ({
-            src: image,
-            alt: post.metadata.title,
-          }))}
-          indicator="thumbnail"
-          aspectRatio="16 / 9"
-          sizes="(max-width: 960px) 100vw, 960px"
-        />
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", marginBottom: "var(--space-6)" }}>
+          {post.metadata.images.map((image: string, i: number) => (
+            <img
+              key={i}
+              src={image}
+              alt={post.metadata.title}
+              style={{
+                width: "100%",
+                borderRadius: "var(--radius-sm)",
+                objectFit: "cover",
+                aspectRatio: "16 / 9",
+              }}
+            />
+          ))}
+        </div>
       ) : post.metadata.image ? (
-        <SmartImage
-          priority
-          aspectRatio="16 / 9"
-          radius="m"
-          alt={post.metadata.title}
+        <img
           src={post.metadata.image}
+          alt={post.metadata.title}
+          style={{
+            width: "100%",
+            borderRadius: "var(--radius-sm)",
+            objectFit: "cover",
+            aspectRatio: "16 / 9",
+            marginBottom: "var(--space-6)",
+          }}
         />
       ) : null}
-      <Column style={{ margin: "auto" }} as="article" maxWidth="xs">
-        <Flex gap="12" marginBottom="24" vertical="center">
+
+      <article className="prose">
+        <p
+          style={{
+            fontSize: "13px",
+            color: "var(--color-secondary)",
+            marginBottom: "var(--space-6)",
+          }}
+        >
           {formatDate(post.metadata.publishedAt)}
-        </Flex>
+        </p>
         <CustomMDX source={post.content} />
-      </Column>
+      </article>
+
       <ScrollToHash />
-    </Column>
+    </section>
   );
 }
