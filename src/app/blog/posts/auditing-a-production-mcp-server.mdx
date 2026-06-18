@@ -30,44 +30,36 @@ An MCP tool result carries two things: a `content` block (the text the model rea
 
 Every list tool I had was doing this:
 
-<CodeBlock
-  codeInstances={[{
-    code: `# The data is all here — but the model never sees the cursor
+```python
+# The data is all here, but the model never sees the cursor
 return ToolResult(
     content=f"Found {len(items)} posts.",        # all the model reads
     structured_content={"posts": items, "page": page, "has_more": True},  # invisible
-)`,
-    language: "python",
-    label: "before"
-  }]}
-/>
+)
+```
 
 A board with 800 posts returns 30, the model reads *"Found 30 posts,"* and confidently tells the user that's everything. The next-page signal existed, just in a field the model never looks at. Pagination was, in practice, unreachable.
 
-The fix is a shared helper that writes the next-page instruction into the **content text** itself:
+The fix is a shared helper that writes the next-page instruction into the content text itself:
 
-<CodeBlock
-  codeInstances={[{
-    code: `def build_list_result(items, label, key, *, page=None, per_page=None, meta=None):
+```python
+def build_list_result(items, label, key, *, page=None, per_page=None, meta=None):
     count = len(items)
     has_more = per_page is not None and count == per_page  # full page => likely more
 
     head = f"Found {count} {label}{'s' if count != 1 else ''}."
     if has_more and page is not None:
         head += (
-            f"\\n\\n[Page {page}. More results available — call this tool again "
+            f"\n\n[Page {page}. More results available. Call this tool again "
             f"with page={page + 1} and the same other arguments to get the next page.]"
         )
 
     return ToolResult(
-        content=head + "\\n\\n" + json.dumps(items, default=str),   # the model reads THIS
+        content=head + "\n\n" + json.dumps(items, default=str),   # the model reads THIS
         structured_content={key: items, "page": page, "has_more": has_more},
         meta=meta,
-    )`,
-    language: "python",
-    label: "tools/helpers.py"
-  }]}
-/>
+    )
+```
 
 For endpoints that paginate but don't expose a total, the heuristic is *"a full page probably has more."* For endpoints that return everything in one shot, no hint is emitted; a false *"there's more"* is worse than none. The rule generalizes: anything the model must act on belongs in `content`, not `structured_content`.
 
@@ -75,21 +67,17 @@ For endpoints that paginate but don't expose a total, the heuristic is *"a full 
 
 Same category, different tool. Every error branch looked like this:
 
-<CodeBlock
-  codeInstances={[{
-    code: `# Before — a 403/404 body comes back as if it were a normal result
+```python
+# Before: a 403/404 body comes back as if it were a normal result
 return ToolResult(content=result)
 
-# After — the failure is actually flagged
+# After: the failure is actually flagged
 return ToolResult(
     content=f"Error: {result.get('message')}",
     structured_content=result,
     is_error=True,
-)`,
-    language: "python",
-    label: "error signaling"
-  }]}
-/>
+)
+```
 
 Without `is_error=True`, the SDK ships the failure as an ordinary result. A model reads `{"error": true, ...}` as data: it'll happily report "the upvoters are: error", or read an auth failure as "zero results" and move on. One flag is the difference between the model retrying and the model hallucinating over a 404.
 
@@ -99,30 +87,22 @@ While we were in the descriptions, the audit caught one that was actively wrong.
 
 Tool schemas describe individual tools. They don't describe how tools relate. So the server now ships `instructions`: domain framing, an ID-provenance map, and the pagination rule:
 
-<CodeBlock
-  codeInstances={[{
-    code: `IDs are opaque and must come from a prior tool call — never invent them:
+```text
+IDs are opaque and must come from a prior tool call. Never invent them:
   bucket_id     <- list_buckets
   tag_ids       <- list_tags
   changelog_id  <- list_changelogs / search_changelogs
-  to assign a teammate, pass their email (list_team_members -> user.email), not an id.`,
-    language: "text",
-    label: "instructions"
-  }]}
-/>
+  to assign a teammate, pass their email (list_team_members -> user.email), not an id.
+```
 
 Plus per-tool annotations, made into three shared constants so the intent is declared once:
 
-<CodeBlock
-  codeInstances={[{
-    code: `READ        = {"readOnlyHint": True,  "destructiveHint": False, "openWorldHint": False}
+```python
+READ        = {"readOnlyHint": True,  "destructiveHint": False, "openWorldHint": False}
 WRITE       = {"readOnlyHint": False, "destructiveHint": False, "openWorldHint": False}
 DESTRUCTIVE = {"readOnlyHint": False, "destructiveHint": True,  "openWorldHint": False}
-# openWorldHint=False: these tools touch ONE workspace, not the open web.`,
-    language: "python",
-    label: "annotations"
-  }]}
-/>
+# openWorldHint=False: these tools touch ONE workspace, not the open web.
+```
 
 `openWorldHint=False` is the easy one to get wrong; I did, at first. The question isn't whether the tool hits the network, it's whether it reaches into an unbounded, open world like web search. A workspace API is a closed domain, and hosts lean on that hint to decide what's safe to auto-approve.
 
@@ -132,9 +112,8 @@ Here's the honest part. The fixes themselves were applied by fanning out ~10 fil
 
 The nastier one: an agent gave `remove_tag_from_changelog` an `output_schema` keyed on `tag_id` as an object, but the tool returns `tag_id` as an integer.
 
-<CodeBlock
-  codeInstances={[{
-    code: `# What the agent generated — looks reasonable, breaks every call:
+```python
+# What the agent generated. Looks reasonable, breaks every call:
 output_schema = item_output_schema("tag_id")   # declares {"tag_id": {"type": "object"}}
 
 # But the tool actually returns:
@@ -148,13 +127,10 @@ def status_output_schema():
         "type": "object",
         "properties": {"success": {"type": "boolean"}},
         "additionalProperties": True,   # permissive: documents shape, never rejects
-    }`,
-    language: "python",
-    label: "output_schema collision"
-  }]}
-/>
+    }
+```
 
-The lesson on `output_schema`: keep it **permissive**. Its job is to *document* the result shape for the model, not to police your own backend. A too-strict schema turns a valid response into a runtime error the model has to puzzle over. I proved the fix by round-tripping all 31 tools through an in-memory client and asserting zero output-validation errors.
+The lesson on `output_schema`: keep it permissive. Its job is to *document* the result shape for the model, not to police your own backend. A too-strict schema turns a valid response into a runtime error the model has to puzzle over. I proved the fix by round-tripping all 31 tools through an in-memory client and asserting zero output-validation errors.
 
 ## Shipping it: six atomic PRs
 

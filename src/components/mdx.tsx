@@ -128,8 +128,26 @@ function createParagraph({ children }: TextProps) {
   );
 }
 
+function Code({ children }: { children?: ReactNode }) {
+  // Fenced code blocks arrive as <pre><code className="language-x">...</code></pre>.
+  // Route them through the styled CodeBlock instead of the default <pre>.
+  const codeEl = children as React.ReactElement<{ className?: string; children?: ReactNode }>;
+  const className = codeEl?.props?.className || "";
+  const language = className.replace(/language-/, "") || "text";
+  const raw = codeEl?.props?.children;
+  const code = (Array.isArray(raw) ? raw.join("") : String(raw ?? "")).replace(/\n$/, "");
+  return (
+    <CodeBlock
+      marginTop="8"
+      marginBottom="12"
+      codeInstances={[{ code, language, label: language }]}
+    />
+  );
+}
+
 const components = {
   p: createParagraph as any,
+  pre: Code as any,
   h1: createHeading(1) as any,
   h2: createHeading(2) as any,
   h3: createHeading(3) as any,
