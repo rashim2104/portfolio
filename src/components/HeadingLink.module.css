@@ -1,8 +1,5 @@
 .heading {
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
 }
 
 .heading:hover .icon {
@@ -11,7 +8,9 @@
 
 .icon {
   opacity: 0;
-  font-size: 12px;
+  font-size: 0.6em;
   color: var(--gray-700);
+  margin-left: 6px;
+  vertical-align: baseline;
   transition: opacity 150ms;
 }

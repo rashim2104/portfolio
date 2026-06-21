@@ -81,6 +81,16 @@ function createImage({ alt, src }: CreateImageProps) {
   );
 }
 
+function getTextContent(node: ReactNode): string {
+  if (node == null || typeof node === "boolean") return "";
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(getTextContent).join("");
+  if (React.isValidElement(node)) {
+    return getTextContent((node.props as { children?: ReactNode }).children);
+  }
+  return "";
+}
+
 function slugify(str: string): string {
   return str
     .toString()
@@ -94,7 +104,7 @@ function slugify(str: string): string {
 
 function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
   const CustomHeading = ({ children }: { children?: ReactNode }) => {
-    const slug = slugify(children as string);
+    const slug = slugify(getTextContent(children));
     return (
       <HeadingLink
         style={{ marginTop: "var(--space-6)", marginBottom: "var(--space-3)" }}
