@@ -64,7 +64,7 @@
   --shadow-modal: 0 1px 1px rgba(0, 0, 0, 0.02), 0 8px 16px -4px rgba(0, 0, 0, 0.04), 0 24px 32px -8px rgba(0, 0, 0, 0.06);
 
   /* === FOCUS === */
-  --focus-ring: 0 0 0 2px #ffffff, 0 0 0 4px #006bff;
+  --focus-ring: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-accent);
 
   /* === CONTENT WIDTHS === */
   --max-w-xs: 480px;
@@ -139,4 +139,43 @@
   --input-height-sm: 32px;
   --input-height-md: 40px;
   --input-height-lg: 48px;
+}
+
+/* === DARK THEME === */
+[data-theme="dark"] {
+  --color-primary: #ededed;
+  --color-secondary: #a1a1a1;
+  --color-accent: #3b82f6;
+  --color-bg: #0a0a0a;
+  --color-bg-subtle: #141414;
+
+  /* Gray scale (inverted: low = dark surface, high = light text) */
+  --gray-100: #1a1a1a;
+  --gray-200: #2a2a2a;
+  --gray-300: #2e2e2e;
+  --gray-400: #333333;
+  --gray-500: #555555;
+  --gray-600: #6e6e6e;
+  --gray-700: #8f8f8f;
+  --gray-800: #b4b4b4;
+  --gray-900: #ededed;
+  --gray-1000: #fafafa;
+
+  /* Gray alpha (white-based for dark surfaces) */
+  --gray-alpha-100: rgba(255, 255, 255, 0.06);
+  --gray-alpha-200: rgba(255, 255, 255, 0.09);
+  --gray-alpha-300: rgba(255, 255, 255, 0.11);
+  --gray-alpha-400: rgba(255, 255, 255, 0.10);
+  --gray-alpha-500: rgba(255, 255, 255, 0.21);
+  --gray-alpha-600: rgba(255, 255, 255, 0.24);
+  --gray-alpha-700: rgba(255, 255, 255, 0.44);
+  --gray-alpha-800: rgba(255, 255, 255, 0.51);
+  --gray-alpha-900: rgba(255, 255, 255, 0.70);
+  --gray-alpha-1000: rgba(255, 255, 255, 0.92);
+
+  --blue-700: #3b82f6;
+
+  --shadow-card: 0 2px 2px rgba(0, 0, 0, 0.3);
+  --shadow-popover: 0 1px 1px rgba(0, 0, 0, 0.2), 0 4px 8px -4px rgba(0, 0, 0, 0.4), 0 16px 24px -8px rgba(0, 0, 0, 0.5);
+  --shadow-modal: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 16px -4px rgba(0, 0, 0, 0.4), 0 24px 32px -8px rgba(0, 0, 0, 0.5);
 }
