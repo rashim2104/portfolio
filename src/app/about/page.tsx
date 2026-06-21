@@ -5,8 +5,8 @@ import React from "react";
 import { FaGithub, FaLinkedin, FaXTwitter, FaEnvelope } from "react-icons/fa6";
 
 export async function generateMetadata() {
-  const title = "About Rashim R B - Full Stack Developer";
-  const description = "Learn about Rashim R B, a full stack developer at Skcript building scalable systems with TypeScript, React Native, Node.js, PostgreSQL, and cloud technologies. Based in Chennai.";
+  const title = "About Rashim R B - Software Developer";
+  const description = "Learn about Rashim R B, a software developer at Skcript building scalable systems with TypeScript, React Native, Node.js, PostgreSQL, and cloud technologies. Based in Chennai.";
   const ogImage = `https://${baseURL}/og?type=about&title=${encodeURIComponent(title)}`;
 
   return {

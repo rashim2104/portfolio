@@ -11,9 +11,9 @@ import { Analytics } from "@vercel/analytics/next";
 export const metadata: Metadata = {
   title: {
     template: "%s | Rashim R B",
-    default: "Rashim R B - Full Stack Developer | TypeScript, React Native, Node.js",
+    default: "Rashim R B - Software Developer | TypeScript, React Native, Node.js",
   },
-  description: `Full Stack Developer at Skcript specializing in TypeScript, React Native, Node.js, and cloud-native architectures. Building production-grade email services, mobile apps, and scalable backend systems.`,
+  description: `Software Developer at Skcript specializing in TypeScript, React Native, Node.js, and cloud-native architectures. Building production-grade email services, mobile apps, and scalable backend systems.`,
   keywords: [
     "Rashim R B",
     "Rashim",
@@ -44,8 +44,8 @@ export const metadata: Metadata = {
   manifest: '/favicon_io/site.webmanifest',
   metadataBase: new URL(`https://${baseURL}`),
   openGraph: {
-    title: `${person.name} - Full Stack Developer`,
-    description: `Full Stack Developer at Skcript. Building production-grade systems with TypeScript, React Native, Node.js, and cloud-native architectures. Email services, mobile apps, backend systems.`,
+    title: `${person.name} - Software Developer`,
+    description: `Software Developer at Skcript. Building production-grade systems with TypeScript, React Native, Node.js, and cloud-native architectures. Email services, mobile apps, backend systems.`,
     url: `https://${baseURL}`,
     siteName: person.name,
     locale: "en_US",
@@ -61,8 +61,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${person.name} - Full Stack Developer`,
-    description: `Full Stack Developer at Skcript. Building production-grade systems with TypeScript, React Native, Node.js, and cloud-native architectures.`,
+    title: `${person.name} - Software Developer`,
+    description: `Software Developer at Skcript. Building production-grade systems with TypeScript, React Native, Node.js, and cloud-native architectures.`,
     images: [`https://${baseURL}/images/avatar.jpg`],
     creator: "@rashimbuilds",
   },
@@ -126,6 +126,20 @@ const jsonLd = {
   "description": "Software Developer at Skcript building production-grade systems with TypeScript, React Native, and cloud-native architectures."
 };
 
+// ImageObject schema — helps the portrait surface in Google Image search for "Rashim"
+const imageSchema = {
+  "@context": "https://schema.org",
+  "@type": "ImageObject",
+  "contentUrl": "https://rashim.in/images/avatar.jpg",
+  "url": "https://rashim.in/images/avatar.jpg",
+  "name": "Rashim R B — Software Developer",
+  "caption": "Rashim R B, Software Developer based in Chennai",
+  "creditText": "Rashim R B",
+  "author": { "@type": "Person", "name": "Rashim R B" },
+  "copyrightHolder": { "@type": "Person", "name": "Rashim R B" },
+  "representativeOfPage": true,
+};
+
 // Website schema for overall site structure
 const websiteSchema = {
   "@context": "https://schema.org",
@@ -166,6 +180,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(imageSchema) }}
+        />
       </head>
       <body
         style={{
@@ -179,8 +197,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           fontFamily: "var(--font-sans)",
         }}
       >
+        <a href="#main-content" className="skip-link">Skip to content</a>
         <Header />
         <main
+          id="main-content"
           style={{
             flex: 1,
             display: "flex",

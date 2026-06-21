@@ -83,6 +83,14 @@ export default async function Work() {
           }),
         }}
       />
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", marginBottom: "var(--space-8)" }}>
+        <h1 style={{ fontSize: "32px", fontWeight: 600, letterSpacing: "-1.28px", lineHeight: "40px", color: "var(--color-primary)", margin: 0 }}>
+          {work.title}
+        </h1>
+        <p style={{ fontSize: "16px", lineHeight: "24px", color: "var(--color-secondary)", margin: 0 }}>
+          {work.description}
+        </p>
+      </div>
       <Projects projects={allProjects} />
     </div>
   );

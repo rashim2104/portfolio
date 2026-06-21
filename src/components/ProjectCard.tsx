@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface ProjectCardProps {
   href: string;
@@ -22,26 +23,23 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   description,
   avatars,
   link,
+  priority = false,
 }) => {
   return (
-    <div
-      style={{
-        border: "1px solid var(--gray-200)",
-        borderRadius: "var(--radius-md)",
-        overflow: "hidden",
-      }}
-    >
+    <article className="project-card">
       {images.length > 0 && (
-        <img
-          src={images[0]}
-          alt={title}
-          style={{
-            width: "100%",
-            aspectRatio: "16 / 9",
-            objectFit: "cover",
-            display: "block",
-          }}
-        />
+        <Link href={"/" + href} aria-label={`View ${title}`} style={{ display: "block" }}>
+          <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9", overflow: "hidden" }}>
+            <Image
+              src={images[0]}
+              alt={`${title} — project preview`}
+              fill
+              priority={priority}
+              sizes="(max-width: 960px) 100vw, 960px"
+              style={{ objectFit: "cover" }}
+            />
+          </div>
+        </Link>
       )}
       <div style={{ padding: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
         {title && (
@@ -55,7 +53,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               margin: 0,
             }}
           >
-            {title}
+            <Link href={"/" + href} style={{ color: "inherit", textDecoration: "none" }}>
+              {title}
+            </Link>
           </h2>
         )}
         {description?.trim() && (
@@ -73,10 +73,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         {avatars?.length > 0 && (
           <div style={{ display: "flex", flexDirection: "row", gap: "4px" }}>
             {avatars.map((avatar, index) => (
-              <img
+              <Image
                 key={index}
                 src={avatar.src}
                 alt=""
+                width={24}
+                height={24}
                 style={{
                   width: "24px",
                   height: "24px",
@@ -123,6 +125,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           )}
         </div>
       </div>
-    </div>
+    </article>
   );
 };
