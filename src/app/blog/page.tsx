@@ -1,9 +1,8 @@
-import { Column, Flex, Heading } from "@/once-ui/components";
-import { Mailchimp } from "@/components";
 import { Posts } from "@/components/blog/Posts";
 import { baseURL } from "@/app/resources";
 import { blog, person, newsletter } from "@/app/resources/content";
 import { getPosts } from "@/app/utils/utils";
+import { Mailchimp } from "@/components";
 
 export async function generateMetadata() {
   const title = "Technical Blog - Rashim R B";
@@ -34,7 +33,7 @@ export default function Blog() {
   const allPosts = getPosts(["src", "app", "blog", "posts"]);
 
   return (
-    <Column maxWidth="s">
+    <div style={{ maxWidth: "var(--max-w-md)", width: "100%" }}>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -94,13 +93,20 @@ export default function Blog() {
           }),
         }}
       />
-      <Heading marginBottom="l" variant="display-strong-s">
+      <h1
+        style={{
+          fontSize: "32px",
+          fontWeight: 600,
+          letterSpacing: "-1.28px",
+          lineHeight: "40px",
+          color: "var(--color-primary)",
+          marginBottom: "var(--space-8)",
+        }}
+      >
         {blog.title}
-      </Heading>
-      <Column fillWidth flex={1}>
-        <Posts posts={allPosts} thumbnail columns="1" />
-      </Column>
+      </h1>
+      <Posts posts={allPosts} thumbnail columns="1" />
       {newsletter.display && <Mailchimp newsletter={newsletter} />}
-    </Column>
+    </div>
   );
 }

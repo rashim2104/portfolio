@@ -1,6 +1,5 @@
 "use client";
 
-import { Column } from "@/once-ui/components";
 import { ProjectCard } from "@/components";
 
 interface Project {
@@ -42,7 +41,7 @@ export function Projects({ range, projects }: ProjectsProps) {
     : sortedProjects;
 
   return (
-    <Column fillWidth gap="xl" marginBottom="40" paddingX="l">
+    <div style={{ display: "flex", flexDirection: "column", gap: "48px" }}>
       {displayedProjects.map((post, index) => (
         <ProjectCard
           priority={index < 2}
@@ -56,6 +55,6 @@ export function Projects({ range, projects }: ProjectsProps) {
           link={post.metadata.link || ""}
         />
       ))}
-    </Column>
+    </div>
   );
 }

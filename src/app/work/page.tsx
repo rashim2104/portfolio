@@ -1,5 +1,4 @@
 import { getPosts } from "@/app/utils/utils";
-import { Column } from "@/once-ui/components";
 import { Projects } from "@/components/work/Projects";
 import { baseURL } from "@/app/resources";
 import { person, work } from "@/app/resources/content";
@@ -33,7 +32,7 @@ export default async function Work() {
   let allProjects = await getPosts(["src", "app", "work", "projects"]);
 
   return (
-    <Column maxWidth="m">
+    <div style={{ maxWidth: "var(--max-w-md)", width: "100%" }}>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -85,6 +84,6 @@ export default async function Work() {
         }}
       />
       <Projects projects={allProjects} />
-    </Column>
+    </div>
   );
 }

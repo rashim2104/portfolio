@@ -1,6 +1,5 @@
 "use client";
 
-import { Grid } from "@/once-ui/components";
 import Post from "@/components/blog/Post";
 
 interface Post {
@@ -32,11 +31,11 @@ export function Posts({ range, columns = "1", thumbnail = false, posts }: PostsP
   return (
     <>
       {displayedPosts.length > 0 && (
-        <Grid columns={columns} mobileColumns="1" fillWidth marginBottom="40" gap="m">
+        <div style={{ display: "flex", flexDirection: "column", marginBottom: "var(--space-10)" }}>
           {displayedPosts.map((post) => (
             <Post key={post.slug} post={post} thumbnail={thumbnail} />
           ))}
-        </Grid>
+        </div>
       )}
     </>
   );

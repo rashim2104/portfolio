@@ -1,20 +1,8 @@
-import {
-  Avatar,
-  Button,
-  Column,
-  Flex,
-  Heading,
-  Icon,
-  IconButton,
-  SmartImage,
-  Tag,
-  Text,
-} from "@/once-ui/components";
 import { baseURL } from "@/app/resources";
 import TableOfContents from "@/components/about/TableOfContents";
-import styles from "@/components/about/about.module.scss";
 import { person, about, social } from "@/app/resources/content";
-import React, { Fragment } from "react";
+import React from "react";
+import { FaGithub, FaLinkedin, FaXTwitter, FaEnvelope } from "react-icons/fa6";
 
 export async function generateMetadata() {
   const title = "About Rashim R B - Full Stack Developer";
@@ -40,6 +28,13 @@ export async function generateMetadata() {
     },
   };
 }
+
+const iconMap: Record<string, React.ReactElement> = {
+  github: <FaGithub size={18} />,
+  linkedin: <FaLinkedin size={18} />,
+  x: <FaXTwitter size={18} />,
+  email: <FaEnvelope size={18} />,
+};
 
 export default function About() {
   const structure = [
@@ -69,8 +64,9 @@ export default function About() {
       items: about.technical.skills.map((skill) => skill.title),
     },
   ];
+
   return (
-    <Column maxWidth="m">
+    <div style={{ maxWidth: "var(--max-w-md)", width: "100%" }}>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -84,7 +80,7 @@ export default function About() {
             url: `https://${baseURL}/about`,
             image: `https://${baseURL}${person.avatar}`,
             sameAs: social
-              .filter((item) => item.link && !item.link.startsWith("mailto:")) // Filter out empty links and email links
+              .filter((item) => item.link && !item.link.startsWith("mailto:"))
               .map((item) => item.link),
             worksFor: {
               "@type": "Organization",
@@ -93,140 +89,154 @@ export default function About() {
           }),
         }}
       />
+
       {about.tableOfContent.display && (
-        <Column
-          left="0"
-          style={{ top: "50%", transform: "translateY(-50%)" }}
-          position="fixed"
-          paddingLeft="24"
-          gap="32"
-          hide="s"
-        >
-          <TableOfContents structure={structure} about={about} />
-        </Column>
+        <TableOfContents structure={structure} about={about} />
       )}
-      <Flex fillWidth mobileDirection="column" horizontal="center">
+
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
         {about.avatar.display && (
-          <Column
-            className={styles.avatar}
-            minWidth="160"
-            paddingX="l"
-            paddingBottom="xl"
-            gap="m"
-            flex={3}
-            horizontal="center"
-          >
-            <Avatar src={person.avatar} size="xl" />
-            <Flex gap="8" vertical="center">
-              <Icon onBackground="accent-weak" name="globe" />
-              {person.location}
-            </Flex>
-          </Column>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-3)", paddingBottom: "var(--space-8)" }}>
+            <img
+              src={person.avatar}
+              alt={person.name}
+              style={{
+                width: "120px",
+                height: "120px",
+                borderRadius: "var(--radius-full)",
+                objectFit: "cover",
+                border: "1px solid var(--gray-400)",
+              }}
+            />
+            <span style={{ fontSize: "13px", color: "var(--color-secondary)", display: "flex", alignItems: "center", gap: "4px" }}>
+              📍 {person.location}
+            </span>
+          </div>
         )}
-        <Column className={styles.blockAlign} flex={9} maxWidth={40}>
-          <Column
+
+        <div style={{ width: "100%", maxWidth: "640px" }}>
+          <div
             id={about.intro.title}
-            fillWidth
-            minHeight="160"
-            vertical="center"
-            marginBottom="32"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              minHeight: "160px",
+              justifyContent: "center",
+              marginBottom: "var(--space-8)",
+            }}
           >
-            {about.calendar.display && (
-              <Flex
-                fitWidth
-                border="brand-alpha-medium"
-                className={styles.blockAlign}
-                style={{
-                  backdropFilter: "blur(var(--static-space-1))",
-                }}
-                background="brand-alpha-weak"
-                radius="full"
-                padding="4"
-                gap="8"
-                marginBottom="m"
-                vertical="center"
-              >
-                <Icon paddingLeft="12" name="calendar" onBackground="brand-weak" />
-                <Flex paddingX="8">Schedule a call</Flex>
-                <IconButton
-                  href={about.calendar.link}
-                  data-border="rounded"
-                  variant="secondary"
-                  icon="chevronRight"
-                />
-              </Flex>
-            )}
-            <Heading className={styles.textAlign} variant="display-strong-xl">
+            <h1
+              style={{
+                fontSize: "40px",
+                fontWeight: 600,
+                letterSpacing: "-2.4px",
+                lineHeight: "48px",
+                color: "var(--color-primary)",
+                margin: 0,
+              }}
+            >
               {person.name}
-            </Heading>
-            <Text
-              className={styles.textAlign}
-              variant="display-default-xs"
-              onBackground="neutral-weak"
+            </h1>
+            <p
+              style={{
+                fontSize: "20px",
+                fontWeight: 400,
+                color: "var(--color-secondary)",
+                marginTop: "var(--space-2)",
+                marginBottom: 0,
+              }}
             >
               {person.role}
-            </Text>
+            </p>
+
             {social.length > 0 && (
-              <Flex className={styles.blockAlign} paddingTop="20" paddingBottom="8" gap="8" wrap horizontal="center" fitWidth>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "var(--space-2)",
+                  paddingTop: "20px",
+                  paddingBottom: "var(--space-2)",
+                  alignItems: "center",
+                }}
+              >
                 {social.map(
                   (item) =>
                     item.link && (
-                      <Fragment key={item.name}>
-                        <Button
-                          className="s-flex-hide"
-                          href={item.link}
-                          prefixIcon={item.icon}
-                          label={item.name}
-                          size="s"
-                          variant="secondary"
-                        />
-                        <IconButton
-                          className="s-flex-show"
-                          size="l"
-                          href={item.link}
-                          icon={item.icon}
-                          variant="secondary"
-                        />
-                      </Fragment>
+                      <a
+                        key={item.name}
+                        href={item.link}
+                        className="icon-btn"
+                        target={item.link.startsWith("mailto:") ? undefined : "_blank"}
+                        rel={item.link.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                        aria-label={item.name}
+                      >
+                        {iconMap[item.icon] ?? <span>{item.name}</span>}
+                      </a>
                     ),
                 )}
-                <Button
-                  className="s-flex-hide"
+                <a
                   href="/resumes/Rashim-Resume.pdf"
                   download="Rashim-Resume.pdf"
-                  prefixIcon="download"
-                  label="Download Resume"
-                  size="s"
-                  variant="primary"
-                />
-                <IconButton
-                  className="s-flex-show"
-                  size="l"
-                  href="/resumes/Rashim-Resume.pdf"
-                  download="Rashim-Resume.pdf"
-                  icon="download"
-                  variant="secondary"
-                />
-              </Flex>
+                  className="btn btn-primary btn-sm"
+                >
+                  Download Resume
+                </a>
+              </div>
             )}
-          </Column>
+          </div>
 
           {about.intro.display && (
-            <Column textVariant="body-default-l" fillWidth gap="m" marginBottom="xl">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-4)",
+                marginBottom: "var(--space-10)",
+                fontSize: "16px",
+                lineHeight: "24px",
+                color: "var(--color-primary)",
+              }}
+            >
               {about.intro.description}
-            </Column>
+            </div>
           )}
 
           {about.work.display && (
-            <>
-              <Heading as="h2" id={about.work.title} variant="display-strong-s" marginBottom="m">
+            <div style={{ marginBottom: "var(--space-10)" }}>
+              <h2
+                id={about.work.title}
+                style={{
+                  fontSize: "24px",
+                  fontWeight: 600,
+                  letterSpacing: "-0.96px",
+                  lineHeight: "32px",
+                  color: "var(--color-primary)",
+                  marginBottom: "var(--space-6)",
+                  marginTop: 0,
+                }}
+              >
                 {about.work.title}
-              </Heading>
-              <Column fillWidth gap="l" marginBottom="40">
+              </h2>
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
                 {about.work.experiences.map((experience, index) => (
-                  <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth>
-                    <Flex fillWidth horizontal="space-between" vertical="end" marginBottom="4">
-                      <Text id={experience.company} variant="heading-strong-l">
+                  <div key={`${experience.company}-${experience.role}-${index}`} style={{ width: "100%" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-end",
+                        marginBottom: "var(--space-1)",
+                      }}
+                    >
+                      <strong
+                        id={experience.company}
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: 600,
+                          color: "var(--color-primary)",
+                        }}
+                      >
                         {experience.company === "Bulkpe" ? (
                           <a href="https://bulkpe.in" target="_blank" rel="noopener noreferrer">
                             {experience.company}
@@ -234,169 +244,166 @@ export default function About() {
                         ) : (
                           experience.company
                         )}
-                      </Text>
-                      <Text variant="heading-default-xs" onBackground="neutral-weak">
+                      </strong>
+                      <span style={{ fontSize: "13px", color: "var(--color-secondary)" }}>
                         {experience.timeframe}
-                      </Text>
-                    </Flex>
-                    <Text variant="body-default-s" onBackground="brand-weak" marginBottom="m">
+                      </span>
+                    </div>
+                    <p
+                      style={{
+                        fontSize: "13px",
+                        color: "var(--color-accent)",
+                        marginBottom: "var(--space-4)",
+                        marginTop: 0,
+                      }}
+                    >
                       {experience.role}
-                    </Text>
-                    <Column as="ul" gap="16">
-                      {experience.achievements.map((achievement: React.ReactElement, index: number) => (
-                        <Text
-                          as="li"
-                          variant="body-default-m"
-                          key={`${experience.company}-${index}`}
+                    </p>
+                    <ul style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)", paddingLeft: "var(--space-4)", margin: 0 }}>
+                      {experience.achievements.map((achievement: React.ReactElement, i: number) => (
+                        <li
+                          key={`${experience.company}-${i}`}
+                          style={{ fontSize: "14px", lineHeight: "22px", color: "var(--color-primary)" }}
                         >
                           {achievement}
-                        </Text>
+                        </li>
                       ))}
-                    </Column>
-                    {experience.images?.length > 0 && (
-                      <Flex fillWidth paddingTop="m" paddingLeft="40" wrap>
-                        {experience.images.map((image, index) => (
-                          <Flex
-                            key={index}
-                            border="neutral-medium"
-                            radius="m"
-                            //@ts-ignore
-                            minWidth={image.width}
-                            //@ts-ignore
-                            height={image.height}
-                          >
-                            <SmartImage
-                              enlarge
-                              radius="m"
-                              //@ts-ignore
-                              sizes={image.width.toString()}
-                              //@ts-ignore
-                              alt={image.alt}
-                              //@ts-ignore
-                              src={image.src}
-                            />
-                          </Flex>
-                        ))}
-                      </Flex>
-                    )}
-                  </Column>
+                    </ul>
+                  </div>
                 ))}
-              </Column>
-            </>
+              </div>
+            </div>
           )}
 
           {about.volunteering.display && (
-            <>
-              <Heading as="h2" id={about.volunteering.title} variant="display-strong-s" marginBottom="m">
+            <div style={{ marginBottom: "var(--space-10)" }}>
+              <h2
+                id={about.volunteering.title}
+                style={{
+                  fontSize: "24px",
+                  fontWeight: 600,
+                  letterSpacing: "-0.96px",
+                  lineHeight: "32px",
+                  color: "var(--color-primary)",
+                  marginBottom: "var(--space-6)",
+                  marginTop: 0,
+                }}
+              >
                 {about.volunteering.title}
-              </Heading>
-              <Column fillWidth gap="l" marginBottom="40">
+              </h2>
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
                 {about.volunteering.experiences.map((experience, index) => (
-                  <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth>
-                    <Flex fillWidth horizontal="space-between" vertical="end" marginBottom="4">
-                      <Text id={experience.company} variant="heading-strong-l">
-                        {experience.company === "Bulkpe" ? (
-                          <a href="https://bulkpe.in" target="_blank" rel="noopener noreferrer">
-                            {experience.company}
-                          </a>
-                        ) : (
-                          experience.company
-                        )}
-                      </Text>
-                      <Text variant="heading-default-xs" onBackground="neutral-weak">
+                  <div key={`${experience.company}-${experience.role}-${index}`} style={{ width: "100%" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-end",
+                        marginBottom: "var(--space-1)",
+                      }}
+                    >
+                      <strong
+                        id={experience.company}
+                        style={{ fontSize: "16px", fontWeight: 600, color: "var(--color-primary)" }}
+                      >
+                        {experience.company}
+                      </strong>
+                      <span style={{ fontSize: "13px", color: "var(--color-secondary)" }}>
                         {experience.timeframe}
-                      </Text>
-                    </Flex>
-                    <Text variant="body-default-s" onBackground="brand-weak" marginBottom="m">
+                      </span>
+                    </div>
+                    <p
+                      style={{
+                        fontSize: "13px",
+                        color: "var(--color-accent)",
+                        marginBottom: "var(--space-4)",
+                        marginTop: 0,
+                      }}
+                    >
                       {experience.role}
-                    </Text>
-                    <Column as="ul" gap="16">
-                      {experience.achievements.map((achievement: React.ReactElement, index: number) => (
-                        <Text
-                          as="li"
-                          variant="body-default-m"
-                          key={`${experience.company}-${index}`}
+                    </p>
+                    <ul style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)", paddingLeft: "var(--space-4)", margin: 0 }}>
+                      {experience.achievements.map((achievement: React.ReactElement, i: number) => (
+                        <li
+                          key={`${experience.company}-${i}`}
+                          style={{ fontSize: "14px", lineHeight: "22px", color: "var(--color-primary)" }}
                         >
                           {achievement}
-                        </Text>
+                        </li>
                       ))}
-                    </Column>
-                  </Column>
+                    </ul>
+                  </div>
                 ))}
-              </Column>
-            </>
+              </div>
+            </div>
           )}
 
           {about.studies.display && (
-            <>
-              <Heading as="h2" id={about.studies.title} variant="display-strong-s" marginBottom="m">
+            <div style={{ marginBottom: "var(--space-10)" }}>
+              <h2
+                id={about.studies.title}
+                style={{
+                  fontSize: "24px",
+                  fontWeight: 600,
+                  letterSpacing: "-0.96px",
+                  lineHeight: "32px",
+                  color: "var(--color-primary)",
+                  marginBottom: "var(--space-6)",
+                  marginTop: 0,
+                }}
+              >
                 {about.studies.title}
-              </Heading>
-              <Column fillWidth gap="l" marginBottom="40">
+              </h2>
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
                 {about.studies.institutions.map((institution, index) => (
-                  <Column key={`${institution.name}-${index}`} fillWidth gap="4">
-                    <Text id={institution.name} variant="heading-strong-l">
+                  <div key={`${institution.name}-${index}`} style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
+                    <strong
+                      id={institution.name}
+                      style={{ fontSize: "16px", fontWeight: 600, color: "var(--color-primary)" }}
+                    >
                       {institution.name}
-                    </Text>
-                    <Text variant="heading-default-xs" onBackground="neutral-weak">
+                    </strong>
+                    <span style={{ fontSize: "13px", color: "var(--color-secondary)" }}>
                       {institution.description}
-                    </Text>
-                  </Column>
+                    </span>
+                  </div>
                 ))}
-              </Column>
-            </>
+              </div>
+            </div>
           )}
 
           {about.technical.display && (
-            <>
-              <Heading
-                as="h2"
+            <div style={{ marginBottom: "var(--space-10)" }}>
+              <h2
                 id={about.technical.title}
-                variant="display-strong-s"
-                marginBottom="40"
+                style={{
+                  fontSize: "24px",
+                  fontWeight: 600,
+                  letterSpacing: "-0.96px",
+                  lineHeight: "32px",
+                  color: "var(--color-primary)",
+                  marginBottom: "var(--space-10)",
+                  marginTop: 0,
+                }}
               >
                 {about.technical.title}
-              </Heading>
-              <Column fillWidth gap="l">
+              </h2>
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
                 {about.technical.skills.map((skill, index) => (
-                  <Column key={`${skill}-${index}`} fillWidth gap="4">
-                    <Text variant="heading-strong-l">{skill.title}</Text>
-                    <Text variant="body-default-m" onBackground="neutral-weak">
+                  <div key={`${skill.title}-${index}`} style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
+                    <strong style={{ fontSize: "16px", fontWeight: 600, color: "var(--color-primary)" }}>
+                      {skill.title}
+                    </strong>
+                    <span style={{ fontSize: "14px", lineHeight: "20px", color: "var(--color-secondary)" }}>
                       {skill.description}
-                    </Text>
-                    {skill.images?.length > 0 && (
-                      <Flex fillWidth paddingTop="m" gap="12" wrap>
-                        {skill.images.map((image, index) => (
-                          <Flex
-                            key={index}
-                            border="neutral-medium"
-                            radius="m"
-                            //@ts-ignore
-                            minWidth={image.width}
-                            //@ts-ignore
-                            height={image.height}
-                          >
-                            <SmartImage
-                              enlarge
-                              radius="m"
-                              //@ts-ignore
-                              sizes={image.width.toString()}
-                              //@ts-ignore
-                              alt={image.alt}
-                              //@ts-ignore
-                              src={image.src}
-                            />
-                          </Flex>
-                        ))}
-                      </Flex>
-                    )}
-                  </Column>
+                    </span>
+                  </div>
                 ))}
-              </Column>
-            </>
+              </div>
+            </div>
           )}
-        </Column>
-      </Flex>
-    </Column>
+        </div>
+      </div>
+    </div>
   );
 }

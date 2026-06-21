@@ -1,14 +1,7 @@
 "use client";
 
-import {
-  AvatarGroup,
-  Carousel,
-  Column,
-  Flex,
-  Heading,
-  SmartLink,
-  Text,
-} from "@/once-ui/components";
+import React from "react";
+import Link from "next/link";
 
 interface ProjectCardProps {
   href: string;
@@ -31,60 +24,105 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   link,
 }) => {
   return (
-    <Column fillWidth gap="m">
-      <Carousel
-        sizes="(max-width: 960px) 100vw, 960px"
-        images={images.map((image) => ({
-          src: image,
-          alt: title,
-        }))}
-      />
-      <Flex
-        mobileDirection="column"
-        fillWidth
-        paddingX="s"
-        paddingTop="12"
-        paddingBottom="24"
-        gap="l"
-      >
+    <div
+      style={{
+        border: "1px solid var(--gray-200)",
+        borderRadius: "var(--radius-md)",
+        overflow: "hidden",
+      }}
+    >
+      {images.length > 0 && (
+        <img
+          src={images[0]}
+          alt={title}
+          style={{
+            width: "100%",
+            aspectRatio: "16 / 9",
+            objectFit: "cover",
+            display: "block",
+          }}
+        />
+      )}
+      <div style={{ padding: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
         {title && (
-          <Flex flex={5}>
-            <Heading as="h2" wrap="balance" variant="heading-strong-xl">
-              {title}
-            </Heading>
-          </Flex>
+          <h2
+            style={{
+              fontSize: "24px",
+              fontWeight: 600,
+              letterSpacing: "-0.96px",
+              lineHeight: "32px",
+              color: "var(--color-primary)",
+              margin: 0,
+            }}
+          >
+            {title}
+          </h2>
         )}
-        {(avatars?.length > 0 || description?.trim() || content?.trim()) && (
-          <Column flex={7} gap="16">
-            {avatars?.length > 0 && <AvatarGroup avatars={avatars} size="m" reverse />}
-            {description?.trim() && (
-              <Text wrap="balance" variant="body-default-s" onBackground="neutral-weak">
-                {description}
-              </Text>
-            )}
-            <Flex gap="24" wrap>
-              {content?.trim() && (
-                <SmartLink
-                  suffixIcon="arrowRight"
-                  style={{ margin: "0", width: "fit-content" }}
-                  href={href}
-                >
-                  <Text variant="body-default-s">View more about project</Text>
-                </SmartLink>
-              )}
-              {link && (
-                <SmartLink
-                  suffixIcon="arrowUpRightFromSquare"
-                  style={{ margin: "0", width: "fit-content" }}
-                  href={link}
-                >
-                  <Text variant="body-default-s">View project</Text>
-                </SmartLink>
-              )}
-            </Flex>
-          </Column>
+        {description?.trim() && (
+          <p
+            style={{
+              fontSize: "14px",
+              lineHeight: "20px",
+              color: "var(--color-secondary)",
+              margin: 0,
+            }}
+          >
+            {description}
+          </p>
         )}
-      </Flex>
-    </Column>
+        {avatars?.length > 0 && (
+          <div style={{ display: "flex", flexDirection: "row", gap: "4px" }}>
+            {avatars.map((avatar, index) => (
+              <img
+                key={index}
+                src={avatar.src}
+                alt=""
+                style={{
+                  width: "24px",
+                  height: "24px",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  border: "1px solid var(--gray-200)",
+                }}
+              />
+            ))}
+          </div>
+        )}
+        <div style={{ display: "flex", flexDirection: "row", gap: "16px", flexWrap: "wrap" }}>
+          {content?.trim() && (
+            <Link
+              href={"/" + href}
+              style={{
+                fontSize: "14px",
+                color: "var(--color-accent)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+                textDecoration: "none",
+              }}
+            >
+              View project details →
+            </Link>
+          )}
+          {link && (
+            <a
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontSize: "14px",
+                color: "var(--color-secondary)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+                textDecoration: "none",
+              }}
+            >
+              ↗ Live project
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };

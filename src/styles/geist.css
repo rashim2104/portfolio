@@ -1,0 +1,142 @@
+/* Geist Design System — Light Theme Tokens */
+:root {
+  /* === COLORS === */
+  --color-primary: #171717;
+  --color-secondary: #4d4d4d;
+  --color-accent: #006bff;
+  --color-bg: #ffffff;
+  --color-bg-subtle: #fafafa;
+
+  /* Gray scale */
+  --gray-100: #f2f2f2;
+  --gray-200: #ebebeb;
+  --gray-300: #e6e6e6;
+  --gray-400: #eaeaea;
+  --gray-500: #c9c9c9;
+  --gray-600: #a8a8a8;
+  --gray-700: #8f8f8f;
+  --gray-800: #7d7d7d;
+  --gray-900: #4d4d4d;
+  --gray-1000: #171717;
+
+  /* Gray alpha */
+  --gray-alpha-100: rgba(0, 0, 0, 0.053);
+  --gray-alpha-200: rgba(0, 0, 0, 0.082);
+  --gray-alpha-300: rgba(0, 0, 0, 0.102);
+  --gray-alpha-400: rgba(0, 0, 0, 0.078);
+  --gray-alpha-500: rgba(0, 0, 0, 0.212);
+  --gray-alpha-600: rgba(0, 0, 0, 0.239);
+  --gray-alpha-700: rgba(0, 0, 0, 0.439);
+  --gray-alpha-800: rgba(0, 0, 0, 0.510);
+  --gray-alpha-900: rgba(0, 0, 0, 0.702);
+  --gray-alpha-1000: rgba(0, 0, 0, 0.910);
+
+  /* Semantic accent colors */
+  --blue-700: #006bff;
+  --red-700: #fc0035;
+  --green-700: #28a948;
+  --amber-700: #ffae00;
+
+  /* === FONTS === */
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: var(--font-geist-mono), 'Menlo', 'Monaco', 'Courier New', monospace;
+
+  /* === SPACING (4px base) === */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-16: 64px;
+  --space-24: 96px;
+
+  /* === BORDER RADIUS === */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* === SHADOWS === */
+  --shadow-card: 0 2px 2px rgba(0, 0, 0, 0.04);
+  --shadow-popover: 0 1px 1px rgba(0, 0, 0, 0.02), 0 4px 8px -4px rgba(0, 0, 0, 0.04), 0 16px 24px -8px rgba(0, 0, 0, 0.06);
+  --shadow-modal: 0 1px 1px rgba(0, 0, 0, 0.02), 0 8px 16px -4px rgba(0, 0, 0, 0.04), 0 24px 32px -8px rgba(0, 0, 0, 0.06);
+
+  /* === FOCUS === */
+  --focus-ring: 0 0 0 2px #ffffff, 0 0 0 4px #006bff;
+
+  /* === CONTENT WIDTHS === */
+  --max-w-xs: 480px;
+  --max-w-sm: 640px;
+  --max-w-content: 768px;
+  --max-w-md: 960px;
+  --max-w-lg: 1200px;
+
+  /* === TYPOGRAPHY SIZES === */
+  /* Headings */
+  --text-heading-72: 72px;
+  --text-heading-64: 64px;
+  --text-heading-56: 56px;
+  --text-heading-48: 48px;
+  --text-heading-40: 40px;
+  --text-heading-32: 32px;
+  --text-heading-24: 24px;
+  --text-heading-20: 20px;
+  --text-heading-16: 16px;
+  --text-heading-14: 14px;
+
+  /* Line heights for headings */
+  --lh-heading-72: 72px;
+  --lh-heading-64: 64px;
+  --lh-heading-56: 56px;
+  --lh-heading-48: 56px;
+  --lh-heading-40: 48px;
+  --lh-heading-32: 40px;
+  --lh-heading-24: 32px;
+  --lh-heading-20: 26px;
+  --lh-heading-16: 24px;
+  --lh-heading-14: 20px;
+
+  /* Letter spacing for headings */
+  --ls-heading-32: -1.28px;
+  --ls-heading-24: -0.96px;
+  --ls-heading-20: -0.4px;
+  --ls-heading-16: -0.32px;
+  --ls-heading-14: -0.28px;
+
+  /* Body copy */
+  --text-body-24: 24px;
+  --text-body-20: 20px;
+  --text-body-18: 18px;
+  --text-body-16: 16px;
+  --text-body-14: 14px;
+  --text-body-13: 13px;
+
+  /* Line heights for body */
+  --lh-body-24: 36px;
+  --lh-body-20: 36px;
+  --lh-body-18: 28px;
+  --lh-body-16: 24px;
+  --lh-body-14: 20px;
+  --lh-body-13: 18px;
+
+  /* Label */
+  --text-label-16: 16px;
+  --text-label-14: 14px;
+  --text-label-13: 13px;
+  --text-label-12: 12px;
+
+  /* Button */
+  --text-btn-16: 16px;
+  --text-btn-14: 14px;
+  --text-btn-12: 12px;
+
+  /* === COMPONENT DIMENSIONS === */
+  --btn-height-sm: 32px;
+  --btn-height-md: 40px;
+  --btn-height-lg: 48px;
+  --input-height-sm: 32px;
+  --input-height-md: 40px;
+  --input-height-lg: 48px;
+}

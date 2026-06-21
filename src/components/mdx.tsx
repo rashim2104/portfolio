@@ -1,12 +1,8 @@
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
 import React, { ReactNode } from "react";
+import Link from "next/link";
 
-import { SmartImage, SmartLink, Text } from "@/once-ui/components";
-import { CodeBlock } from "@/once-ui/modules";
 import { HeadingLink } from "@/components";
-
-import { TextProps } from "@/once-ui/interfaces";
-import { SmartImageProps } from "@/once-ui/components/SmartImage";
 
 type TableProps = {
   data: {
@@ -43,42 +39,44 @@ type CustomLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
 function CustomLink({ href, children, ...props }: CustomLinkProps) {
   if (href.startsWith("/")) {
     return (
-      <SmartLink href={href} {...props}>
+      <Link href={href} style={{ color: "var(--color-accent)" }} {...(props as any)}>
         {children}
-      </SmartLink>
+      </Link>
     );
   }
 
   if (href.startsWith("#")) {
     return (
-      <a href={href} {...props}>
+      <a href={href} style={{ color: "var(--color-accent)" }} {...props}>
         {children}
       </a>
     );
   }
 
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+    <a href={href} target="_blank" rel="noopener noreferrer" style={{ color: "var(--color-accent)" }} {...props}>
       {children}
     </a>
   );
 }
 
-function createImage({ alt, src, ...props }: SmartImageProps & { src: string }) {
+type CreateImageProps = {
+  alt?: string;
+  src: string;
+  [key: string]: unknown;
+};
+
+function createImage({ alt, src }: CreateImageProps) {
   if (!src) {
-    console.error("SmartImage requires a valid 'src' property.");
+    console.error("createImage requires a valid 'src' property.");
     return null;
   }
 
   return (
-    <SmartImage
-      className="my-20"
-      enlarge
-      radius="m"
-      aspectRatio="16 / 9"
-      alt={alt}
+    <img
       src={src}
-      {...props}
+      alt={alt || ""}
+      style={{ width: "100%", borderRadius: "var(--radius-sm)", margin: "16px 0" }}
     />
   );
 }
@@ -87,22 +85,21 @@ function slugify(str: string): string {
   return str
     .toString()
     .toLowerCase()
-    .trim() // Remove whitespace from both ends of a string
-    .replace(/\s+/g, "-") // Replace spaces with -
-    .replace(/&/g, "-and-") // Replace & with 'and'
-    .replace(/[^\w\-]+/g, "") // Remove all non-word characters except for -
-    .replace(/\-\-+/g, "-"); // Replace multiple - with single -
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/&/g, "-and-")
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-");
 }
 
 function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
-  const CustomHeading = ({ children, ...props }: TextProps) => {
+  const CustomHeading = ({ children }: { children?: ReactNode }) => {
     const slug = slugify(children as string);
     return (
       <HeadingLink
-        style={{ marginTop: "var(--static-space-24)", marginBottom: "var(--static-space-12)" }}
+        style={{ marginTop: "var(--space-6)", marginBottom: "var(--space-3)" }}
         level={level}
         id={slug}
-        {...props}
       >
         {children}
       </HeadingLink>
@@ -114,34 +111,45 @@ function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
   return CustomHeading;
 }
 
-function createParagraph({ children }: TextProps) {
+function createParagraph({ children }: { children?: ReactNode }) {
   return (
-    <Text
-      style={{ lineHeight: "175%" }}
-      variant="body-default-m"
-      onBackground="neutral-medium"
-      marginTop="8"
-      marginBottom="12"
+    <p
+      style={{
+        lineHeight: "175%",
+        fontSize: "14px",
+        color: "var(--color-secondary)",
+        marginTop: "8px",
+        marginBottom: "12px",
+      }}
     >
       {children}
-    </Text>
+    </p>
   );
 }
 
 function Code({ children }: { children?: ReactNode }) {
-  // Fenced code blocks arrive as <pre><code className="language-x">...</code></pre>.
-  // Route them through the styled CodeBlock instead of the default <pre>.
   const codeEl = children as React.ReactElement<{ className?: string; children?: ReactNode }>;
   const className = codeEl?.props?.className || "";
-  const language = className.replace(/language-/, "") || "text";
   const raw = codeEl?.props?.children;
   const code = (Array.isArray(raw) ? raw.join("") : String(raw ?? "")).replace(/\n$/, "");
+
   return (
-    <CodeBlock
-      marginTop="8"
-      marginBottom="12"
-      codeInstances={[{ code, language, label: language }]}
-    />
+    <div style={{ margin: "8px 0 12px", borderRadius: "var(--radius-sm)", overflow: "hidden" }}>
+      <pre
+        style={{
+          background: "#1a1a1a",
+          color: "#e5e5e5",
+          padding: "var(--space-4)",
+          overflowX: "auto",
+          fontSize: "13px",
+          lineHeight: "1.6",
+          fontFamily: "var(--font-mono)",
+          margin: 0,
+        }}
+      >
+        <code className={className}>{code}</code>
+      </pre>
+    </div>
   );
 }
 
@@ -157,7 +165,6 @@ const components = {
   img: createImage as any,
   a: CustomLink as any,
   Table,
-  CodeBlock,
 };
 
 type CustomMDXProps = MDXRemoteProps & {

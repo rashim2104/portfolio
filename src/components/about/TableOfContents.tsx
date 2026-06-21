@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { Column, Flex, Text } from "@/once-ui/components";
-import styles from "./about.module.scss";
+import styles from "./about.module.css";
 
 interface TableOfContentsProps {
   structure: {
@@ -35,54 +34,32 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ structure, about }) =
   if (!about.tableOfContent.display) return null;
 
   return (
-    <Column
-      left="0"
-      style={{
-        top: "50%",
-        transform: "translateY(-50%)",
-        whiteSpace: "nowrap",
-      }}
-      position="fixed"
-      paddingLeft="24"
-      gap="32"
-      hide="m"
-    >
+    <div className={styles.sidebar}>
       {structure
         .filter((section) => section.display)
         .map((section, sectionIndex) => (
-          <Column key={sectionIndex} gap="12">
-            <Flex
-              cursor="interactive"
-              className={styles.hover}
-              gap="8"
-              vertical="center"
+          <div key={sectionIndex} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <div
+              className={styles.sidebarItem}
               onClick={() => scrollTo(section.title, 80)}
             >
-              <Flex height="1" minWidth="16" background="neutral-strong"></Flex>
-              <Text>{section.title}</Text>
-            </Flex>
-            {about.tableOfContent.subItems && (
-              <>
-                {section.items.map((item, itemIndex) => (
-                  <Flex
-                    hide="l"
-                    key={itemIndex}
-                    style={{ cursor: "pointer" }}
-                    className={styles.hover}
-                    gap="12"
-                    paddingLeft="24"
-                    vertical="center"
-                    onClick={() => scrollTo(item, 80)}
-                  >
-                    <Flex height="1" minWidth="8" background="neutral-strong"></Flex>
-                    <Text>{item}</Text>
-                  </Flex>
-                ))}
-              </>
-            )}
-          </Column>
+              <div className={styles.line} />
+              <span>{section.title}</span>
+            </div>
+            {about.tableOfContent.subItems && section.items.map((item, itemIndex) => (
+              <div
+                key={itemIndex}
+                className={styles.sidebarItem}
+                style={{ paddingLeft: "24px" }}
+                onClick={() => scrollTo(item, 80)}
+              >
+                <div className={styles.line} style={{ width: "8px" }} />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
         ))}
-    </Column>
+    </div>
   );
 };
 

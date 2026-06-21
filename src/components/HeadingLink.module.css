@@ -1,0 +1,17 @@
+.heading {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.heading:hover .icon {
+  opacity: 1;
+}
+
+.icon {
+  opacity: 0;
+  font-size: 12px;
+  color: var(--gray-700);
+  transition: opacity 150ms;
+}

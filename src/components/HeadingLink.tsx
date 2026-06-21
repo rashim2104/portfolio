@@ -1,9 +1,7 @@
 "use client";
 
 import React from "react";
-import { Heading, Flex, IconButton, useToast } from "@/once-ui/components";
-
-import styles from "@/components/HeadingLink.module.scss";
+import styles from "@/components/HeadingLink.module.css";
 
 interface HeadingLinkProps {
   id: string;
@@ -12,58 +10,38 @@ interface HeadingLinkProps {
   style?: React.CSSProperties;
 }
 
-export const HeadingLink: React.FC<HeadingLinkProps> = ({ id, level, children, style }) => {
-  const { addToast } = useToast();
+const fontStyles: Record<number, React.CSSProperties> = {
+  1: { fontSize: "32px", fontWeight: 600, letterSpacing: "-1.28px", lineHeight: "40px" },
+  2: { fontSize: "24px", fontWeight: 600, letterSpacing: "-0.96px", lineHeight: "32px" },
+  3: { fontSize: "20px", fontWeight: 600, letterSpacing: "-0.4px", lineHeight: "26px" },
+  4: { fontSize: "16px", fontWeight: 600, letterSpacing: "-0.32px", lineHeight: "24px" },
+  5: { fontSize: "14px", fontWeight: 600, letterSpacing: "-0.28px", lineHeight: "20px" },
+  6: { fontSize: "13px", fontWeight: 600, lineHeight: "18px" },
+};
 
-  const copyURL = (id: string): void => {
+export const HeadingLink: React.FC<HeadingLinkProps> = ({ id, level, children, style }) => {
+  const copyURL = (): void => {
     const url = `${window.location.origin}${window.location.pathname}#${id}`;
-    navigator.clipboard.writeText(url).then(
-      () => {
-        addToast({
-          variant: "success",
-          message: "Link copied to clipboard.",
-        });
-      },
-      () => {
-        addToast({
-          variant: "danger",
-          message: "Failed to copy link.",
-        });
-      },
-    );
+    navigator.clipboard.writeText(url).catch(() => {});
   };
 
-  const variantMap = {
-    1: "display-strong-xs",
-    2: "heading-strong-xl",
-    3: "heading-strong-l",
-    4: "heading-strong-m",
-    5: "heading-strong-s",
-    6: "heading-strong-xs",
-  } as const;
-
-  const variant = variantMap[level];
-  const asTag = `h${level}` as keyof React.JSX.IntrinsicElements;
+  const Tag = `h${level}` as keyof React.JSX.IntrinsicElements;
 
   return (
-    <Flex
-      style={style}
-      onClick={() => copyURL(id)}
-      className={styles.control}
-      vertical="center"
-      gap="4"
+    <Tag
+      id={id}
+      className={styles.heading}
+      onClick={copyURL}
+      style={{
+        ...fontStyles[level],
+        color: "var(--color-primary)",
+        fontFamily: "var(--font-sans)",
+        margin: 0,
+        ...style,
+      }}
     >
-      <Heading className={styles.text} id={id} variant={variant} as={asTag}>
-        {children}
-      </Heading>
-      <IconButton
-        className={styles.visibility}
-        size="s"
-        icon="openLink"
-        variant="ghost"
-        tooltip="Copy"
-        tooltipPosition="right"
-      />
-    </Flex>
+      {children}
+      <span className={styles.icon} aria-hidden="true">#</span>
+    </Tag>
   );
 };

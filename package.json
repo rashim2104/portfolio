@@ -17,6 +17,7 @@
     "classnames": "^2.5.1",
     "cookie": "^1.0.1",
     "critters": "^0.0.20",
+    "geist": "^1.7.2",
     "gray-matter": "^4.0.3",
     "next": "^15.5.12",
     "next-mdx-remote": "^6.0.0",
