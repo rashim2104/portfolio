@@ -6,6 +6,7 @@ const routes = {
   "/work": true,
   "/blog": true,
   "/now": true,
+  "/uses": true,
   "/resume": true,
 };
 

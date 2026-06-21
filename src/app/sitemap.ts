@@ -7,6 +7,7 @@ const STATIC_PRIORITIES: Record<string, { priority: number; changeFrequency: str
   "/work": { priority: 0.8, changeFrequency: "monthly" },
   "/blog": { priority: 0.8, changeFrequency: "monthly" },
   "/now": { priority: 0.7, changeFrequency: "weekly" },
+  "/uses": { priority: 0.6, changeFrequency: "monthly" },
   "/resume": { priority: 0.8, changeFrequency: "monthly" },
 };
 

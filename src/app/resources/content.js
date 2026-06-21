@@ -261,6 +261,51 @@ const now = {
   ],
 };
 
+const uses = {
+  label: "Uses",
+  title: "Uses",
+  description: `The hardware, tools, and stack ${person.name} uses day to day`,
+  intro: "The gear and software I actually reach for every day. Updated as things change.",
+  groups: [
+    {
+      title: "Hardware",
+      items: [
+        { name: "MacBook Air (M4)", detail: "daily driver" },
+        { name: "ASUS TUF", detail: "Intel i5 9th gen · 16GB · GTX 1650 — gaming + Windows" },
+        { name: "BenQ GW2790Q", detail: "1440p display" },
+        { name: "Aula F75", detail: "mechanical keyboard" },
+        { name: "Logitech M720", detail: "mouse" },
+      ],
+    },
+    {
+      title: "Editor & terminal",
+      items: [
+        { name: "Claude Code", detail: "primary driver — builds, reviews, multi-agent work" },
+        { name: "zsh", detail: "shell of choice" },
+        { name: "git + gh", detail: "CLI all the way" },
+      ],
+    },
+    {
+      title: "Stack",
+      items: [
+        { name: "TypeScript", detail: "the language I live in" },
+        { name: "Next.js · Hono · Express · SvelteKit", detail: "web frameworks" },
+        { name: "Drizzle · BullMQ · LiveKit", detail: "data, queues, realtime" },
+        { name: "Bun", detail: "runtime + package manager (never npm)" },
+        { name: "PostgreSQL · MongoDB", detail: "databases" },
+      ],
+    },
+    {
+      title: "Infra",
+      items: [
+        { name: "Docker · Caddy", detail: "containers + reverse proxy" },
+        { name: "Hetzner · Vercel · Cloudflare", detail: "where things run" },
+        { name: "Cloudflare R2 · AWS S3", detail: "object storage" },
+      ],
+    },
+  ],
+};
+
 const work = {
   label: "Projects",
   title: "Featured Projects",
@@ -273,4 +318,4 @@ const resume = {
   description: "View and download my professional resume",
 };
 
-export { person, social, newsletter, home, about, blog, now, work, resume };
+export { person, social, newsletter, home, about, blog, now, uses, work, resume };
