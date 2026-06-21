@@ -11,8 +11,8 @@ export const Header = () => {
   const navLinks = [
     { href: "/", label: "Home", match: (p: string) => p === "/" },
     { href: "/about", label: "About", match: (p: string) => p === "/about" },
-    { href: "/work", label: "Projects", match: (p: string) => p.startsWith("/work") },
     { href: "/blog", label: "Blog", match: (p: string) => p.startsWith("/blog") },
+    { href: "/work", label: "Projects", match: (p: string) => p.startsWith("/work") },
     { href: "/resume", label: "Resume", match: (p: string) => p.startsWith("/resume") },
   ];
 
@@ -43,6 +43,7 @@ export const Header = () => {
         </Link>
 
         <nav
+          aria-label="Main navigation"
           style={{
             display: "flex",
             alignItems: "center",
@@ -58,6 +59,7 @@ export const Header = () => {
               <Link
                 key={href}
                 href={href}
+                aria-current={isActive ? "page" : undefined}
                 className={`nav-link${isActive ? " active" : ""}`}
               >
                 {label}

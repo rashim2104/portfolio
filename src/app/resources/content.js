@@ -43,8 +43,26 @@ const social = [
 const home = {
   label: "Home",
   title: person.name,
-  description: `Software Developer & IT Engineering Student from ${person.location}`,
-  headline: <>Software Developer & IT Engineering Student</>,
+  description: `Software Developer from ${person.location}, building backend systems and mobile apps at Skcript`,
+  headline: <>Software Developer — mostly backend, sometimes mobile, always shipping</>,
+  tagline: "better late than never",
+  intro: <>
+    I'm a software developer at <strong>Skcript</strong>, mostly building the quiet stuff that runs in
+    the background. You know the password-reset email Instagram sends you? Someone has to build the thing
+    that renders and ships millions of those — that's my kind of work. Built Skcript's email service from
+    scratch (<strong>500K+ jobs, zero failed deliveries</strong>), and shipped <strong>FeatureOS Mobile</strong> end-to-end
+    with React Native.
+  </>,
+  stack: [
+    "TypeScript",
+    "React",
+    "React Native",
+    "Node.js",
+    "PostgreSQL",
+    "Redis",
+    "Docker",
+    "AWS",
+  ],
   about: <>Hey, I'm Rashim. Curious, a little all over the place, and someone who can't stop building things.
     <br /><br />
     I think in visuals, figure things out as I go, and get weirdly obsessed with problems that don't have easy answers. I'm a night owl, a team player, and someone who believes the best solutions are usually the simplest ones.
@@ -56,27 +74,27 @@ const home = {
   interests: [
     {
       title: "Building",
-      description: "Software, systems, and side projects. If it can be made, I want to make it.",
+      description: "software, systems, side projects. if it can be built, i want to build it.",
     },
     {
       title: "Music",
-      description: "A.R. Rahman on loop, always. Anything with soul.",
+      description: "something chill always playing — a.r. rahman to indie. it never really stops.",
     },
     {
       title: "Badminton",
-      description: "On the court when not at a keyboard.",
+      description: "been too long. gotta get back on the court.",
     },
     {
       title: "Legos",
-      description: "Building physical things, one brick at a time.",
+      description: "right now it's the ferrari sf24. calm to build, real result at the end.",
     },
     {
       title: "Math",
-      description: "Always had a thing for elegant solutions.",
+      description: "always had a thing for it. trigonometry laws are underrated.",
     },
     {
       title: "Games",
-      description: "Spending time in virtual worlds.",
+      description: "valorant, rdr2, the occasional pubg night.",
     },
   ],
 };
