@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: "%s | Rashim R B",
     default: "Rashim R B - Software Developer | TypeScript, React Native, Node.js",
   },
-  description: `Software Developer at Skcript specializing in TypeScript, React Native, Node.js, and cloud-native architectures. Building production-grade email services, mobile apps, and scalable backend systems.`,
+  description: `Software Developer at Skcript. I build email infrastructure, mobile apps, and backend systems with TypeScript, React Native, and Node.js. Based in Chennai.`,
   keywords: [
     "Rashim R B",
     "Rashim",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(`https://${baseURL}`),
   openGraph: {
     title: `${person.name} - Software Developer`,
-    description: `Software Developer at Skcript. Building production-grade systems with TypeScript, React Native, Node.js, and cloud-native architectures. Email services, mobile apps, backend systems.`,
+    description: `Software Developer at Skcript. I build email infrastructure, mobile apps, and backend systems with TypeScript, React Native, and Node.js.`,
     url: `https://${baseURL}`,
     siteName: person.name,
     locale: "en_US",
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: `${person.name} - Software Developer`,
-    description: `Software Developer at Skcript. Building production-grade systems with TypeScript, React Native, Node.js, and cloud-native architectures.`,
+    description: `Software Developer at Skcript. I build email infra, mobile apps, and backend systems with TypeScript, React Native, and Node.js.`,
     images: [`https://${baseURL}/images/avatar.jpg`],
     creator: "@rashimbuilds",
   },

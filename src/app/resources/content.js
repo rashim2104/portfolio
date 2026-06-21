@@ -153,12 +153,12 @@ const about = {
         role: "Software Developer",
         location: "Chennai, Tamil Nadu, India",
         achievements: [
-          <>Independently architected and built a standalone, production-grade email and notification service, decoupled from a legacy Ruby system to enable reuse across multiple products.</>,
-          <>Processed 500K+ email jobs in the last 6 months with zero failures for completed deliveries, using Redis-backed queues, PostgreSQL transactions, and retry mechanisms (3 retries).</>,
-          <>Designed and implemented pixel-based open tracking and URL shortening for click analytics, enabling real-time engagement insights through interactive dashboards.</>,
-          <>Built a scalable job processing pipeline capable of handling high request volumes with strict logging guarantees, tracking every lifecycle event of an email job.</>,
-          <>Developed FeatureOS Mobile end-to-end using React Native + Expo, delivering a complete production-ready app including changelogs, roadmap boards, voting system, and searchable knowledge base.</>,
-          <>Integrated Apple Sign-In, Sentry error monitoring, and React Query for type-safe APIs, caching, and performant data fetching across iOS and Android.</>,
+          <>Built Skcript's email and notification service from scratch — pulled it out of a legacy Ruby system so every product routes through one place.</>,
+          <>It's handled 500K+ jobs in six months with zero failed deliveries. Redis queues, Postgres transactions, and a 3-try retry path keep it honest.</>,
+          <>Added pixel-based open tracking and URL shortening, so the dashboards show who opened and clicked in near real time.</>,
+          <>The pipeline behind it logs every step of an email's lifecycle, so nothing disappears silently under load.</>,
+          <>Shipped FeatureOS Mobile end to end with React Native + Expo — changelogs, roadmap boards, voting, and a searchable knowledge base in one app.</>,
+          <>Wired in Apple Sign-In, Sentry, and React Query for typed APIs and caching across iOS and Android.</>,
         ],
       },
     ],
@@ -225,8 +225,8 @@ const about = {
 
 const blog = {
   label: "Blog",
-  title: "Technical Blog",
-  description: "Articles about software development, engineering, and technology"
+  title: "Writing",
+  description: "Notes on what I'm building, and what breaks along the way."
 };
 
 const now = {
@@ -308,8 +308,8 @@ const uses = {
 
 const work = {
   label: "Projects",
-  title: "Featured Projects",
-  description: "A collection of my technical projects and achievements",
+  title: "Projects",
+  description: "Things I've built — at work, in college, and on weekends.",
 };
 
 const resume = {

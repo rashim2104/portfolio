@@ -8,7 +8,7 @@ import { formatDate } from "@/app/utils/formatDate";
 
 export async function generateMetadata() {
   const title = "Rashim R B - Software Developer";
-  const description = "Software Developer at Skcript specializing in TypeScript, React Native, Node.js. Building production-grade email services, mobile apps, and scalable systems. Based in Chennai.";
+  const description = "Software Developer at Skcript. I build email infrastructure, mobile apps, and backend systems with TypeScript, React Native, and Node.js. Based in Chennai.";
   const ogImage = `https://${baseURL}/og?type=default&title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 
   return {

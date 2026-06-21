@@ -3,7 +3,7 @@ import { baseURL } from "@/app/resources";
 
 export async function generateMetadata() {
   const title = "Resume - Rashim R B | Software Developer";
-  const description = "Rashim R B's professional resume. Software Developer at Skcript with expertise in TypeScript, React Native, Node.js, PostgreSQL, Docker, and AWS. Based in Chennai, India.";
+  const description = "Rashim R B's resume. Software Developer at Skcript working in TypeScript, React Native, Node.js, Postgres, Docker, and AWS. Based in Chennai, India.";
   const ogImage = `https://${baseURL}/og?type=resume&title=${encodeURIComponent(title)}`;
 
   return {

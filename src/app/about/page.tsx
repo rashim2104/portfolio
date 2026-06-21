@@ -7,7 +7,7 @@ import { FaGithub, FaLinkedin, FaXTwitter, FaEnvelope } from "react-icons/fa6";
 
 export async function generateMetadata() {
   const title = "About Rashim R B - Software Developer";
-  const description = "Learn about Rashim R B, a software developer at Skcript building scalable systems with TypeScript, React Native, Node.js, PostgreSQL, and cloud technologies. Based in Chennai.";
+  const description = "Rashim R B — Software Developer at Skcript. Backend systems, mobile apps, and the occasional voice-AI experiment. TypeScript, React Native, Node.js, Postgres. Based in Chennai.";
   const ogImage = `https://${baseURL}/og?type=about&title=${encodeURIComponent(title)}`;
 
   return {
