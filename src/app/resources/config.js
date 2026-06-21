@@ -4,8 +4,8 @@ const routes = {
   "/": true,
   "/about": true,
   "/work": true,
-  "/gallery": true,
   "/blog": true,
+  "/now": true,
   "/resume": true,
 };
 

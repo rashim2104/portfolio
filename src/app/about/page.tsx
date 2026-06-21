@@ -2,6 +2,7 @@ import { baseURL } from "@/app/resources";
 import TableOfContents from "@/components/about/TableOfContents";
 import { person, about, social } from "@/app/resources/content";
 import React from "react";
+import Image from "next/image";
 import { FaGithub, FaLinkedin, FaXTwitter, FaEnvelope } from "react-icons/fa6";
 
 export async function generateMetadata() {
@@ -76,7 +77,7 @@ export default function About() {
             "@type": "Person",
             name: person.name,
             jobTitle: person.role,
-            description: about.intro.description,
+            description: about.description,
             url: `https://${baseURL}/about`,
             image: `https://${baseURL}${person.avatar}`,
             sameAs: social
@@ -97,9 +98,12 @@ export default function About() {
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
         {about.avatar.display && (
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-3)", paddingBottom: "var(--space-8)" }}>
-            <img
+            <Image
               src={person.avatar}
-              alt={person.name}
+              alt={`${person.name} — Software Developer based in ${person.location}`}
+              width={120}
+              height={120}
+              priority
               style={{
                 width: "120px",
                 height: "120px",
