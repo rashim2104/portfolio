@@ -5,7 +5,7 @@ import { person, work } from "@/app/resources/content";
 
 export async function generateMetadata() {
   const title = "Featured Projects - Rashim R B";
-  const description = "Full stack projects including production email services, mobile apps with React Native, real-time tracking systems, and scalable backend architectures.";
+  const description = "Projects I've shipped — an email service, React Native apps, and a few real-time tracking systems for events.";
   const ogImage = `https://${baseURL}/og?type=work&title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 
   return {
@@ -83,6 +83,14 @@ export default async function Work() {
           }),
         }}
       />
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", marginBottom: "var(--space-8)" }}>
+        <h1 style={{ fontSize: "32px", fontWeight: 600, letterSpacing: "-1.28px", lineHeight: "40px", color: "var(--color-primary)", margin: 0 }}>
+          {work.title}
+        </h1>
+        <p style={{ fontSize: "16px", lineHeight: "24px", color: "var(--color-secondary)", margin: 0 }}>
+          {work.description}
+        </p>
+      </div>
       <Projects projects={allProjects} />
     </div>
   );

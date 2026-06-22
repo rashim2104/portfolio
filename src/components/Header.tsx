@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import styles from "@/components/Header.module.css";
 import { routes } from "@/app/resources";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Header = () => {
   const pathname = usePathname() ?? "";
@@ -11,8 +12,9 @@ export const Header = () => {
   const navLinks = [
     { href: "/", label: "Home", match: (p: string) => p === "/" },
     { href: "/about", label: "About", match: (p: string) => p === "/about" },
-    { href: "/work", label: "Projects", match: (p: string) => p.startsWith("/work") },
     { href: "/blog", label: "Blog", match: (p: string) => p.startsWith("/blog") },
+    { href: "/work", label: "Projects", match: (p: string) => p.startsWith("/work") },
+    { href: "/now", label: "Now", match: (p: string) => p.startsWith("/now") },
     { href: "/resume", label: "Resume", match: (p: string) => p.startsWith("/resume") },
   ];
 
@@ -43,6 +45,7 @@ export const Header = () => {
         </Link>
 
         <nav
+          aria-label="Main navigation"
           style={{
             display: "flex",
             alignItems: "center",
@@ -58,12 +61,15 @@ export const Header = () => {
               <Link
                 key={href}
                 href={href}
+                aria-current={isActive ? "page" : undefined}
                 className={`nav-link${isActive ? " active" : ""}`}
               >
                 {label}
               </Link>
             );
           })}
+          <span style={{ width: "1px", height: "20px", background: "var(--gray-200)", margin: "0 var(--space-1)" }} aria-hidden="true" />
+          <ThemeToggle />
         </nav>
       </div>
     </header>

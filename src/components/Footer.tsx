@@ -56,6 +56,15 @@ export const Footer = () => {
           &copy; {currentYear} {person.name}
         </span>
 
+        <div style={{ display: "flex", alignItems: "center", gap: "var(--space-4)" }}>
+          <Link href="/now" className="nav-link" style={{ padding: 0, fontSize: "13px", fontWeight: 400 }}>
+            Now
+          </Link>
+          <Link href="/uses" className="nav-link" style={{ padding: 0, fontSize: "13px", fontWeight: 400 }}>
+            Uses
+          </Link>
+        </div>
+
         <div
           style={{
             display: "flex",

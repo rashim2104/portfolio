@@ -21,6 +21,17 @@ body {
   background-color: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+:root { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
+
+/* Keep code blocks dark in both themes */
+[data-theme="dark"] .prose pre {
+  background: #141414;
+  color: #ededed;
+  border: 1px solid var(--gray-200);
 }
 
 /* Base typography */
@@ -92,6 +103,26 @@ input, textarea, select {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--gray-500);
+}
+
+/* Skip to content (a11y) */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-primary);
+  color: var(--color-bg);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: var(--space-4);
+  top: var(--space-4);
 }
 
 /* === LAYOUT UTILITIES === */
@@ -239,6 +270,29 @@ input, textarea, select {
 .card-hover:hover {
   background-color: var(--color-bg-subtle);
   border-color: var(--gray-500);
+}
+
+/* Project card hover lift */
+.project-card {
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-bg);
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.project-card:hover {
+  border-color: var(--gray-400);
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+}
+
+.project-card img {
+  transition: transform 300ms ease;
+}
+
+.project-card:hover img {
+  transform: scale(1.02);
 }
 
 /* Divider */
