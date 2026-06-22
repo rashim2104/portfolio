@@ -74,15 +74,6 @@ export default function Home() {
           {home.intro}
         </p>
 
-        {/* Tech stack */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
-          {home.stack.map((tech) => (
-            <span key={tech} className="tag" style={{ fontFamily: "var(--font-mono)" }}>
-              {tech}
-            </span>
-          ))}
-        </div>
-
         {/* CTAs */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)", marginTop: "var(--space-1)" }}>
           <Link href="/blog" className="btn btn-primary">
