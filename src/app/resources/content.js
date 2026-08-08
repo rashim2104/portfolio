@@ -47,6 +47,12 @@ const home = {
     scratch (<strong>500K+ jobs, zero failed deliveries</strong>), and shipped <strong>FeatureOS Mobile</strong> end-to-end
     with React Native.
   </>,
+  // Pulled out of the intro paragraph so the numbers can carry themselves.
+  metrics: [
+    { value: "500K+", label: "Jobs run" },
+    { value: "0", label: "Failed deliveries" },
+    { value: "6 mo", label: "In production" },
+  ],
   stack: [
     "TypeScript",
     "React",
