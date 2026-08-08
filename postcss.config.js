@@ -3,7 +3,7 @@ module.exports = {
     [
       "@csstools/postcss-global-data",
       {
-        files: ["src/once-ui/styles/breakpoints.scss"],
+        files: ["src/styles/breakpoints.css"],
       },
     ],
     "postcss-custom-media",

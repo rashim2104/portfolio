@@ -1,8 +1,7 @@
 import { Posts } from "@/components/blog/Posts";
 import { baseURL } from "@/app/resources";
-import { blog, person, newsletter } from "@/app/resources/content";
+import { blog, person } from "@/app/resources/content";
 import { getPosts } from "@/app/utils/utils";
-import { Mailchimp } from "@/components";
 
 export async function generateMetadata() {
   const title = "Technical Blog - Rashim R B";
@@ -106,7 +105,6 @@ export default function Blog() {
         {blog.title}
       </h1>
       <Posts posts={allPosts} thumbnail columns="1" />
-      {newsletter.display && <Mailchimp newsletter={newsletter} />}
     </div>
   );
 }
