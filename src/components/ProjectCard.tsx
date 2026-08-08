@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { ScanReveal } from "@/components/fx/ScanReveal";
 import styles from "@/components/ProjectCard.module.css";
 
 interface ProjectCardProps {
@@ -26,8 +27,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   priority = false,
   ordinal,
 }) => {
+  const hasMedia = images.length > 0;
+
   return (
-    <article className={styles.card}>
+    // Projects without artwork collapse to a single column rather than leaving
+    // an empty half of the row.
+    <article className={`${styles.card}${hasMedia ? "" : ` ${styles.cardTextOnly}`}`}>
       <div className={styles.body}>
         {ordinal !== undefined && (
           <span className={`${styles.ordinal} label`}>
@@ -70,16 +75,18 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
       </div>
 
-      {images.length > 0 && (
-        <Link href={`/${href}`} aria-label={`View ${title}`} className={styles.media}>
-          <Image
-            src={images[0]}
-            alt={`${title} — project preview`}
-            fill
-            priority={priority}
-            sizes="(max-width: 899px) 100vw, 480px"
-          />
-        </Link>
+      {hasMedia && (
+        <ScanReveal className={styles.mediaWrap}>
+          <Link href={`/${href}`} aria-label={`View ${title}`} className={styles.media}>
+            <Image
+              src={images[0]}
+              alt={`${title} — project preview`}
+              fill
+              priority={priority}
+              sizes="(max-width: 899px) 100vw, 480px"
+            />
+          </Link>
+        </ScanReveal>
       )}
     </article>
   );

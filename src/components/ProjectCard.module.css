@@ -7,6 +7,21 @@
   border-top: 1px solid var(--rule);
 }
 
+.cardTextOnly {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.cardTextOnly .body {
+  max-width: var(--w-prose);
+}
+
+/* Holds the scan canvas, which is positioned against this box. */
+.mediaWrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-1);
+}
+
 .media {
   display: block;
   position: relative;
