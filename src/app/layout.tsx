@@ -1,7 +1,14 @@
-import "@/styles/geist.css";
+import "@/styles/tokens.css";
 import "@/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
+import { IBM_Plex_Mono } from "next/font/google";
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-plex-mono",
+  display: "swap",
+});
 import { Footer, Header } from "@/components";
 import { baseURL } from "@/app/resources";
 import { person } from "@/app/resources/content";
@@ -177,7 +184,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      className={`${GeistSans.variable} ${plexMono.variable}`}
     >
       <head>
         <script
