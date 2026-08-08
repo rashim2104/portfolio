@@ -29,25 +29,6 @@ export const metadata: Metadata = {
     default: "Rashim R B - Software Developer | TypeScript, React Native, Node.js",
   },
   description: `Software Developer at Skcript. I build email infrastructure, mobile apps, and backend systems with TypeScript, React Native, and Node.js. Based in Chennai.`,
-  keywords: [
-    "Rashim R B",
-    "Rashim",
-    "Software Developer",
-    "Full Stack Developer",
-    "React Native Developer",
-    "TypeScript Developer",
-    "Node.js Developer",
-    "Next.js Developer",
-    "Chennai Developer",
-    "Skcript",
-    "Sri Sairam Institute of Technology",
-    "FeatureOS Mobile",
-    "Email Service",
-    "Redis",
-    "PostgreSQL",
-    "Docker",
-    "AWS",
-  ].join(", "),
   authors: [{ name: "Rashim R B", url: "https://rashim.in" }],
   creator: "Rashim R B",
   publisher: "Rashim R B",
@@ -92,9 +73,8 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  alternates: {
-    canonical: `https://${baseURL}`,
-  },
+  // No canonical here on purpose. A root-level canonical silently leaks onto any
+  // page that forgets its own, so every route declares its own instead.
   verification: {
     google: "aORBuZX3pcK4_x1Tb98R52KmbozBWMRFQbmd_egUGlQ",
   },
@@ -165,14 +145,6 @@ const websiteSchema = {
   "author": {
     "@type": "Person",
     "name": "Rashim R B"
-  },
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": {
-      "@type": "EntryPoint",
-      "urlTemplate": "https://rashim.in/blog?q={search_term_string}"
-    },
-    "query-input": "required name=search_term_string"
   }
 };
 
