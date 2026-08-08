@@ -26,7 +26,8 @@
 
 export interface KineticParams {
   text: string;
-  paper: string;
+  /** null paints no ground at all, so the page shows through the letter. */
+  paper: string | null;
   ink: string;
   accent: string;
   tiles: number; // grid columns; rows derived from aspect
@@ -36,6 +37,15 @@ export interface KineticParams {
   chroma: number; // chromatic-split strength 0..1
   shade: number; // depth-shading strength 0..1
   grain: number; // grain/scanline strength 0..1
+  /** Glyph height as a fraction of canvas height. >1 deliberately overflows. */
+  fit: number;
+  /** Glyph bounding-box centre, in fractions of the canvas. */
+  anchorX: number;
+  anchorY: number;
+  /** Master alpha for the whole letter. */
+  opacity: number;
+  /** Device-pixel-ratio ceiling. Large canvases want a lower cap. */
+  maxDpr: number;
 }
 
 function parseHex(hex: string): [number, number, number] {
@@ -117,7 +127,7 @@ export class KineticEngine {
   }
 
   private applyColors() {
-    this.paperRGB = parseHex(this.p.paper);
+    this.paperRGB = parseHex(this.p.paper ?? "#000000");
     this.inkRGB = parseHex(this.p.ink);
     this.accentRGB = parseHex(this.p.accent);
     this.accentInv = [
@@ -130,7 +140,7 @@ export class KineticEngine {
   resize() {
     const rect = this.stage.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
-    this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.dpr = Math.min(window.devicePixelRatio || 1, this.p.maxDpr);
     this.w = rect.width;
     this.h = rect.height;
 
@@ -155,29 +165,45 @@ export class KineticEngine {
     if (!W || !H) return;
     mctx.clearRect(0, 0, W, H);
 
-    const text = (this.p.text || "R").slice(0, 12);
-    const single = text.length === 1;
+    const text = (this.p.text || "r").slice(0, 12);
     // The whole computed stack, not just its first entry — next/font families
     // resolve to generated names and the fallbacks matter if one is still loading.
     const stack =
       getComputedStyle(document.documentElement).getPropertyValue("--font-mono").trim() ||
       "ui-monospace, monospace";
 
-    let size = Math.round(H * (single ? 0.86 : 0.6));
     mctx.fillStyle = "#fff";
-    mctx.textAlign = "center";
-    mctx.textBaseline = "middle";
+    mctx.textAlign = "left";
+    mctx.textBaseline = "alphabetic";
     const setFont = (s: number) => (mctx.font = `700 ${s}px ${stack}`);
+
+    // Size against the glyph's REAL inked bounds rather than the font's em box.
+    // A lowercase 'r' has no ascender and no descender, so em-box sizing would
+    // render it at roughly half the intended height; measuring the ink makes any
+    // character fill the same optical space.
+    const PROBE = 200;
+    setFont(PROBE);
+    const probe = mctx.measureText(text);
+    const probeH = probe.actualBoundingBoxAscent + probe.actualBoundingBoxDescent;
+    const probeW = probe.actualBoundingBoxRight + probe.actualBoundingBoxLeft;
+    if (probeH <= 0 || probeW <= 0) return;
+
+    // Fit to height, but never let a wide string overflow the canvas width.
+    const byHeight = (H * this.p.fit * PROBE) / probeH;
+    const byWidth = (W * this.p.fit * 1.6 * PROBE) / probeW;
+    const size = Math.max(8, Math.min(byHeight, byWidth));
     setFont(size);
-    if (!single) {
-      const maxW = W * 0.9;
-      let guard = 0;
-      while (mctx.measureText(text).width > maxW && size > 12 && guard++ < 40) {
-        size -= 4;
-        setFont(size);
-      }
-    }
-    mctx.fillText(text, W / 2, H * 0.54);
+
+    // Place the glyph by its ink centre, not its baseline or advance width.
+    const m = mctx.measureText(text);
+    const left = m.actualBoundingBoxLeft;
+    const right = m.actualBoundingBoxRight;
+    const ascent = m.actualBoundingBoxAscent;
+    const descent = m.actualBoundingBoxDescent;
+    const x = this.p.anchorX * W - (right - left) / 2;
+    const y = this.p.anchorY * H + (ascent - descent) / 2;
+
+    mctx.fillText(text, x, y);
     this.measureBox();
   }
 
@@ -300,18 +326,25 @@ export class KineticEngine {
     //    clean ink and only the warped edges show colour.
     ctx.globalCompositeOperation = "source-over";
     ctx.globalAlpha = 1;
-    ctx.fillStyle = rgb(this.paperRGB);
-    ctx.fillRect(0, 0, W, H);
+    if (p.paper === null) {
+      // Transparent ground: the page itself is the paper.
+      ctx.clearRect(0, 0, W, H);
+    } else {
+      ctx.fillStyle = rgb(this.paperRGB);
+      ctx.fillRect(0, 0, W, H);
+    }
 
+    const a = p.opacity;
     if (p.chroma > 0) {
       const shiftPx = Math.round(p.chroma * 5 * this.dpr) + 1;
-      this.compositeTinted(this.accentRGB, shiftPx, 0.7 * p.chroma);
-      this.compositeTinted(this.accentInv, -shiftPx, 0.6 * p.chroma);
+      this.compositeTinted(this.accentRGB, shiftPx, 0.7 * p.chroma * a);
+      this.compositeTinted(this.accentInv, -shiftPx, 0.6 * p.chroma * a);
     }
-    this.compositeTinted(this.inkRGB, 0, 1);
+    this.compositeTinted(this.inkRGB, 0, a);
 
-    // 3) grain + scanline veil
-    if (this.grainCanvas && p.grain > 0) {
+    // 3) grain + scanline veil. Skipped on a transparent ground — an overlay
+    //    blend against nothing just fogs whatever sits behind the canvas.
+    if (this.grainCanvas && p.grain > 0 && p.paper !== null) {
       ctx.globalCompositeOperation = "overlay";
       ctx.globalAlpha = p.grain;
       ctx.drawImage(this.grainCanvas, 0, 0);

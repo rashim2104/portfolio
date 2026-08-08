@@ -141,6 +141,8 @@ select {
    ============================================================ */
 
 .main {
+  position: relative;
+  z-index: 1; /* above the kinetic backdrop */
   flex: 1;
   width: 100%;
   max-width: var(--w-frame);

@@ -10,6 +10,7 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 import { Footer, Header, StatusBar } from "@/components";
+import { KineticBackdrop } from "@/components/fx/KineticBackdrop";
 import { baseURL } from "@/app/resources";
 import { person } from "@/app/resources/content";
 import { Metadata, Viewport } from "next";
@@ -210,6 +211,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body>
         <a href="#main-content" className="skip-link">Skip to content</a>
+        <KineticBackdrop letter="r" />
         <Header />
         <main id="main-content" className="main">
           {children}

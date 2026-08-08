@@ -1,4 +1,6 @@
 .footer {
+  position: relative;
+  z-index: 1; /* above the kinetic backdrop */
   border-top: 1px solid var(--rule);
   padding: var(--space-10) var(--space-6) var(--space-8);
   margin-top: var(--space-24);

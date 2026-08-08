@@ -1,0 +1,14 @@
+/* A fixed layer behind everything. Not in the document flow, allocated no
+   space, never intercepts a click — the letter simply lives behind the site
+   and the content scrolls over it.
+
+   `contain: strict` keeps a full-viewport canvas from participating in layout
+   or paint for the rest of the page. */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+}

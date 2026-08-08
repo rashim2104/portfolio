@@ -5,7 +5,6 @@ import { baseURL } from "@/app/resources";
 import { home, person, social } from "@/app/resources/content";
 import { getPosts } from "@/app/utils/utils";
 import { formatDate } from "@/app/utils/formatDate";
-import { KineticMark } from "@/components/fx/KineticMark";
 import styles from "@/app/page.module.css";
 
 export async function generateMetadata() {
@@ -80,8 +79,6 @@ export default function Home() {
           className={styles.portrait}
         />
       </section>
-
-      <KineticMark letter="R" />
 
       {posts.length > 0 && (
         <section className={styles.section}>
