@@ -4,14 +4,16 @@ import { DatamoshBand } from "@/components/fx/DatamoshBand";
 import styles from "@/app/not-found.module.css";
 
 export const metadata: Metadata = {
-  title: "404 - Page Not Found | Rashim R B",
+  title: "404 — Page Not Found",
   description: "The page you're looking for doesn't exist. Return to explore projects, blog posts, and more.",
+  // Overrides the layout's site-wide index/follow. Next emits its own noindex
+  // for this route, and without this the two tags would contradict each other.
   robots: {
-    index: true,
-    follow: true,
+    index: false,
+    follow: false,
   },
   openGraph: {
-    title: "404 - Page Not Found | Rashim R B",
+    title: "404 — Page Not Found",
     description: "The page you're looking for doesn't exist. Return to explore projects, blog posts, and more.",
     url: "https://rashim.in/404",
     type: "website",
