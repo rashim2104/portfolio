@@ -80,15 +80,6 @@ export default function Home() {
         />
       </section>
 
-      <section className={`${styles.grid} ${styles.metrics}`} aria-label="Production metrics">
-        {home.metrics.map((metric) => (
-          <div key={metric.label} className={styles.cell}>
-            <span className={styles.metricValue}>{metric.value}</span>
-            <span className="label">{metric.label}</span>
-          </div>
-        ))}
-      </section>
-
       {posts.length > 0 && (
         <section className={styles.section}>
           <div className={styles.sectionHead}>
