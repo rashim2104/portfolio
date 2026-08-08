@@ -35,3 +35,5 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+# Isolated build dir used by build:check
+/.next-check/

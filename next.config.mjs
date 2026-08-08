@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // `next build` and `next dev` share .next by default, so building while a dev
+  // server is running overwrites the chunks it is serving and the site loses its
+  // stylesheets until dev recompiles. `bun run build:check` sets this to build
+  // into a throwaway directory instead, leaving a running dev server untouched.
+  // Unset in CI and on Vercel, so production builds still use .next.
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   pageExtensions: ["ts", "tsx"],
   experimental: {
     optimizeCss: true,

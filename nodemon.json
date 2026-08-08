@@ -1,0 +1,14 @@
+{
+  "watch": [
+    "next.config.mjs",
+    "postcss.config.js",
+    "tsconfig.json",
+    "package.json",
+    "src/app/resources"
+  ],
+  "ext": "mjs,js,json,ts",
+  "ignore": [".next/**", "node_modules/**", "**/*.test.*"],
+  "exec": "next dev",
+  "delay": "300",
+  "signal": "SIGTERM"
+}
