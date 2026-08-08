@@ -33,12 +33,16 @@
   min-width: 0;
 }
 
+/* An h2 for structure, but it keeps the sans face and body scale of the rest of
+   the row — the global heading rule would otherwise pull in the mono face and
+   its heading letter-spacing. */
 .title {
   font-family: var(--font-sans);
   font-size: var(--t-body);
   font-weight: 500;
   color: var(--ink);
   line-height: var(--lh-tight);
+  letter-spacing: normal;
 }
 
 .postLink:hover .title {

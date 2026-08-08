@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/PageHeader";
 import styles from "@/styles/page.module.css";
 
 export async function generateMetadata() {
-  const title = "Technical Blog - Rashim R B";
+  const title = "Writing — Engineering Notes";
   const description = "In-depth technical articles on TypeScript, React Native, Node.js, system design, and software engineering best practices.";
   const ogImage = `https://${baseURL}/og?type=blog&title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 

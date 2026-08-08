@@ -6,7 +6,10 @@ import { BadgeTrail } from "@/components/fx/BadgeTrail";
 import styles from "@/styles/page.module.css";
 
 export async function generateMetadata() {
-  const title = `Uses - ${person.name}`;
+  // The page title stays bare — the layout template appends the name. Social
+  // cards carry it inline, since they travel without that template.
+  const title = "Uses";
+  const socialTitle = `Uses — ${person.name}`;
   const description = uses.description;
   const ogImage = `https://${baseURL}/og?type=default&title=${encodeURIComponent("Uses")}&description=${encodeURIComponent(description)}`;
 
@@ -15,15 +18,15 @@ export async function generateMetadata() {
     description,
     alternates: { canonical: `https://${baseURL}/uses` },
     openGraph: {
-      title,
+      title: socialTitle,
       description,
       type: "website",
       url: `https://${baseURL}/uses`,
-      images: [{ url: ogImage, alt: title }],
+      images: [{ url: ogImage, alt: socialTitle }],
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: socialTitle,
       description,
       images: [ogImage],
     },

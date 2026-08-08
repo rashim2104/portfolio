@@ -1,7 +1,8 @@
 const baseURL = "rashim.in";
 
-// Routes rendered in the site navigation. /resume is deliberately absent:
-// the page still builds and resolves, it is just not linked from the UI.
+// Routes the site owns. Header renders its own navLinks list and only uses this
+// as a filter, so /resume being here makes it sitemap-visible without adding a
+// nav link — the page stays unlinked in the UI, as intended.
 const routes = {
   "/": true,
   "/about": true,
@@ -9,6 +10,7 @@ const routes = {
   "/blog": true,
   "/now": true,
   "/uses": true,
+  "/resume": true,
 };
 
 const protectedRoutes = {};

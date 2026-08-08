@@ -29,13 +29,15 @@ export default function Post({ post, thumbnail, ordinal }: PostProps) {
         {String(ordinal ?? 0).padStart(2, "0")}
       </span>
 
-      <span className={styles.body}>
-        <span className={styles.title}>{post.metadata.title}</span>
+      {/* A div rather than a span, because the title is a real heading and
+          phrasing content cannot hold one. */}
+      <div className={styles.body}>
+        <h2 className={styles.title}>{post.metadata.title}</h2>
         {post.metadata.summary && (
           <span className={styles.summary}>{post.metadata.summary}</span>
         )}
         {post.metadata.tag && <span className={`${styles.tag} tag`}>{post.metadata.tag}</span>}
-      </span>
+      </div>
 
       {formattedDate && (
         <time className={`${styles.date} label`}>{formattedDate}</time>

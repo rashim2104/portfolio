@@ -4,13 +4,14 @@ import { PageHeader } from "@/components/PageHeader";
 import styles from "@/styles/page.module.css";
 
 export async function generateMetadata() {
-  const title = "Resume - Rashim R B | Software Developer";
+  const title = "Resume — Software Developer";
   const description = "Rashim R B's resume. Software Developer at Skcript working in TypeScript, React Native, Node.js, Postgres, Docker, and AWS. Based in Chennai, India.";
   const ogImage = `https://${baseURL}/og?type=resume&title=${encodeURIComponent(title)}`;
 
   return {
     title,
     description,
+    alternates: { canonical: `https://${baseURL}/resume` },
     openGraph: {
       title,
       description,

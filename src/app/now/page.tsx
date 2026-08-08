@@ -5,7 +5,10 @@ import { PageHeader } from "@/components/PageHeader";
 import styles from "@/styles/page.module.css";
 
 export async function generateMetadata() {
-  const title = `Now - ${person.name}`;
+  // The page title stays bare — the layout template appends the name. Social
+  // cards carry it inline, since they travel without that template.
+  const title = "Now";
+  const socialTitle = `Now — ${person.name}`;
   const description = now.description;
   const ogImage = `https://${baseURL}/og?type=default&title=${encodeURIComponent("Now")}&description=${encodeURIComponent(description)}`;
 
@@ -14,15 +17,15 @@ export async function generateMetadata() {
     description,
     alternates: { canonical: `https://${baseURL}/now` },
     openGraph: {
-      title,
+      title: socialTitle,
       description,
       type: "website",
       url: `https://${baseURL}/now`,
-      images: [{ url: ogImage, alt: title }],
+      images: [{ url: ogImage, alt: socialTitle }],
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: socialTitle,
       description,
       images: [ogImage],
     },

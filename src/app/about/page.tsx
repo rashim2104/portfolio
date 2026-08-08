@@ -8,7 +8,7 @@ import { slug } from "@/app/utils/slug";
 import styles from "@/app/about/about.module.css";
 
 export async function generateMetadata() {
-  const title = "About Rashim R B - Software Developer";
+  const title = "About — Software Developer in Chennai";
   const description = "Rashim R B — Software Developer at Skcript. Backend systems, mobile apps, and the occasional voice-AI experiment. TypeScript, React Native, Node.js, Postgres. Based in Chennai.";
   const ogImage = `https://${baseURL}/og?type=about&title=${encodeURIComponent(title)}`;
 

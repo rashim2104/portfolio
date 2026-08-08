@@ -168,7 +168,10 @@ export default async function BlogPost({ params }: Params) {
             <div key={i} className={styles.figure}>
               <Image
                 src={image}
-                alt={post.metadata.title}
+                alt={
+                  post.metadata.alts?.[i] ||
+                  `${post.metadata.title} — photo ${i + 1} of ${post.metadata.images.length}`
+                }
                 fill
                 priority={i === 0}
                 sizes="(max-width: 899px) 100vw, 760px"

@@ -19,23 +19,18 @@ const STATIC_ASSETS = [
 // Cache duration in seconds
 const CACHE_DURATION = {
   STATIC: 60 * 60 * 24 * 7, // 1 week
-  HTML: 60 * 60, // 1 hour
+  HTML: 60 * 60, // 1 hour at the CDN
+  HTML_STALE: 60 * 60 * 24, // served stale for a day while revalidating
   API: 60 * 5, // 5 minutes
 }
 
+// Security headers are set once in next.config.mjs for /:path*, so this
+// middleware only owns caching.
 export function middleware(request: NextRequest) {
   const response = NextResponse.next()
 
   // Get the pathname of the request
   const pathname = request.nextUrl.pathname
-
-  // Set security headers
-  response.headers.set('X-DNS-Prefetch-Control', 'on')
-  response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload')
-  response.headers.set('X-XSS-Protection', '1; mode=block')
-  response.headers.set('X-Frame-Options', 'SAMEORIGIN')
-  response.headers.set('X-Content-Type-Options', 'nosniff')
-  response.headers.set('Referrer-Policy', 'origin-when-cross-origin')
 
   // Set caching headers based on the type of content
   if (STATIC_ASSETS.some(asset => pathname.includes(asset))) {
@@ -51,10 +46,12 @@ export function middleware(request: NextRequest) {
       `public, max-age=${CACHE_DURATION.API}, must-revalidate`
     )
   } else {
-    // HTML pages - medium cache
+    // HTML pages - cached at the CDN, never in the browser. max-age=0 keeps a
+    // repeat visitor from sitting on an hour-old copy of a page that has since
+    // been republished; s-maxage keeps the CDN hit rate unchanged.
     response.headers.set(
       'Cache-Control',
-      `public, max-age=${CACHE_DURATION.HTML}, must-revalidate`
+      `public, max-age=0, s-maxage=${CACHE_DURATION.HTML}, stale-while-revalidate=${CACHE_DURATION.HTML_STALE}`
     )
   }
 
@@ -72,4 +69,4 @@ export const config = {
      */
     '/((?!_next/static|_next/image|favicon.ico).*)',
   ],
-} 
+}
