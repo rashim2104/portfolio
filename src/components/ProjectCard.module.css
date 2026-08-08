@@ -1,0 +1,139 @@
+.card {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
+  gap: var(--space-8);
+  align-items: start;
+  padding: var(--space-8) 0;
+  border-top: 1px solid var(--rule);
+}
+
+.cardTextOnly {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.cardTextOnly .body {
+  max-width: var(--w-prose);
+}
+
+/* Holds the scan canvas, which is positioned against this box. */
+.mediaWrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-1);
+}
+
+.media {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);
+  background: var(--surface-sunken);
+}
+
+.media img {
+  object-fit: cover;
+  transition: opacity var(--dur) var(--ease), transform var(--dur-slow) var(--ease);
+}
+
+.card:hover .media {
+  border-color: var(--rule-strong);
+}
+
+.card:hover .media img {
+  transform: scale(1.015);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.ordinal {
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--t-h2);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  font-weight: 600;
+}
+
+.title a {
+  color: var(--ink);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.title a:hover {
+  color: var(--accent);
+}
+
+.summary {
+  font-family: var(--font-sans);
+  font-size: var(--t-small);
+  line-height: var(--lh-body);
+  color: var(--ink-dim);
+}
+
+.team {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.team img {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--r-1);
+  object-fit: cover;
+  border: 1px solid var(--rule-strong);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-1);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--ink-faint);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.link:hover {
+  color: var(--ink);
+}
+
+.linkPrimary {
+  color: var(--accent);
+}
+
+.linkPrimary:hover {
+  color: var(--accent-hover);
+}
+
+@media (max-width: 899px) {
+  .card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+    padding: var(--space-6) 0;
+  }
+
+  /* Image first on narrow screens — it is the fastest way to tell the
+     projects apart when there is no room to set them side by side. */
+  .media {
+    order: -1;
+  }
+}

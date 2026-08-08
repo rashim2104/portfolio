@@ -5,6 +5,7 @@ import { baseURL } from "@/app/resources";
 import { home, person, social } from "@/app/resources/content";
 import { getPosts } from "@/app/utils/utils";
 import { formatDate } from "@/app/utils/formatDate";
+import styles from "@/app/page.module.css";
 
 export async function generateMetadata() {
   const title = "Rashim R B - Software Developer";
@@ -41,105 +42,82 @@ export default function Home() {
     .slice(0, 3);
 
   return (
-    <div style={{ maxWidth: "var(--max-w-md)", width: "100%", display: "flex", flexDirection: "column", gap: "var(--space-16)" }}>
+    <div className={styles.page}>
+      <section className={styles.hero}>
+        <div className={styles.heroText}>
+          <h1 className={styles.name}>{person.name}</h1>
 
-      {/* Hero */}
-      <section style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
-        <div style={{ display: "flex", gap: "var(--space-6)", alignItems: "center", flexWrap: "wrap" }}>
-          <Image
-            src={person.avatar}
-            alt={`${person.name} — Software Developer based in Chennai`}
-            width={88}
-            height={88}
-            priority
-            style={{
-              width: "88px",
-              height: "88px",
-              borderRadius: "var(--radius-full)",
-              objectFit: "cover",
-              flexShrink: 0,
-            }}
-          />
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", minWidth: "240px", flex: 1 }}>
-            <h1 style={{ fontSize: "36px", fontWeight: 600, letterSpacing: "-1.6px", lineHeight: "40px", color: "var(--color-primary)", margin: 0 }}>
-              {person.name}
-            </h1>
-            <p style={{ fontSize: "16px", lineHeight: "24px", color: "var(--color-secondary)", margin: 0 }}>
-              {home.headline}
-            </p>
+          <div className={`${styles.kicker} label`}>
+            <span>{person.role}</span>
+            <span className={styles.sep} aria-hidden="true">/</span>
+            <span>{person.location}</span>
+          </div>
+
+          <p className={styles.lede}>{home.headline}</p>
+
+          <p className={styles.intro}>{home.intro}</p>
+
+          <div className={styles.actions}>
+            <Link href="/work" className="btn btn-primary">
+              Work
+            </Link>
+            <Link href="/blog" className="btn btn-secondary">
+              Writing
+            </Link>
+            <a href={githubLink} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+              GitHub
+            </a>
           </div>
         </div>
 
-        <p style={{ fontSize: "16px", lineHeight: "26px", color: "var(--color-secondary)", margin: 0, maxWidth: "60ch" }}>
-          {home.intro}
-        </p>
-
-        {/* CTAs */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)", marginTop: "var(--space-1)" }}>
-          <Link href="/blog" className="btn btn-primary">
-            Read the blog
-          </Link>
-          <Link href="/work" className="btn btn-secondary">
-            See what I've built
-          </Link>
-          <a href={githubLink} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-            GitHub ↗
-          </a>
-        </div>
+        <Image
+          src={person.avatar}
+          alt={`${person.name} — Software Developer based in Chennai`}
+          width={116}
+          height={116}
+          priority
+          className={styles.portrait}
+        />
       </section>
 
-      {/* Writing */}
       {posts.length > 0 && (
-        <section style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
-          <h2 style={{ fontSize: "24px", fontWeight: 600, letterSpacing: "-0.96px", lineHeight: "32px", color: "var(--color-primary)", margin: 0 }}>
-            Writing
-          </h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+        <section className={styles.section}>
+          <div className={styles.sectionHead}>
+            <h2 className={`${styles.sectionTitle} label`}>
+              <span className={styles.index}>01</span>
+              <span>Writing</span>
+            </h2>
+            <Link href="/blog" className="label">
+              View all
+            </Link>
+          </div>
+
+          <div className={styles.posts}>
             {posts.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="post-row"
-              >
-                <span style={{ fontSize: "14px", lineHeight: "20px", color: "var(--color-primary)" }}>
-                  {post.metadata.title}
-                </span>
-                <span style={{ fontSize: "13px", lineHeight: "18px", color: "var(--color-secondary)", whiteSpace: "nowrap", marginLeft: "var(--space-4)" }}>
+              <Link key={post.slug} href={`/blog/${post.slug}`} className={styles.post}>
+                <span className={styles.postTitle}>{post.metadata.title}</span>
+                <span className={`${styles.postDate} label`}>
                   {formatDate(post.metadata.publishedAt)}
                 </span>
               </Link>
             ))}
           </div>
-          <Link href="/blog" style={{ fontSize: "13px", lineHeight: "18px", color: "var(--color-secondary)", textDecoration: "none" }}>
-            View all
-          </Link>
         </section>
       )}
 
-      {/* Interests */}
-      <section style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
-        <h2 style={{ fontSize: "24px", fontWeight: 600, letterSpacing: "-0.96px", lineHeight: "32px", color: "var(--color-primary)", margin: 0 }}>
-          Beyond the keyboard
-        </h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "var(--space-3)" }}>
+      <section className={styles.section}>
+        <div className={styles.sectionHead}>
+          <h2 className={`${styles.sectionTitle} label`}>
+            <span className={styles.index}>02</span>
+            <span>Beyond the keyboard</span>
+          </h2>
+        </div>
+
+        <div className={`${styles.grid} ${styles.interests}`}>
           {home.interests.map((interest) => (
-            <div
-              key={interest.title}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--space-1)",
-                padding: "var(--space-4)",
-                border: "1px solid var(--gray-400)",
-                borderRadius: "var(--radius-sm)",
-              }}
-            >
-              <span style={{ fontSize: "13px", fontWeight: 600, lineHeight: "18px", color: "var(--color-primary)" }}>
-                {interest.title}
-              </span>
-              <span style={{ fontSize: "13px", lineHeight: "18px", color: "var(--color-secondary)" }}>
-                {interest.description}
-              </span>
+            <div key={interest.title} className={styles.cell}>
+              <span className={styles.interestTitle}>{interest.title}</span>
+              <span className={styles.interestBody}>{interest.description}</span>
             </div>
           ))}
         </div>

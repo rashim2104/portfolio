@@ -1,5 +1,7 @@
 import { getPosts } from "@/app/utils/utils";
 import { Projects } from "@/components/work/Projects";
+import { PageHeader } from "@/components/PageHeader";
+import styles from "@/styles/page.module.css";
 import { baseURL } from "@/app/resources";
 import { person, work } from "@/app/resources/content";
 
@@ -32,7 +34,7 @@ export default async function Work() {
   let allProjects = await getPosts(["src", "app", "work", "projects"]);
 
   return (
-    <div style={{ maxWidth: "var(--max-w-md)", width: "100%" }}>
+    <div className={styles.page}>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -83,14 +85,12 @@ export default async function Work() {
           }),
         }}
       />
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", marginBottom: "var(--space-8)" }}>
-        <h1 style={{ fontSize: "32px", fontWeight: 600, letterSpacing: "-1.28px", lineHeight: "40px", color: "var(--color-primary)", margin: 0 }}>
-          {work.title}
-        </h1>
-        <p style={{ fontSize: "16px", lineHeight: "24px", color: "var(--color-secondary)", margin: 0 }}>
-          {work.description}
-        </p>
-      </div>
+      <PageHeader
+        kicker="Selected"
+        title={work.title}
+        lede={work.description}
+        meta={`${allProjects.length} ${allProjects.length === 1 ? "project" : "projects"}`}
+      />
       <Projects projects={allProjects} />
     </div>
   );

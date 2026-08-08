@@ -1,38 +1,45 @@
-.sidebar {
-  position: fixed;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  padding-left: 24px;
+.toc {
+  position: sticky;
+  /* Clears the sticky header plus a little breathing room. */
+  top: calc(var(--h-header) + var(--space-6));
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: var(--space-2);
+  padding-left: var(--space-6);
+  border-left: 1px solid var(--rule);
 }
 
-.sidebarItem {
+.tocLabel {
+  margin-bottom: var(--space-1);
+}
+
+.tocLink {
   display: flex;
   align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  font-size: 13px;
-  color: var(--color-secondary);
-  transition: color 150ms;
-  white-space: nowrap;
+  gap: var(--space-2);
+  color: var(--ink-faint);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease);
 }
 
-.sidebarItem:hover {
-  color: var(--color-primary);
+.tocLink:hover {
+  color: var(--ink);
+}
+
+.tocSub {
+  padding-left: var(--space-4);
 }
 
 .line {
-  width: 16px;
+  width: 10px;
   height: 1px;
-  background: var(--gray-600);
+  background: currentColor;
   flex-shrink: 0;
+  opacity: 0.6;
 }
 
-@media (max-width: 960px) {
-  .sidebar {
+@media (max-width: 1023px) {
+  .toc {
     display: none;
   }
 }

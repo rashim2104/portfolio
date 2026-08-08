@@ -36,10 +36,12 @@ type CustomLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
   children: ReactNode;
 };
 
+// Link colour and underline come from `.prose a` — styling them here as well
+// would mean two places to change when the palette moves.
 function CustomLink({ href, children, ...props }: CustomLinkProps) {
   if (href.startsWith("/")) {
     return (
-      <Link href={href} style={{ color: "var(--color-accent)" }} {...(props as any)}>
+      <Link href={href} {...(props as any)}>
         {children}
       </Link>
     );
@@ -47,14 +49,14 @@ function CustomLink({ href, children, ...props }: CustomLinkProps) {
 
   if (href.startsWith("#")) {
     return (
-      <a href={href} style={{ color: "var(--color-accent)" }} {...props}>
+      <a href={href} {...props}>
         {children}
       </a>
     );
   }
 
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" style={{ color: "var(--color-accent)" }} {...props}>
+    <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
       {children}
     </a>
   );
@@ -72,13 +74,12 @@ function createImage({ alt, src }: CreateImageProps) {
     return null;
   }
 
-  return (
-    <img
-      src={src}
-      alt={alt || ""}
-      style={{ width: "100%", borderRadius: "var(--radius-sm)", margin: "16px 0" }}
-    />
-  );
+  // The one place a bare <img> is still right. Images inside a post body come
+  // from markdown with no dimensions and no fixed aspect, and next/image needs
+  // either explicit width/height or a `fill` parent with a locked ratio —
+  // which would crop whatever the author actually wrote into the post.
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={src} alt={alt || ""} loading="lazy" decoding="async" />;
 }
 
 function getTextContent(node: ReactNode): string {
@@ -106,11 +107,7 @@ function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
   const CustomHeading = ({ children }: { children?: ReactNode }) => {
     const slug = slugify(getTextContent(children));
     return (
-      <HeadingLink
-        style={{ marginTop: "var(--space-6)", marginBottom: "var(--space-3)" }}
-        level={level}
-        id={slug}
-      >
+      <HeadingLink level={level} id={slug}>
         {children}
       </HeadingLink>
     );
@@ -121,22 +118,8 @@ function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
   return CustomHeading;
 }
 
-function createParagraph({ children }: { children?: ReactNode }) {
-  return (
-    <p
-      style={{
-        lineHeight: "175%",
-        fontSize: "14px",
-        color: "var(--color-secondary)",
-        marginTop: "8px",
-        marginBottom: "12px",
-      }}
-    >
-      {children}
-    </p>
-  );
-}
-
+// Normalises the fenced-code shape MDX produces into a plain pre > code, and
+// nothing else — `.prose pre` owns how it looks, in both themes.
 function Code({ children }: { children?: ReactNode }) {
   const codeEl = children as React.ReactElement<{ className?: string; children?: ReactNode }>;
   const className = codeEl?.props?.className || "";
@@ -144,27 +127,13 @@ function Code({ children }: { children?: ReactNode }) {
   const code = (Array.isArray(raw) ? raw.join("") : String(raw ?? "")).replace(/\n$/, "");
 
   return (
-    <div style={{ margin: "8px 0 12px", borderRadius: "var(--radius-sm)", overflow: "hidden" }}>
-      <pre
-        style={{
-          background: "#1a1a1a",
-          color: "#e5e5e5",
-          padding: "var(--space-4)",
-          overflowX: "auto",
-          fontSize: "13px",
-          lineHeight: "1.6",
-          fontFamily: "var(--font-mono)",
-          margin: 0,
-        }}
-      >
-        <code className={className}>{code}</code>
-      </pre>
-    </div>
+    <pre>
+      <code className={className}>{code}</code>
+    </pre>
   );
 }
 
 const components = {
-  p: createParagraph as any,
   pre: Code as any,
   h1: createHeading(1) as any,
   h2: createHeading(2) as any,
