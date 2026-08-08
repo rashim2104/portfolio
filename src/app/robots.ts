@@ -6,7 +6,8 @@ export default function robots() {
       {
         userAgent: "*",
         allow: "/",
-        disallow: "/gallery",
+        // /l/* are short-link redirects, not pages worth crawling.
+        disallow: ["/l/"],
       },
     ],
     sitemap: `https://${baseURL}/sitemap.xml`,
