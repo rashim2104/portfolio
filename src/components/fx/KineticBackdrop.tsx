@@ -12,8 +12,8 @@ const TOKENS = ["--ink", "--accent"] as const;
  * The site's signature: a single oversized 'r' rippling behind every page.
  *
  * It is the nav monogram off its leash — same letter, no frame, no allocated
- * space. It bleeds past the viewport on purpose so you read it as a texture the
- * site sits on rather than as a picture of a letter.
+ * space. Sized to 80% of the viewport height and vertically centred, so it
+ * reads as the surface the site sits on rather than a picture of a letter.
  *
  * Kept faint deliberately: everything on the site renders on top of it, so the
  * letter has to lose every contrast argument it has with the body copy.
@@ -27,9 +27,10 @@ const TUNING = {
   chroma: 0.55,
   shade: 0.4,
   grain: 0,
-  fit: 1.35, // deliberately larger than the viewport, so it crops
+  fit: 0.8, // glyph ink height = 80% of the viewport
   anchorX: 0.78,
-  anchorY: 0.46,
+  anchorY: 0.5, // vertically centred
+
   // A full-viewport canvas is the largest surface on the site; a DPR of 2 on a
   // large display buys nothing visible on a shape this soft and costs real
   // fill rate every frame.

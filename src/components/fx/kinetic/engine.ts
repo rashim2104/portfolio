@@ -188,10 +188,17 @@ export class KineticEngine {
     const probeW = probe.actualBoundingBoxRight + probe.actualBoundingBoxLeft;
     if (probeH <= 0 || probeW <= 0) return;
 
-    // Fit to height, but never let a wide string overflow the canvas width.
+    // Height governs, so `fit` means exactly what it says: the ink is that
+    // fraction of the canvas height. The width guard applies only to
+    // multi-character strings, which genuinely need to be kept inside the
+    // frame — a single glyph is allowed to run past the edges, and on a narrow
+    // viewport clamping it would silently shrink it well below the requested
+    // height.
     const byHeight = (H * this.p.fit * PROBE) / probeH;
-    const byWidth = (W * this.p.fit * 1.6 * PROBE) / probeW;
-    const size = Math.max(8, Math.min(byHeight, byWidth));
+    const size =
+      text.length > 1
+        ? Math.max(8, Math.min(byHeight, (W * 0.9 * PROBE) / probeW))
+        : Math.max(8, byHeight);
     setFont(size);
 
     // Place the glyph by its ink centre, not its baseline or advance width.
