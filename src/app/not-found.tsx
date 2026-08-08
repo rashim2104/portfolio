@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Metadata } from "next";
+import { DatamoshBand } from "@/components/fx/DatamoshBand";
 import styles from "@/app/not-found.module.css";
 
 export const metadata: Metadata = {
@@ -26,6 +27,8 @@ export default function NotFound() {
       </div>
 
       <h1 className={styles.code}>404</h1>
+
+      <DatamoshBand />
 
       <p className={styles.body}>
         Nothing resolves at this address. It may have moved, or it may never have existed.
