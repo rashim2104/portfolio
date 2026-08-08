@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./Post.module.css";
 import { formatDate } from "@/app/utils/formatDate";
 
@@ -14,12 +15,14 @@ export default function Post({ post, thumbnail, ordinal }: PostProps) {
   return (
     <Link href={`/blog/${post.slug}`} className={styles.postLink}>
       {post.metadata.image && thumbnail && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={post.metadata.image}
-          alt={`Thumbnail of ${post.metadata.title}`}
-          className={styles.thumb}
-        />
+        <span className={styles.thumb}>
+          <Image
+            src={post.metadata.image}
+            alt={`Thumbnail of ${post.metadata.title}`}
+            fill
+            sizes="(max-width: 899px) 100vw, 760px"
+          />
+        </span>
       )}
 
       <span className={`${styles.ordinal} label`} aria-hidden="true">

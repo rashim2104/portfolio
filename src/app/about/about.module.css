@@ -1,0 +1,238 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 200px;
+  gap: var(--space-16);
+  align-items: start;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  min-width: 0;
+  max-width: var(--w-prose);
+}
+
+/* ---------------- MASTHEAD ---------------- */
+
+.masthead {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: center;
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+.portrait {
+  width: 104px;
+  height: 104px;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: var(--t-h1);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.roleLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.sep {
+  color: var(--rule-strong);
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+/* ---------------- SECTIONS ---------------- */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  /* So an anchored heading clears the sticky header. */
+  scroll-margin-top: calc(var(--h-header) + var(--space-6));
+}
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--rule);
+}
+
+.index {
+  color: var(--accent);
+}
+
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink-dim);
+}
+
+/* ---------------- EXPERIENCE ---------------- */
+
+.roles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.role {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  scroll-margin-top: calc(var(--h-header) + var(--space-6));
+}
+
+.roleHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.company {
+  font-family: var(--font-mono);
+  font-size: var(--t-h3);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.company a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+.roleTitle {
+  color: var(--accent);
+}
+
+.achievements {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.achievement {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: baseline;
+  font-family: var(--font-sans);
+  font-size: var(--t-small);
+  line-height: var(--lh-body);
+  color: var(--ink-dim);
+}
+
+.bullet {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--t-label);
+}
+
+/* ---------------- SPEC ROWS ---------------- */
+
+.rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-6);
+  padding: var(--space-4) var(--space-1);
+  border-bottom: 1px solid var(--rule);
+  scroll-margin-top: calc(var(--h-header) + var(--space-6));
+}
+
+.rowName {
+  font-family: var(--font-mono);
+  font-size: var(--t-small);
+  font-weight: 500;
+  color: var(--ink);
+  flex-shrink: 0;
+  max-width: 46%;
+}
+
+.rowValue {
+  font-family: var(--font-sans);
+  font-size: var(--t-small);
+  line-height: var(--lh-tight);
+  color: var(--ink-dim);
+  text-align: right;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-10);
+  }
+}
+
+@media (max-width: 599px) {
+  .column {
+    gap: var(--space-10);
+  }
+
+  .masthead {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  .portrait {
+    width: 80px;
+    height: 80px;
+  }
+
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+
+  .rowName {
+    max-width: none;
+  }
+
+  .rowValue {
+    text-align: left;
+  }
+}

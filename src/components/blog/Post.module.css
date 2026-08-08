@@ -67,14 +67,23 @@
   color: var(--ink-faint);
 }
 
+/* Aspect-locked wrapper so next/image can fill it and reserve the space
+   before the file loads. */
 .thumb {
+  position: relative;
+  display: block;
   grid-column: 1 / -1;
   width: 100%;
   aspect-ratio: 16 / 9;
-  object-fit: cover;
+  overflow: hidden;
   border: 1px solid var(--rule);
   border-radius: var(--r-1);
   margin-bottom: var(--space-3);
+  background: var(--surface-sunken);
+}
+
+.thumb img {
+  object-fit: cover;
 }
 
 @media (max-width: 599px) {

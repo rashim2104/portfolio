@@ -1,7 +1,6 @@
-"use client";
-
 import React from "react";
 import styles from "./about.module.css";
+import { slug } from "@/app/utils/slug";
 
 interface TableOfContentsProps {
   structure: {
@@ -17,49 +16,41 @@ interface TableOfContentsProps {
   };
 }
 
+/**
+ * Section index for the about page. Plain anchor links rather than scripted
+ * scrolling — they work without JS, they are keyboard and screen-reader
+ * navigable, and smooth scrolling already comes from the global stylesheet.
+ */
 const TableOfContents: React.FC<TableOfContentsProps> = ({ structure, about }) => {
-  const scrollTo = (id: string, offset: number) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-  };
-
   if (!about.tableOfContent.display) return null;
 
   return (
-    <div className={styles.sidebar}>
+    <nav className={styles.toc} aria-label="On this page">
+      <span className={`${styles.tocLabel} label`}>On this page</span>
+
       {structure
         .filter((section) => section.display)
-        .map((section, sectionIndex) => (
-          <div key={sectionIndex} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <div
-              className={styles.sidebarItem}
-              onClick={() => scrollTo(section.title, 80)}
-            >
-              <div className={styles.line} />
+        .map((section) => (
+          <React.Fragment key={section.title}>
+            <a href={`#${slug(section.title)}`} className={`${styles.tocLink} label`}>
+              <span className={styles.line} aria-hidden="true" />
               <span>{section.title}</span>
-            </div>
-            {about.tableOfContent.subItems && section.items.map((item, itemIndex) => (
-              <div
-                key={itemIndex}
-                className={styles.sidebarItem}
-                style={{ paddingLeft: "24px" }}
-                onClick={() => scrollTo(item, 80)}
-              >
-                <div className={styles.line} style={{ width: "8px" }} />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
+            </a>
+
+            {about.tableOfContent.subItems &&
+              section.items.map((item) => (
+                <a
+                  key={item}
+                  href={`#${slug(item)}`}
+                  className={`${styles.tocLink} ${styles.tocSub} label`}
+                >
+                  <span className={styles.line} aria-hidden="true" />
+                  <span>{item}</span>
+                </a>
+              ))}
+          </React.Fragment>
         ))}
-    </div>
+    </nav>
   );
 };
 

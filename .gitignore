@@ -13,9 +13,6 @@ node_modules
 # Production
 /build
 
-# Cloudflare
-/.open-next/
-
 # Misc
 .DS_Store
 *.pem

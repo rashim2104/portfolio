@@ -4,8 +4,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:cloudflare": "next build && npx @opennextjs/cloudflare build",
-    "deploy": "npm run build:cloudflare && npx wrangler deploy",
     "start": "next start",
     "lint": "next lint"
   },
@@ -27,7 +25,6 @@
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "^2.1.1",
-    "@opennextjs/cloudflare": "^1.17.1",
     "@types/node": "^20",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

@@ -1,11 +1,13 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { CustomMDX } from "@/components/mdx";
 import { getPosts } from "@/app/utils/utils";
 import { baseURL } from "@/app/resources";
 import { person } from "@/app/resources/content";
 import { formatDate } from "@/app/utils/formatDate";
 import ScrollToHash from "@/components/ScrollToHash";
+import styles from "@/styles/article.module.css";
 
 interface WorkParams {
   params: Promise<{
@@ -75,16 +77,7 @@ export default async function Project({ params }: WorkParams) {
     })) || [];
 
   return (
-    <section
-      style={{
-        maxWidth: "var(--max-w-content)",
-        width: "100%",
-        margin: "0 auto",
-        display: "flex",
-        flexDirection: "column",
-        gap: "var(--space-6)",
-      }}
-    >
+    <section className={styles.article}>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -147,77 +140,49 @@ export default async function Project({ params }: WorkParams) {
           }),
         }}
       />
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
-        <Link href="/work" className="btn btn-tertiary btn-sm" style={{ display: "inline-flex", alignItems: "center", gap: "4px", width: "fit-content" }}>
-          <span>←</span> Projects
-        </Link>
-        <h1
-          style={{
-            fontSize: "32px",
-            fontWeight: 600,
-            letterSpacing: "-1.28px",
-            lineHeight: "40px",
-            color: "var(--color-primary)",
-            margin: 0,
-          }}
-        >
-          {post.metadata.title}
-        </h1>
-      </div>
-      {post.metadata.images.length > 0 && (
-        <img
-          src={post.metadata.images[0]}
-          alt={`${post.metadata.title} project screenshot`}
-          style={{
-            width: "100%",
-            aspectRatio: "16 / 9",
-            objectFit: "cover",
-            borderRadius: "var(--radius-md)",
-            display: "block",
-          }}
-        />
-      )}
-      <article>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: "12px",
-            alignItems: "center",
-            marginBottom: "var(--space-6)",
-          }}
-        >
-          {avatars.length > 0 && (
-            <div style={{ display: "flex", flexDirection: "row", gap: "4px" }}>
-              {avatars.map((avatar, index) => (
-                <img
-                  key={index}
-                  src={avatar.src}
-                  alt=""
-                  style={{
-                    width: "32px",
-                    height: "32px",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                    border: "1px solid var(--gray-200)",
-                  }}
-                />
-              ))}
-            </div>
-          )}
-          <span
-            style={{
-              fontSize: "13px",
-              lineHeight: "18px",
-              color: "var(--color-secondary)",
-            }}
-          >
+      <Link href="/work" className={`${styles.back} label`}>
+        <span aria-hidden="true">&#8592;</span> Work
+      </Link>
+
+      <header className={styles.masthead}>
+        <div className={`${styles.meta} label`}>
+          <time dateTime={post.metadata.publishedAt}>
             {formatDate(post.metadata.publishedAt)}
-          </span>
+          </time>
+          {post.metadata.link && (
+            <>
+              <span className={styles.sep} aria-hidden="true">/</span>
+              <a href={post.metadata.link} target="_blank" rel="noopener noreferrer">
+                Live &#8599;
+              </a>
+            </>
+          )}
         </div>
-        <div className="prose">
-          <CustomMDX source={post.content} />
+        <h1 className={styles.title}>{post.metadata.title}</h1>
+        {post.metadata.summary && <p className={styles.summary}>{post.metadata.summary}</p>}
+        {avatars.length > 0 && (
+          <div className={styles.team}>
+            {avatars.map((avatar, index) => (
+              <Image key={index} src={avatar.src} alt="" width={24} height={24} />
+            ))}
+          </div>
+        )}
+      </header>
+
+      {post.metadata.images.length > 0 && (
+        <div className={styles.figure}>
+          <Image
+            src={post.metadata.images[0]}
+            alt={`${post.metadata.title} project screenshot`}
+            fill
+            priority
+            sizes="(max-width: 899px) 100vw, 760px"
+          />
         </div>
+      )}
+
+      <article className={`prose ${styles.body}`}>
+        <CustomMDX source={post.content} />
       </article>
       <ScrollToHash />
     </section>

@@ -35,8 +35,7 @@ export const Footer = () => {
         <div className={styles.colophon}>
           <span className={styles.label}>Colophon</span>
           <span className={styles.note}>
-            Set in IBM Plex Mono and Geist Sans. Built with Next.js, rendered at the edge on
-            Cloudflare Workers.
+            Set in IBM Plex Mono and Geist Sans. Built with Next.js, deployed on Vercel.
           </span>
           <span className={styles.note}>
             &copy; {currentYear} {person.name}
