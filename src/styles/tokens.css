@@ -92,6 +92,11 @@
 
   --focus-ring: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent);
 
+  /* Backdrop letter alpha. Dark ink on pale paper carries far further than
+     pale ink on a near-black ground, so the same number in both themes makes
+     light mode shout. Tuned per theme by eye against the real page. */
+  --fx-backdrop-alpha: 0.05;
+
   color-scheme: light;
 }
 
@@ -121,6 +126,8 @@
 
   --shadow-card:    0 1px 0 var(--rule);
   --shadow-raised:  0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px -12px rgba(0, 0, 0, 0.7);
+
+  --fx-backdrop-alpha: 0.1;
 
   color-scheme: dark;
 }

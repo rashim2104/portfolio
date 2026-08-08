@@ -6,7 +6,7 @@ import { useEngineLifecycle } from "@/components/fx/useEngineLifecycle";
 import { useThemeTokens } from "@/components/fx/useThemeTokens";
 import styles from "@/components/fx/KineticBackdrop.module.css";
 
-const TOKENS = ["--ink", "--accent"] as const;
+const TOKENS = ["--ink", "--accent", "--fx-backdrop-alpha"] as const;
 
 /**
  * The site's signature: a single oversized 'r' rippling behind every page.
@@ -20,8 +20,14 @@ const TOKENS = ["--ink", "--accent"] as const;
  */
 const TUNING = {
   paper: null,
-  tiles: 30,
-  offset: 26,
+  // The grid has to be fine relative to the glyph, not to the viewport. At a
+  // fit of 0.8 the letter is one large mass of thick strokes, so a coarse grid
+  // gives only a few dozen cells across the whole shape and a displacement of
+  // half a cell reads as sliding slabs rather than a ripple. Smaller cells and
+  // a smaller shove keep it a texture. The tile loop is clipped to the glyph's
+  // bounding box, so the extra columns cost nothing outside the letter.
+  tiles: 64,
+  offset: 15,
   speed: 0.014,
   spread: 0.03,
   chroma: 0.55,
@@ -47,7 +53,7 @@ export function KineticBackdrop({ letter = "r" }: { letter?: string }) {
     text: letter,
     ink: tokens?.["--ink"] ?? "#000000",
     accent: tokens?.["--accent"] ?? "#000000",
-    opacity: 0.085,
+    opacity: Number.parseFloat(tokens?.["--fx-backdrop-alpha"] ?? "") || 0.08,
   });
 
   useEngineLifecycle(

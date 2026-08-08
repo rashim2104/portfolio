@@ -8,14 +8,20 @@
   background: var(--surface-sunken);
 }
 
+/* Sits on its own chip rather than blending: the field underneath runs through
+   near-white and near-black within a few pixels, so any blend mode leaves the
+   caption unreadable over part of its own length. */
 .caption {
   position: absolute;
-  left: var(--space-3);
+  left: var(--space-2);
   bottom: var(--space-2);
   z-index: 1;
   pointer-events: none;
-  color: var(--surface);
-  mix-blend-mode: difference;
+  padding: 3px var(--space-2);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);
+  color: var(--ink-dim);
 }
 
 @media (max-width: 599px) {
