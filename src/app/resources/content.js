@@ -226,7 +226,8 @@ const blog = {
 const now = {
   label: "Now",
   title: "Now",
-  description: `What ${person.name} is focused on right now`,
+  description:
+    "What I'm focused on now — shipping SupportWire on iOS, Android and web, keeping Skcript's email service healthy past 500K jobs, and relearning fundamentals.",
   updated: "June 2026",
   sections: [
     {
@@ -258,7 +259,8 @@ const now = {
 const uses = {
   label: "Uses",
   title: "Uses",
-  description: `The hardware, tools, and stack ${person.name} uses day to day`,
+  description:
+    "The gear and software I actually reach for day to day — MacBook Air M4, Claude Code and zsh, TypeScript on Bun, Postgres, and Docker on Hetzner and Vercel.",
   intro: "The gear and software I actually reach for every day. Updated as things change.",
   groups: [
     {
