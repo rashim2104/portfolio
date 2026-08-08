@@ -15,6 +15,9 @@ type Metadata = {
   summary: string;
   image?: string;
   images: string[];
+  // Per-image alt text, positionally matched to `images`. Optional — posts
+  // written before this existed fall back to a generated description.
+  alts?: string[];
   tag?: string;
   team: Team[];
   link?: string;
@@ -44,6 +47,7 @@ function readMDXFile(filePath: string) {
     summary: data.summary || "",
     image: data.image || "",
     images: data.images || [],
+    alts: data.alts || [],
     tag: data.tag || [],
     team: data.team || [],
     link: data.link || "",
