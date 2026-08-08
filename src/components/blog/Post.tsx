@@ -1,52 +1,44 @@
-"use client";
-
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./Post.module.css";
 import { formatDate } from "@/app/utils/formatDate";
 
 interface PostProps {
   post: any;
   thumbnail: boolean;
+  ordinal?: number;
 }
 
-export default function Post({ post, thumbnail }: PostProps) {
+export default function Post({ post, thumbnail, ordinal }: PostProps) {
   const formattedDate = formatDate(post.metadata.publishedAt);
 
   return (
     <Link href={`/blog/${post.slug}`} className={styles.postLink}>
-      <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1, minWidth: 0 }}>
-        {post.metadata.image && thumbnail && (
-          <img
+      {post.metadata.image && thumbnail && (
+        <span className={styles.thumb}>
+          <Image
             src={post.metadata.image}
-            alt={"Thumbnail of " + post.metadata.title}
-            style={{
-              width: "100%",
-              borderRadius: "var(--radius-sm)",
-              objectFit: "cover",
-              aspectRatio: "16 / 9",
-              marginBottom: "8px",
-            }}
+            alt={`Thumbnail of ${post.metadata.title}`}
+            fill
+            sizes="(max-width: 899px) 100vw, 760px"
           />
-        )}
+        </span>
+      )}
+
+      <span className={`${styles.ordinal} label`} aria-hidden="true">
+        {String(ordinal ?? 0).padStart(2, "0")}
+      </span>
+
+      <span className={styles.body}>
         <span className={styles.title}>{post.metadata.title}</span>
-        {post.metadata.tag && (
-          <span
-            style={{
-              fontSize: "12px",
-              color: "var(--color-secondary)",
-              border: "1px solid var(--gray-alpha-400)",
-              borderRadius: "var(--radius-full)",
-              padding: "2px 8px",
-              display: "inline-block",
-              width: "fit-content",
-            }}
-          >
-            {post.metadata.tag}
-          </span>
+        {post.metadata.summary && (
+          <span className={styles.summary}>{post.metadata.summary}</span>
         )}
-      </div>
+        {post.metadata.tag && <span className={`${styles.tag} tag`}>{post.metadata.tag}</span>}
+      </span>
+
       {formattedDate && (
-        <time className={styles.date}>{formattedDate}</time>
+        <time className={`${styles.date} label`}>{formattedDate}</time>
       )}
     </Link>
   );

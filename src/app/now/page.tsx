@@ -1,6 +1,8 @@
 import React from "react";
 import { baseURL } from "@/app/resources";
 import { now, person } from "@/app/resources/content";
+import { PageHeader } from "@/components/PageHeader";
+import styles from "@/styles/page.module.css";
 
 export async function generateMetadata() {
   const title = `Now - ${person.name}`;
@@ -29,41 +31,44 @@ export async function generateMetadata() {
 
 export default function Now() {
   return (
-    <div style={{ maxWidth: "var(--max-w-content)", width: "100%", display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-        <h1 style={{ fontSize: "32px", fontWeight: 600, letterSpacing: "-1.28px", lineHeight: "40px", color: "var(--color-primary)", margin: 0 }}>
-          Now
-        </h1>
-        <p style={{ fontSize: "16px", lineHeight: "24px", color: "var(--color-secondary)", margin: 0 }}>
-          What I'm focused on at the moment. This is a{" "}
-          <a href="https://nownownow.com/about" target="_blank" rel="noopener noreferrer" style={{ color: "var(--color-accent)", textDecoration: "underline", textUnderlineOffset: "2px" }}>
-            now page
-          </a>
-          .
-        </p>
-        <p style={{ fontSize: "13px", lineHeight: "18px", color: "var(--color-secondary)", margin: 0, fontFamily: "var(--font-mono)" }}>
-          Last updated {now.updated}
-        </p>
-      </div>
+    <div className={`${styles.page} ${styles.narrow}`}>
+      <PageHeader
+        kicker="Status"
+        title="Now"
+        lede={
+          <>
+            What I&apos;m focused on at the moment. This is a{" "}
+            <a href="https://nownownow.com/about" target="_blank" rel="noopener noreferrer">
+              now page
+            </a>
+            .
+          </>
+        }
+        meta={`Last updated ${now.updated}`}
+      />
 
-      {now.sections.map((section) => (
-        <section key={section.title} style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
-          <h2 style={{ fontSize: "20px", fontWeight: 600, letterSpacing: "-0.4px", lineHeight: "26px", color: "var(--color-primary)", margin: 0 }}>
-            {section.title}
-          </h2>
-          <ul style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", margin: 0, paddingLeft: "var(--space-4)", listStyle: "disc" }}>
+      {now.sections.map((section, index) => (
+        <section key={section.title} className={styles.section}>
+          <div className={styles.sectionHead}>
+            <h2 className={`${styles.sectionTitle} label`}>
+              <span className={styles.index}>{String(index + 1).padStart(2, "0")}</span>
+              <span>{section.title}</span>
+            </h2>
+          </div>
+          <ul className={styles.list}>
             {section.items.map((item, i) => (
-              <li key={i} style={{ fontSize: "16px", lineHeight: "24px", color: "var(--color-secondary)" }}>
-                {item}
+              <li key={i} className={styles.item}>
+                <span className={styles.bullet} aria-hidden="true">
+                  &#8250;
+                </span>
+                <span>{item}</span>
               </li>
             ))}
           </ul>
         </section>
       ))}
 
-      <p style={{ fontSize: "14px", lineHeight: "20px", color: "var(--color-secondary)", margin: 0, fontStyle: "italic" }}>
-        better late than never.
-      </p>
+      <p className={styles.note}>better late than never.</p>
     </div>
   );
 }

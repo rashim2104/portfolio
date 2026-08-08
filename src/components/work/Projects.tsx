@@ -1,6 +1,5 @@
-"use client";
-
 import { ProjectCard } from "@/components";
+import styles from "@/components/work/Projects.module.css";
 
 interface Project {
   slug: string;
@@ -21,27 +20,24 @@ interface ProjectsProps {
 }
 
 export function Projects({ range, projects }: ProjectsProps) {
-  // Remove duplicates based on title
   const uniqueProjects = projects.reduce((acc, current) => {
-    const existingProject = acc.find(
-      (project) => project.metadata.title === current.metadata.title
-    );
-    if (!existingProject) {
+    if (!acc.some((project) => project.metadata.title === current.metadata.title)) {
       acc.push(current);
     }
     return acc;
   }, [] as Project[]);
 
-  const sortedProjects = uniqueProjects.sort((a, b) => {
-    return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
-  });
+  const sortedProjects = uniqueProjects.sort(
+    (a, b) =>
+      new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime(),
+  );
 
-  const displayedProjects = range
-    ? sortedProjects.slice(range[0] - 1, range[1] ?? sortedProjects.length)
-    : sortedProjects;
+  const start = range ? range[0] - 1 : 0;
+  const end = range ? (range[1] ?? sortedProjects.length) : sortedProjects.length;
+  const displayedProjects = sortedProjects.slice(start, end);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "48px" }}>
+    <div className={styles.list}>
       {displayedProjects.map((post, index) => (
         <ProjectCard
           priority={index < 2}
@@ -53,6 +49,7 @@ export function Projects({ range, projects }: ProjectsProps) {
           content={post.content}
           avatars={post.metadata.team?.map((member) => ({ src: member.avatar })) || []}
           link={post.metadata.link || ""}
+          ordinal={sortedProjects.length - (start + index)}
         />
       ))}
     </div>

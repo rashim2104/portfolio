@@ -1,11 +1,13 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { CustomMDX } from "@/components/mdx";
 import { getPosts } from "@/app/utils/utils";
 import { baseURL } from "@/app/resources";
 import { person } from "@/app/resources/content";
 import { formatDate } from "@/app/utils/formatDate";
 import ScrollToHash from "@/components/ScrollToHash";
+import styles from "@/styles/article.module.css";
 
 interface Params {
   params: Promise<{
@@ -75,7 +77,7 @@ export default async function BlogPost({ params }: Params) {
   }
 
   return (
-    <section style={{ maxWidth: "var(--max-w-content)", width: "100%", margin: "0 auto" }}>
+    <section className={styles.article}>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -140,68 +142,53 @@ export default async function BlogPost({ params }: Params) {
         }}
       />
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)", marginBottom: "var(--space-8)" }}>
-        <Link
-          href="/blog"
-          className="btn btn-tertiary btn-sm"
-          style={{ display: "inline-flex", alignItems: "center", gap: "4px", width: "fit-content" }}
-        >
-          <span>←</span> Blog
-        </Link>
-        <h1
-          style={{
-            fontSize: "32px",
-            fontWeight: 600,
-            letterSpacing: "-1.28px",
-            lineHeight: "40px",
-            color: "var(--color-primary)",
-            margin: 0,
-          }}
-        >
-          {post.metadata.title}
-        </h1>
-      </div>
+      <Link href="/blog" className={`${styles.back} label`}>
+        <span aria-hidden="true">&#8592;</span> Writing
+      </Link>
+
+      <header className={styles.masthead}>
+        <div className={`${styles.meta} label`}>
+          <time dateTime={post.metadata.publishedAt}>
+            {formatDate(post.metadata.publishedAt)}
+          </time>
+          {post.metadata.tag && (
+            <>
+              <span className={styles.sep} aria-hidden="true">/</span>
+              <span>{post.metadata.tag}</span>
+            </>
+          )}
+        </div>
+        <h1 className={styles.title}>{post.metadata.title}</h1>
+        {post.metadata.summary && <p className={styles.summary}>{post.metadata.summary}</p>}
+      </header>
 
       {post.metadata.images && post.metadata.images.length > 0 ? (
-        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", marginBottom: "var(--space-6)" }}>
+        <div className={styles.figures}>
           {post.metadata.images.map((image: string, i: number) => (
-            <img
-              key={i}
-              src={image}
-              alt={post.metadata.title}
-              style={{
-                width: "100%",
-                borderRadius: "var(--radius-sm)",
-                objectFit: "cover",
-                aspectRatio: "16 / 9",
-              }}
-            />
+            <div key={i} className={styles.figure}>
+              <Image
+                src={image}
+                alt={post.metadata.title}
+                fill
+                priority={i === 0}
+                sizes="(max-width: 899px) 100vw, 760px"
+              />
+            </div>
           ))}
         </div>
       ) : post.metadata.image ? (
-        <img
-          src={post.metadata.image}
-          alt={post.metadata.title}
-          style={{
-            width: "100%",
-            borderRadius: "var(--radius-sm)",
-            objectFit: "cover",
-            aspectRatio: "16 / 9",
-            marginBottom: "var(--space-6)",
-          }}
-        />
+        <div className={styles.figure}>
+          <Image
+            src={post.metadata.image}
+            alt={post.metadata.title}
+            fill
+            priority
+            sizes="(max-width: 899px) 100vw, 760px"
+          />
+        </div>
       ) : null}
 
-      <article className="prose">
-        <p
-          style={{
-            fontSize: "13px",
-            color: "var(--color-secondary)",
-            marginBottom: "var(--space-6)",
-          }}
-        >
-          {formatDate(post.metadata.publishedAt)}
-        </p>
+      <article className={`prose ${styles.body}`}>
         <CustomMDX source={post.content} />
       </article>
 

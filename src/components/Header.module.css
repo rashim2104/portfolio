@@ -2,8 +2,116 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--color-bg) 80%, transparent);
-  backdrop-filter: saturate(180%) blur(12px);
-  -webkit-backdrop-filter: saturate(180%) blur(12px);
-  border-bottom: 1px solid var(--gray-200);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.inner {
+  max-width: var(--w-frame);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  height: var(--h-header);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--ink);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.brandName {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+}
+
+.brand:hover .brandName {
+  color: var(--accent);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: var(--h-control);
+  padding: 0 var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.link:hover {
+  color: var(--ink);
+}
+
+/* Active state is a rule under the item, not a filled pill — the panel
+   language is hairlines, and a pill would read as a button. */
+.link.active {
+  color: var(--ink);
+}
+
+.link.active::after {
+  content: "";
+  position: absolute;
+  left: var(--space-2);
+  right: var(--space-2);
+  bottom: -1px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.divider {
+  width: 1px;
+  height: 16px;
+  background: var(--rule-strong);
+  margin: 0 var(--space-2);
+  flex-shrink: 0;
+}
+
+@media (--md) {
+  .inner {
+    padding: 0 var(--space-4);
+  }
+
+  .nav {
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .link {
+    padding: 0 6px;
+  }
+
+  .divider {
+    margin: 0 var(--space-1);
+  }
 }

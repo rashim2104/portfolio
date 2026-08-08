@@ -2,17 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { FaSun, FaMoon } from "react-icons/fa6";
+import styles from "@/components/ThemeToggle.module.css";
 
 type Theme = "light" | "dark";
 
 function getInitialTheme(): Theme {
-  if (typeof document === "undefined") return "light";
-  const current = document.documentElement.getAttribute("data-theme");
-  return current === "dark" ? "dark" : "light";
+  if (typeof document === "undefined") return "dark";
+  return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
 }
 
 export const ThemeToggle = () => {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -33,12 +33,11 @@ export const ThemeToggle = () => {
     <button
       type="button"
       onClick={toggle}
-      className="icon-btn"
+      className={styles.toggle}
       aria-label={mounted ? `Switch to ${theme === "dark" ? "light" : "dark"} mode` : "Toggle theme"}
       title="Toggle theme"
     >
-      {/* Avoid hydration mismatch: render nothing decisive until mounted */}
-      {mounted ? (theme === "dark" ? <FaSun size={15} /> : <FaMoon size={15} />) : <FaMoon size={15} />}
+      {mounted && theme === "light" ? <FaMoon size={13} /> : <FaSun size={13} />}
     </button>
   );
 };

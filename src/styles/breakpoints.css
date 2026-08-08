@@ -1,0 +1,12 @@
+/* Named breakpoints, consumed by postcss-custom-media via postcss-global-data. */
+
+@custom-media --sm (max-width: 599px);
+@custom-media --md (max-width: 899px);
+@custom-media --lg (max-width: 1199px);
+
+@custom-media --sm-up (min-width: 600px);
+@custom-media --md-up (min-width: 900px);
+@custom-media --lg-up (min-width: 1200px);
+
+@custom-media --pointer-fine (hover: hover) and (pointer: fine);
+@custom-media --motion-ok (prefers-reduced-motion: no-preference);

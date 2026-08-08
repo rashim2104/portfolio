@@ -4,6 +4,8 @@ import { person, about, social } from "@/app/resources/content";
 import React from "react";
 import Image from "next/image";
 import { FaGithub, FaLinkedin, FaXTwitter, FaEnvelope } from "react-icons/fa6";
+import { slug } from "@/app/utils/slug";
+import styles from "@/app/about/about.module.css";
 
 export async function generateMetadata() {
   const title = "About Rashim R B - Software Developer";
@@ -31,10 +33,10 @@ export async function generateMetadata() {
 }
 
 const iconMap: Record<string, React.ReactElement> = {
-  github: <FaGithub size={18} />,
-  linkedin: <FaLinkedin size={18} />,
-  x: <FaXTwitter size={18} />,
-  email: <FaEnvelope size={18} />,
+  github: <FaGithub size={15} />,
+  linkedin: <FaLinkedin size={15} />,
+  x: <FaXTwitter size={15} />,
+  email: <FaEnvelope size={15} />,
 };
 
 export default function About() {
@@ -66,8 +68,13 @@ export default function About() {
     },
   ];
 
+  // Numbering runs over the sections that actually render, so a hidden section
+  // does not leave a gap in the sequence.
+  const visible = structure.filter((section) => section.display).map((section) => section.title);
+  const ordinal = (title: string) => String(visible.indexOf(title) + 1).padStart(2, "0");
+
   return (
-    <div style={{ maxWidth: "var(--max-w-md)", width: "100%" }}>
+    <div className={styles.layout}>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -91,323 +98,150 @@ export default function About() {
         }}
       />
 
-      {about.tableOfContent.display && (
-        <TableOfContents structure={structure} about={about} />
-      )}
-
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-        {about.avatar.display && (
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-3)", paddingBottom: "var(--space-8)" }}>
+      <div className={styles.column}>
+        <header className={styles.masthead}>
+          {about.avatar.display && (
             <Image
               src={person.avatar}
               alt={`${person.name} — Software Developer based in ${person.location}`}
-              width={120}
-              height={120}
+              width={104}
+              height={104}
               priority
-              style={{
-                width: "120px",
-                height: "120px",
-                borderRadius: "var(--radius-full)",
-                objectFit: "cover",
-                border: "1px solid var(--gray-400)",
-              }}
+              className={styles.portrait}
             />
-            <span style={{ fontSize: "13px", color: "var(--color-secondary)", display: "flex", alignItems: "center", gap: "4px" }}>
-              📍 {person.location}
-            </span>
+          )}
+
+          <div className={styles.identity}>
+            <h1 className={styles.name}>{person.name}</h1>
+
+            <div className={`${styles.roleLine} label`}>
+              <span>{person.role}</span>
+              <span className={styles.sep} aria-hidden="true">/</span>
+              <span>{person.location}</span>
+            </div>
+
+            <div className={styles.contact}>
+              {social.map(
+                (item) =>
+                  item.link && (
+                    <a
+                      key={item.name}
+                      href={item.link}
+                      className="icon-btn"
+                      target={item.link.startsWith("mailto:") ? undefined : "_blank"}
+                      rel={item.link.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                      aria-label={item.name}
+                    >
+                      {iconMap[item.icon] ?? <span>{item.name}</span>}
+                    </a>
+                  ),
+              )}
+              <a
+                href="/resumes/Rashim_Resume.pdf"
+                download="Rashim_Resume.pdf"
+                className="btn btn-secondary btn-sm"
+              >
+                Resume
+              </a>
+            </div>
           </div>
+        </header>
+
+        {about.intro.display && (
+          <section id={slug(about.intro.title)} className={styles.section}>
+            <div className={styles.sectionHead}>
+              <h2 className="label">
+                <span className={styles.index}>{ordinal(about.intro.title)}</span>{" "}
+                <span>{about.intro.title}</span>
+              </h2>
+            </div>
+            <div className={styles.prose}>{about.intro.description}</div>
+          </section>
         )}
 
-        <div style={{ width: "100%", maxWidth: "640px" }}>
-          <div
-            id={about.intro.title}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              minHeight: "160px",
-              justifyContent: "center",
-              marginBottom: "var(--space-8)",
-            }}
-          >
-            <h1
-              style={{
-                fontSize: "40px",
-                fontWeight: 600,
-                letterSpacing: "-2.4px",
-                lineHeight: "48px",
-                color: "var(--color-primary)",
-                margin: 0,
-              }}
-            >
-              {person.name}
-            </h1>
-            <p
-              style={{
-                fontSize: "20px",
-                fontWeight: 400,
-                color: "var(--color-secondary)",
-                marginTop: "var(--space-2)",
-                marginBottom: 0,
-              }}
-            >
-              {person.role}
-            </p>
+        {about.work.display && (
+          <section id={slug(about.work.title)} className={styles.section}>
+            <div className={styles.sectionHead}>
+              <h2 className="label">
+                <span className={styles.index}>{ordinal(about.work.title)}</span>{" "}
+                <span>{about.work.title}</span>
+              </h2>
+            </div>
 
-            {social.length > 0 && (
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "var(--space-2)",
-                  paddingTop: "20px",
-                  paddingBottom: "var(--space-2)",
-                  alignItems: "center",
-                }}
-              >
-                {social.map(
-                  (item) =>
-                    item.link && (
-                      <a
-                        key={item.name}
-                        href={item.link}
-                        className="icon-btn"
-                        target={item.link.startsWith("mailto:") ? undefined : "_blank"}
-                        rel={item.link.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-                        aria-label={item.name}
-                      >
-                        {iconMap[item.icon] ?? <span>{item.name}</span>}
-                      </a>
-                    ),
-                )}
-                <a
-                  href="/resumes/Rashim-Resume.pdf"
-                  download="Rashim-Resume.pdf"
-                  className="btn btn-primary btn-sm"
+            <div className={styles.roles}>
+              {about.work.experiences.map((experience, index) => (
+                <article
+                  key={`${experience.company}-${experience.role}-${index}`}
+                  id={slug(experience.company)}
+                  className={styles.role}
                 >
-                  Download Resume
-                </a>
-              </div>
-            )}
-          </div>
-
-          {about.intro.display && (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--space-4)",
-                marginBottom: "var(--space-10)",
-                fontSize: "16px",
-                lineHeight: "24px",
-                color: "var(--color-primary)",
-              }}
-            >
-              {about.intro.description}
-            </div>
-          )}
-
-          {about.work.display && (
-            <div style={{ marginBottom: "var(--space-10)" }}>
-              <h2
-                id={about.work.title}
-                style={{
-                  fontSize: "24px",
-                  fontWeight: 600,
-                  letterSpacing: "-0.96px",
-                  lineHeight: "32px",
-                  color: "var(--color-primary)",
-                  marginBottom: "var(--space-6)",
-                  marginTop: 0,
-                }}
-              >
-                {about.work.title}
-              </h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
-                {about.work.experiences.map((experience, index) => (
-                  <div key={`${experience.company}-${experience.role}-${index}`} style={{ width: "100%" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-end",
-                        marginBottom: "var(--space-1)",
-                      }}
-                    >
-                      <strong
-                        id={experience.company}
-                        style={{
-                          fontSize: "16px",
-                          fontWeight: 600,
-                          color: "var(--color-primary)",
-                        }}
-                      >
-                        {experience.company === "Bulkpe" ? (
-                          <a href="https://bulkpe.in" target="_blank" rel="noopener noreferrer">
-                            {experience.company}
-                          </a>
-                        ) : (
-                          experience.company
-                        )}
-                      </strong>
-                      <span style={{ fontSize: "13px", color: "var(--color-secondary)" }}>
-                        {experience.timeframe}
-                      </span>
-                    </div>
-                    <p
-                      style={{
-                        fontSize: "13px",
-                        color: "var(--color-accent)",
-                        marginBottom: "var(--space-4)",
-                        marginTop: 0,
-                      }}
-                    >
-                      {experience.role}
-                    </p>
-                    <ul style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)", paddingLeft: "var(--space-4)", margin: 0 }}>
-                      {experience.achievements.map((achievement: React.ReactElement, i: number) => (
-                        <li
-                          key={`${experience.company}-${i}`}
-                          style={{ fontSize: "14px", lineHeight: "22px", color: "var(--color-primary)" }}
-                        >
-                          {achievement}
-                        </li>
-                      ))}
-                    </ul>
+                  <div className={styles.roleHead}>
+                    <span className={styles.company}>{experience.company}</span>
+                    <span className="label">{experience.timeframe}</span>
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
+                  <span className={`${styles.roleTitle} label`}>{experience.role}</span>
 
-          {about.volunteering.display && (
-            <div style={{ marginBottom: "var(--space-10)" }}>
-              <h2
-                id={about.volunteering.title}
-                style={{
-                  fontSize: "24px",
-                  fontWeight: 600,
-                  letterSpacing: "-0.96px",
-                  lineHeight: "32px",
-                  color: "var(--color-primary)",
-                  marginBottom: "var(--space-6)",
-                  marginTop: 0,
-                }}
-              >
-                {about.volunteering.title}
-              </h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
-                {about.volunteering.experiences.map((experience, index) => (
-                  <div key={`${experience.company}-${experience.role}-${index}`} style={{ width: "100%" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-end",
-                        marginBottom: "var(--space-1)",
-                      }}
-                    >
-                      <strong
-                        id={experience.company}
-                        style={{ fontSize: "16px", fontWeight: 600, color: "var(--color-primary)" }}
-                      >
-                        {experience.company}
-                      </strong>
-                      <span style={{ fontSize: "13px", color: "var(--color-secondary)" }}>
-                        {experience.timeframe}
-                      </span>
-                    </div>
-                    <p
-                      style={{
-                        fontSize: "13px",
-                        color: "var(--color-accent)",
-                        marginBottom: "var(--space-4)",
-                        marginTop: 0,
-                      }}
-                    >
-                      {experience.role}
-                    </p>
-                    <ul style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)", paddingLeft: "var(--space-4)", margin: 0 }}>
-                      {experience.achievements.map((achievement: React.ReactElement, i: number) => (
-                        <li
-                          key={`${experience.company}-${i}`}
-                          style={{ fontSize: "14px", lineHeight: "22px", color: "var(--color-primary)" }}
-                        >
-                          {achievement}
-                        </li>
-                      ))}
-                    </ul>
+                  <div className={styles.achievements}>
+                    {experience.achievements.map((achievement: React.ReactElement, i: number) => (
+                      <p key={`${experience.company}-${i}`} className={styles.achievement}>
+                        <span className={styles.bullet} aria-hidden="true">
+                          &#8250;
+                        </span>
+                        <span>{achievement}</span>
+                      </p>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </article>
+              ))}
             </div>
-          )}
+          </section>
+        )}
 
-          {about.studies.display && (
-            <div style={{ marginBottom: "var(--space-10)" }}>
-              <h2
-                id={about.studies.title}
-                style={{
-                  fontSize: "24px",
-                  fontWeight: 600,
-                  letterSpacing: "-0.96px",
-                  lineHeight: "32px",
-                  color: "var(--color-primary)",
-                  marginBottom: "var(--space-6)",
-                  marginTop: 0,
-                }}
-              >
-                {about.studies.title}
+        {about.studies.display && (
+          <section id={slug(about.studies.title)} className={styles.section}>
+            <div className={styles.sectionHead}>
+              <h2 className="label">
+                <span className={styles.index}>{ordinal(about.studies.title)}</span>{" "}
+                <span>{about.studies.title}</span>
               </h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
-                {about.studies.institutions.map((institution, index) => (
-                  <div key={`${institution.name}-${index}`} style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-                    <strong
-                      id={institution.name}
-                      style={{ fontSize: "16px", fontWeight: 600, color: "var(--color-primary)" }}
-                    >
-                      {institution.name}
-                    </strong>
-                    <span style={{ fontSize: "13px", color: "var(--color-secondary)" }}>
-                      {institution.description}
-                    </span>
-                  </div>
-                ))}
-              </div>
             </div>
-          )}
 
-          {about.technical.display && (
-            <div style={{ marginBottom: "var(--space-10)" }}>
-              <h2
-                id={about.technical.title}
-                style={{
-                  fontSize: "24px",
-                  fontWeight: 600,
-                  letterSpacing: "-0.96px",
-                  lineHeight: "32px",
-                  color: "var(--color-primary)",
-                  marginBottom: "var(--space-10)",
-                  marginTop: 0,
-                }}
-              >
-                {about.technical.title}
-              </h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
-                {about.technical.skills.map((skill, index) => (
-                  <div key={`${skill.title}-${index}`} style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-                    <strong style={{ fontSize: "16px", fontWeight: 600, color: "var(--color-primary)" }}>
-                      {skill.title}
-                    </strong>
-                    <span style={{ fontSize: "14px", lineHeight: "20px", color: "var(--color-secondary)" }}>
-                      {skill.description}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <div className={styles.rows}>
+              {about.studies.institutions.map((institution) => (
+                <div key={institution.name} id={slug(institution.name)} className={styles.row}>
+                  <span className={styles.rowName}>{institution.name}</span>
+                  <span className={styles.rowValue}>
+                    {institution.description}
+                    {institution.timeframe ? ` · ${institution.timeframe}` : ""}
+                  </span>
+                </div>
+              ))}
             </div>
-          )}
-        </div>
+          </section>
+        )}
+
+        {about.technical.display && (
+          <section id={slug(about.technical.title)} className={styles.section}>
+            <div className={styles.sectionHead}>
+              <h2 className="label">
+                <span className={styles.index}>{ordinal(about.technical.title)}</span>{" "}
+                <span>{about.technical.title}</span>
+              </h2>
+            </div>
+
+            <div className={styles.rows}>
+              {about.technical.skills.map((skill) => (
+                <div key={skill.title} id={slug(skill.title)} className={styles.row}>
+                  <span className={styles.rowName}>{skill.title}</span>
+                  <span className={styles.rowValue}>{skill.description}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
+
+      {about.tableOfContent.display && <TableOfContents structure={structure} about={about} />}
     </div>
   );
 }

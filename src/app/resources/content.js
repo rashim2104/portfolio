@@ -11,12 +11,6 @@ const person = {
   phone: "+91-8778484418",
 };
 
-const newsletter = {
-  display: false, // Disabled newsletter subscription
-  title: "Subscribe to the newsletter",
-  description: "Get notified about new blog posts and updates"
-};
-
 const social = [
   {
     name: "GitHub",
@@ -318,4 +312,4 @@ const resume = {
   description: "View and download my professional resume",
 };
 
-export { person, social, newsletter, home, about, blog, now, uses, work, resume };
+export { person, social, home, about, blog, now, uses, work, resume };
