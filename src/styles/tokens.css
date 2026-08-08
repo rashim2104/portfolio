@@ -13,7 +13,7 @@
   /* --- INK --- */
   --ink:              #14151a;
   --ink-dim:          #5a5f66;
-  --ink-faint:        #757b84;  /* 4.6:1 on surface — safe for small labels */
+  --ink-faint:        #6d737c;  /* 4.61:1 on surface — passes AA at 11px */
 
   /* --- RULES (hairlines are the primary structural device) --- */
   --rule:             #e4e4df;
@@ -107,7 +107,7 @@
 
   --ink:              #e6e8ea;
   --ink-dim:          #979ca3;
-  --ink-faint:        #6e747c;  /* 4.7:1 on surface */
+  --ink-faint:        #757b83;  /* 4.61:1 on surface — passes AA at 11px */
 
   --rule:             #1b1e22;
   --rule-strong:      #2a2e34;

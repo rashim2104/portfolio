@@ -276,7 +276,10 @@ hr {
 .btn-primary:hover {
   background-color: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  /* Not white: against the light-violet dark-mode accent, white lands at
+     3.3:1 and fails AA for button text. The surface colour inverts with the
+     theme and clears 5.7:1 in both. */
+  color: var(--surface);
 }
 
 .btn-secondary {

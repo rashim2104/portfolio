@@ -42,16 +42,21 @@ export function useEngineLifecycle(
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    // Under reduced motion the effect still renders — it just holds one frame,
-    // so the page keeps its composition instead of showing a hole.
-    if (reduced.matches) {
-      live.renderStatic();
-      return () => live.destroy();
-    }
-
     let onScreen = true;
     let hidden = document.hidden;
+
+    // Under reduced motion the effect still renders — it just holds one frame,
+    // so the page keeps its composition instead of showing a hole.
+    //
+    // The preference is watched rather than read once: a visitor who turns
+    // motion off while the page is open should have the loop stop there and
+    // then, not on the next navigation.
     const sync = () => {
+      if (reduced.matches) {
+        live.stop();
+        live.renderStatic();
+        return;
+      }
       if (onScreen && !hidden) live.start();
       else live.stop();
     };
@@ -70,6 +75,7 @@ export function useEngineLifecycle(
       sync();
     };
     document.addEventListener("visibilitychange", onVisibility);
+    reduced.addEventListener("change", sync);
 
     sync();
 
@@ -77,6 +83,7 @@ export function useEngineLifecycle(
       ro.disconnect();
       io.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
+      reduced.removeEventListener("change", sync);
       live.destroy();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
