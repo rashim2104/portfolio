@@ -9,7 +9,7 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
   display: "swap",
 });
-import { Footer, Header } from "@/components";
+import { Footer, Header, StatusBar } from "@/components";
 import { baseURL } from "@/app/resources";
 import { person } from "@/app/resources/content";
 import { Metadata, Viewport } from "next";
@@ -17,8 +17,8 @@ import { Analytics } from "@vercel/analytics/next";
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+    { media: "(prefers-color-scheme: light)", color: "#fbfbf9" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0b0d" },
   ],
 };
 
@@ -189,7 +189,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
+            // Dark is the brand mode, so it is also the default: an explicit
+            // stored choice wins, a system preference of light is honoured,
+            // and anything else lands on dark.
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`,
           }}
         />
         <script
@@ -205,36 +208,14 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(imageSchema) }}
         />
       </head>
-      <body
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          margin: 0,
-          padding: 0,
-          backgroundColor: "var(--color-bg)",
-          color: "var(--color-primary)",
-          fontFamily: "var(--font-sans)",
-        }}
-      >
+      <body>
         <a href="#main-content" className="skip-link">Skip to content</a>
         <Header />
-        <main
-          id="main-content"
-          style={{
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "flex-start",
-            paddingTop: "var(--space-16)",
-            paddingBottom: "var(--space-16)",
-            paddingLeft: "var(--space-6)",
-            paddingRight: "var(--space-6)",
-          }}
-        >
+        <main id="main-content" className="main">
           {children}
         </main>
         <Footer />
+        <StatusBar />
         <Analytics />
       </body>
     </html>

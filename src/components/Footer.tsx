@@ -1,16 +1,17 @@
 import Link from "next/link";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { person, social } from "@/app/resources/content";
+import styles from "@/components/Footer.module.css";
 
 const iconMap: Record<string, React.ReactNode> = {
-  github: <FaGithub size={18} />,
-  linkedin: <FaLinkedin size={18} />,
-  x: <FaXTwitter size={18} />,
+  github: <FaGithub size={15} />,
+  linkedin: <FaLinkedin size={15} />,
+  x: <FaXTwitter size={15} />,
   email: (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="18"
-      height="18"
+      width="15"
+      height="15"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -29,64 +30,46 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer
-      style={{
-        borderTop: "1px solid var(--gray-200)",
-        padding: "var(--space-6) var(--space-6)",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "var(--max-w-md)",
-          margin: "0 auto",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: "var(--space-4)",
-        }}
-      >
-        <span
-          style={{
-            fontSize: "13px",
-            lineHeight: "18px",
-            color: "var(--color-secondary)",
-          }}
-        >
-          &copy; {currentYear} {person.name}
-        </span>
-
-        <div style={{ display: "flex", alignItems: "center", gap: "var(--space-4)" }}>
-          <Link href="/now" className="nav-link" style={{ padding: 0, fontSize: "13px", fontWeight: 400 }}>
-            Now
-          </Link>
-          <Link href="/uses" className="nav-link" style={{ padding: 0, fontSize: "13px", fontWeight: 400 }}>
-            Uses
-          </Link>
+    <footer className={styles.footer}>
+      <div className={styles.inner}>
+        <div className={styles.colophon}>
+          <span className={styles.label}>Colophon</span>
+          <span className={styles.note}>
+            Set in IBM Plex Mono and Geist Sans. Built with Next.js, rendered at the edge on
+            Cloudflare Workers.
+          </span>
+          <span className={styles.note}>
+            &copy; {currentYear} {person.name}
+          </span>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-2)",
-          }}
-        >
-          {social.map(
-            (item) =>
-              item.link && (
-                <a
-                  key={item.name}
-                  href={item.link}
-                  className="icon-btn"
-                  target={item.link.startsWith("mailto:") ? undefined : "_blank"}
-                  rel={item.link.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-                  aria-label={item.name}
-                >
-                  {iconMap[item.icon] ?? null}
-                </a>
-              ),
-          )}
+        <div className={styles.links}>
+          <div className={styles.linkRow}>
+            <Link href="/now" className={styles.link}>
+              Now
+            </Link>
+            <Link href="/uses" className={styles.link}>
+              Uses
+            </Link>
+          </div>
+
+          <div className={styles.social}>
+            {social.map(
+              (item) =>
+                item.link && (
+                  <a
+                    key={item.name}
+                    href={item.link}
+                    className={styles.iconLink}
+                    target={item.link.startsWith("mailto:") ? undefined : "_blank"}
+                    rel={item.link.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                    aria-label={item.name}
+                  >
+                    {iconMap[item.icon] ?? null}
+                  </a>
+                ),
+            )}
+          </div>
         </div>
       </div>
     </footer>

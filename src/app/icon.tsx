@@ -1,28 +1,29 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "fs/promises";
-import { join } from "path";
+import { strokeRects } from "@/components/markGeometry";
 
 export const size = { width: 48, height: 48 };
 export const contentType = "image/png";
 
-export default async function Icon() {
-  const avatarData = await readFile(join(process.cwd(), "public/images/avatar.jpg"));
-  const base64 = `data:image/jpeg;base64,${avatarData.toString("base64")}`;
+const PLATE_COLOR = "#e6e8ea";
+const KNOCKOUT = "#0a0b0d";
 
+export default function Icon() {
   return new ImageResponse(
     (
       <div
         style={{
-          width: 48,
-          height: 48,
-          borderRadius: "50%",
-          overflow: "hidden",
+          width: size.width,
+          height: size.height,
+          background: PLATE_COLOR,
+          position: "relative",
           display: "flex",
         }}
       >
-        <img src={base64} width={48} height={48} style={{ objectFit: "cover" }} />
+        {strokeRects(size.width).map((r, i) => (
+          <div key={i} style={{ position: "absolute", background: KNOCKOUT, ...r }} />
+        ))}
       </div>
     ),
-    { ...size }
+    { ...size },
   );
 }
