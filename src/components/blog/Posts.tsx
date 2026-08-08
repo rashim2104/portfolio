@@ -1,8 +1,7 @@
-"use client";
-
 import Post from "@/components/blog/Post";
+import styles from "@/components/blog/Posts.module.css";
 
-interface Post {
+interface PostItem {
   slug: string;
   metadata: {
     title: string;
@@ -16,27 +15,33 @@ interface PostsProps {
   range?: [number] | [number, number];
   columns?: "1" | "2" | "3";
   thumbnail?: boolean;
-  posts: Post[];
+  posts: PostItem[];
 }
 
-export function Posts({ range, columns = "1", thumbnail = false, posts }: PostsProps) {
-  const sortedPosts = posts.sort((a, b) => {
-    return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
-  });
+export function Posts({ range, thumbnail = false, posts }: PostsProps) {
+  const sortedPosts = [...posts].sort(
+    (a, b) =>
+      new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime(),
+  );
 
-  const displayedPosts = range
-    ? sortedPosts.slice(range[0] - 1, range.length === 2 ? range[1] : sortedPosts.length)
-    : sortedPosts;
+  const start = range ? range[0] - 1 : 0;
+  const end = range ? (range.length === 2 ? range[1] : sortedPosts.length) : sortedPosts.length;
+  const displayedPosts = sortedPosts.slice(start, end);
+
+  if (displayedPosts.length === 0) return null;
 
   return (
-    <>
-      {displayedPosts.length > 0 && (
-        <div style={{ display: "flex", flexDirection: "column", marginBottom: "var(--space-10)" }}>
-          {displayedPosts.map((post) => (
-            <Post key={post.slug} post={post} thumbnail={thumbnail} />
-          ))}
-        </div>
-      )}
-    </>
+    <div className={styles.list}>
+      {displayedPosts.map((post, i) => (
+        <Post
+          key={post.slug}
+          post={post}
+          thumbnail={thumbnail}
+          // Counted from the oldest post, so an entry keeps its number for good
+          // instead of every id shifting each time something new is published.
+          ordinal={sortedPosts.length - (start + i)}
+        />
+      ))}
+    </div>
   );
 }

@@ -1,6 +1,8 @@
 import React from "react";
 import { baseURL } from "@/app/resources";
 import { uses, person } from "@/app/resources/content";
+import { PageHeader } from "@/components/PageHeader";
+import styles from "@/styles/page.module.css";
 
 export async function generateMetadata() {
   const title = `Uses - ${person.name}`;
@@ -29,40 +31,23 @@ export async function generateMetadata() {
 
 export default function Uses() {
   return (
-    <div style={{ maxWidth: "var(--max-w-content)", width: "100%", display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-        <h1 style={{ fontSize: "32px", fontWeight: 600, letterSpacing: "-1.28px", lineHeight: "40px", color: "var(--color-primary)", margin: 0 }}>
-          Uses
-        </h1>
-        <p style={{ fontSize: "16px", lineHeight: "24px", color: "var(--color-secondary)", margin: 0 }}>
-          {uses.intro}
-        </p>
-      </div>
+    <div className={`${styles.page} ${styles.narrow}`}>
+      <PageHeader kicker="Setup" title="Uses" lede={uses.intro} />
 
-      {uses.groups.map((group) => (
-        <section key={group.title} style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
-          <h2 style={{ fontSize: "20px", fontWeight: 600, letterSpacing: "-0.4px", lineHeight: "26px", color: "var(--color-primary)", margin: 0 }}>
-            {group.title}
-          </h2>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            {group.items.map((item, i) => (
-              <div
-                key={item.name}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "baseline",
-                  gap: "var(--space-4)",
-                  padding: "var(--space-3) 0",
-                  borderTop: i === 0 ? "none" : "1px solid var(--gray-200)",
-                }}
-              >
-                <span style={{ fontSize: "15px", fontWeight: 500, color: "var(--color-primary)", flexShrink: 0 }}>
-                  {item.name}
-                </span>
-                <span style={{ fontSize: "13px", lineHeight: "18px", color: "var(--color-secondary)", textAlign: "right" }}>
-                  {item.detail}
-                </span>
+      {uses.groups.map((group, index) => (
+        <section key={group.title} className={styles.section}>
+          <div className={styles.sectionHead}>
+            <h2 className={`${styles.sectionTitle} label`}>
+              <span className={styles.index}>{String(index + 1).padStart(2, "0")}</span>
+              <span>{group.title}</span>
+            </h2>
+            <span className="label">{group.items.length} items</span>
+          </div>
+          <div className={styles.rows}>
+            {group.items.map((item) => (
+              <div key={item.name} className={styles.row}>
+                <span className={styles.rowName}>{item.name}</span>
+                <span className={styles.rowValue}>{item.detail}</span>
               </div>
             ))}
           </div>

@@ -2,6 +2,8 @@ import { Posts } from "@/components/blog/Posts";
 import { baseURL } from "@/app/resources";
 import { blog, person } from "@/app/resources/content";
 import { getPosts } from "@/app/utils/utils";
+import { PageHeader } from "@/components/PageHeader";
+import styles from "@/styles/page.module.css";
 
 export async function generateMetadata() {
   const title = "Technical Blog - Rashim R B";
@@ -32,7 +34,7 @@ export default function Blog() {
   const allPosts = getPosts(["src", "app", "blog", "posts"]);
 
   return (
-    <div style={{ maxWidth: "var(--max-w-md)", width: "100%" }}>
+    <div className={styles.page}>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -92,19 +94,13 @@ export default function Blog() {
           }),
         }}
       />
-      <h1
-        style={{
-          fontSize: "32px",
-          fontWeight: 600,
-          letterSpacing: "-1.28px",
-          lineHeight: "40px",
-          color: "var(--color-primary)",
-          marginBottom: "var(--space-8)",
-        }}
-      >
-        {blog.title}
-      </h1>
-      <Posts posts={allPosts} thumbnail columns="1" />
+      <PageHeader
+        kicker="Log"
+        title={blog.title}
+        lede={blog.description}
+        meta={`${allPosts.length} ${allPosts.length === 1 ? "entry" : "entries"}`}
+      />
+      <Posts posts={allPosts} />
     </div>
   );
 }

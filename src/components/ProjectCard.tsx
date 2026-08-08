@@ -1,8 +1,7 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import styles from "@/components/ProjectCard.module.css";
 
 interface ProjectCardProps {
   href: string;
@@ -13,6 +12,7 @@ interface ProjectCardProps {
   description: string;
   avatars: { src: string }[];
   link: string;
+  ordinal?: number;
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -24,86 +24,37 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   avatars,
   link,
   priority = false,
+  ordinal,
 }) => {
   return (
-    <article className="project-card">
-      {images.length > 0 && (
-        <Link href={"/" + href} aria-label={`View ${title}`} style={{ display: "block" }}>
-          <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9", overflow: "hidden" }}>
-            <Image
-              src={images[0]}
-              alt={`${title} — project preview`}
-              fill
-              priority={priority}
-              sizes="(max-width: 960px) 100vw, 960px"
-              style={{ objectFit: "cover" }}
-            />
-          </div>
-        </Link>
-      )}
-      <div style={{ padding: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
+    <article className={styles.card}>
+      <div className={styles.body}>
+        {ordinal !== undefined && (
+          <span className={`${styles.ordinal} label`}>
+            {String(ordinal).padStart(2, "0")}
+          </span>
+        )}
+
         {title && (
-          <h2
-            style={{
-              fontSize: "24px",
-              fontWeight: 600,
-              letterSpacing: "-0.96px",
-              lineHeight: "32px",
-              color: "var(--color-primary)",
-              margin: 0,
-            }}
-          >
-            <Link href={"/" + href} style={{ color: "inherit", textDecoration: "none" }}>
-              {title}
-            </Link>
+          <h2 className={styles.title}>
+            <Link href={`/${href}`}>{title}</Link>
           </h2>
         )}
-        {description?.trim() && (
-          <p
-            style={{
-              fontSize: "14px",
-              lineHeight: "20px",
-              color: "var(--color-secondary)",
-              margin: 0,
-            }}
-          >
-            {description}
-          </p>
-        )}
+
+        {description?.trim() && <p className={styles.summary}>{description}</p>}
+
         {avatars?.length > 0 && (
-          <div style={{ display: "flex", flexDirection: "row", gap: "4px" }}>
+          <div className={styles.team}>
             {avatars.map((avatar, index) => (
-              <Image
-                key={index}
-                src={avatar.src}
-                alt=""
-                width={24}
-                height={24}
-                style={{
-                  width: "24px",
-                  height: "24px",
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                  border: "1px solid var(--gray-200)",
-                }}
-              />
+              <Image key={index} src={avatar.src} alt="" width={22} height={22} />
             ))}
           </div>
         )}
-        <div style={{ display: "flex", flexDirection: "row", gap: "16px", flexWrap: "wrap" }}>
+
+        <div className={styles.links}>
           {content?.trim() && (
-            <Link
-              href={"/" + href}
-              style={{
-                fontSize: "14px",
-                color: "var(--color-accent)",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "4px",
-                textDecoration: "none",
-              }}
-            >
-              View project details →
+            <Link href={`/${href}`} className={`${styles.link} ${styles.linkPrimary} label`}>
+              Read the case &#8594;
             </Link>
           )}
           {link && (
@@ -111,20 +62,25 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               href={link}
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                fontSize: "14px",
-                color: "var(--color-secondary)",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "4px",
-                textDecoration: "none",
-              }}
+              className={`${styles.link} label`}
             >
-              ↗ Live project
+              Live &#8599;
             </a>
           )}
         </div>
       </div>
+
+      {images.length > 0 && (
+        <Link href={`/${href}`} aria-label={`View ${title}`} className={styles.media}>
+          <Image
+            src={images[0]}
+            alt={`${title} — project preview`}
+            fill
+            priority={priority}
+            sizes="(max-width: 899px) 100vw, 480px"
+          />
+        </Link>
+      )}
     </article>
   );
 };
