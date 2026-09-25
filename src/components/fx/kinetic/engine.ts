@@ -146,6 +146,7 @@ export class KineticEngine {
 
     const pw = Math.round(this.w * this.dpr);
     const ph = Math.round(this.h * this.dpr);
+    if (pw === this.mask.width && ph === this.mask.height) return;
     for (const c of [this.canvas, this.mask, this.warp]) {
       c.width = pw;
       c.height = ph;
@@ -425,5 +426,10 @@ export class KineticEngine {
   destroy() {
     this.stop();
     this.canvas.remove();
+    for (const c of [this.canvas, this.mask, this.warp, this.grainCanvas, this.tintScratch]) {
+      if (c) c.width = c.height = 0;
+    }
+    this.grainCanvas = null;
+    this.tintScratch = null;
   }
 }
